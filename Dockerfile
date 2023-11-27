@@ -9,7 +9,7 @@ WORKDIR "/app"
 # install app dependencies
 COPY ./package.json ./
 COPY ./package-lock.json ./
-RUN npm install --silent
+RUN npm install --legacy-peer-deps
 
 # add app
 COPY . ./
