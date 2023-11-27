@@ -47,7 +47,7 @@ function Chatlist(props) {
   const listchat = async (idUser, localTipoChat) => {
 
     try {
-      const response = await axios.post('/listuser', { idUser });
+      const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//listuser', { idUser });
       const jsonData = response.data;
       setChatData(jsonData); // Actualiza el estado con los nuevos datos
 

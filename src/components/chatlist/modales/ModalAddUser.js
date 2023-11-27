@@ -26,7 +26,7 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
         setSelectedLine('')
 
         try {
-          const response = await axios.post('/listlines', postData);
+          const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//listlines', postData);
           const jsonData = response.data;
           setListdata(jsonData);
           console.log('ListdtosModallin', jsonData);
@@ -66,7 +66,7 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
     };
 
     try {
-      const response = await axios.post('/getTemplate', postData);
+      const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//getTemplate', postData);
       const jsonData = response.data;
       setListplantilla(jsonData);
       console.log('Platilla pa', jsonData);
@@ -123,7 +123,7 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
     try {
 
 
-      const respuesta = await axios.post('/initChat', postData);
+      const respuesta = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//initChat', postData);
 
       console.log('plantilla enviada con éxito.', respuesta.data);
 

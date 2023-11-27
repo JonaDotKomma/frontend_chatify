@@ -82,7 +82,7 @@ function Chatcontent(props) {
     };
 
     try {
-      const response = await axios.post('/getmensajes', postData);
+      const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//getmensajes', postData);
       const jsonData = response.data;
       setMensajes(jsonData);
       setChatItms(response.data);

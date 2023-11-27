@@ -71,7 +71,7 @@ function Castores() {
     useEffect(() => {
         const obtenerProductos = async () => {
             try {
-                const response = await axios.get('/getProductos');
+                const response = await axios.get('https://apiservhtc-d76a501f67be.herokuapp.com//getProductos');
                 const jsonData = response.data;
                 setListproductosdata(jsonData);
                 console.log(response.data);
@@ -123,7 +123,7 @@ function Castores() {
          console.log('la data es ', formData);
          try {
             // Hacer la petición POST a tu API
-            const response = await axios.post('/cotEnvio', formData);
+            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//cotEnvio', formData);
             console.log('Si paso mano', response.data);
             setRespuestaApi(response.data); // Actualiza el estado con la respuesta
 

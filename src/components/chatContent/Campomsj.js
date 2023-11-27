@@ -77,7 +77,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
             };
 
             try {
-                const response = await axios.post('/sendmensaje', postData);
+                const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//sendmensaje', postData);
                 console.log(response);
 
             } catch (error) {
@@ -112,7 +112,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const respuesta = await axios.post('/sendResponseWA', postData);
+            const respuesta = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//sendResponseWA', postData);
 
             console.log('Mensaje enviado:', respuesta.data);
             setMensaje([]);  // Limpiar el área de texto después de enviar
@@ -224,7 +224,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const response = await axios.post('/send-image', formData, config);
+            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//send-image', formData, config);
             console.log(`Imagen enviada a ${numerselect}:`, response.data);
             console.log(image)
 
@@ -251,7 +251,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
         console.log('kahkdsa', formData)
         try {
-            const response = await axios.post('/send-pdf', formData);
+            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//send-pdf', formData);
             console.log(`PDF enviada o ${numerselect}:`, response.data);
         } catch (error) {
             console.error(`Error al enviar el PDf a ${numerselect}:`, error);
@@ -358,7 +358,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const response = await axios.post('/send-audio', formData);
+            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//send-audio', formData);
             console.log(`audio enviada a ${numerselect}:`, response.data);
             console.log('Enviamos estto', formData)
             onMensajeEnviado();

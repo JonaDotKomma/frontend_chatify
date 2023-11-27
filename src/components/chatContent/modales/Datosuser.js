@@ -59,7 +59,7 @@ function DatosUser({ sendiduser, onClose }) {
         };
 
         try {
-            const response = await axios.post('/getInfoUserOdoo', postData);
+            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//getInfoUserOdoo', postData);
 
             // Actualiza clientData con los valores de la respuesta o con una cadena vacía si no existen.
             setClientData(prevState => ({

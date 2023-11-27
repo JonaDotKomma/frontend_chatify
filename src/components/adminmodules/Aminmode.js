@@ -44,7 +44,7 @@ function AdminView({ user, onLogout, nombreUsuario }) {
 
 
         try {
-            const response = await axios.post('/newPredeterminate', formData);
+            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//listuser/newPredeterminate', formData);
             console.log(`Mensjae texto guardado padrino XD`, response.data);
 
         } catch (error) {
@@ -79,7 +79,7 @@ function AdminView({ user, onLogout, nombreUsuario }) {
 
 
         try {
-            const response = await axios.post('/newPredeterminate', formData);
+            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//listuser/newPredeterminate', formData);
             console.log(`Mensjae guardado padrino XD`, response.data);
 
         } catch (error) {
@@ -128,7 +128,7 @@ function AdminView({ user, onLogout, nombreUsuario }) {
         };
 
         try {
-            const response = await axios.post('/getDataAgent', postData);
+            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//listuser/getDataAgent', postData);
             setdatosuser(response.data);
             const elementoName = response.data[0][0];
             const linkImguser = response.data[0][1];

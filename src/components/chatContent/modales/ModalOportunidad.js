@@ -27,7 +27,7 @@ function ModalOportunidad({closeModal, idUsuario, nameLinea}) {
             }
     
             const response = await axios.post(
-                "/newLeadOdoo",
+                "https://apiservhtc-d76a501f67be.herokuapp.com//newLeadOdoo",
                 data
             )
             

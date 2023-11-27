@@ -14,7 +14,7 @@ function ModalCambiarEstatus({closeModal, idUsuario}) {
     
             try {
               //Obtener lista de leads
-              const responseGetLeads = await axios.post('/getLeadsByUser', postData);
+              const responseGetLeads = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//getLeadsByUser', postData);
               console.log('padrino', responseGetLeads.data)
               setListLeads(responseGetLeads.data);     
               
@@ -54,7 +54,7 @@ function ModalCambiarEstatus({closeModal, idUsuario}) {
                 stage: parseInt(status),
             }
             const response = await axios.post(
-                "/editLead",
+                "https://apiservhtc-d76a501f67be.herokuapp.com//editLead",
                 data
             )          
             closeModal();

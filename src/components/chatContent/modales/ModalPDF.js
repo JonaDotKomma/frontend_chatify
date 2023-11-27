@@ -38,7 +38,7 @@ function ModalPDF({ isOpen, onClose, numerselect, idagente, id_dlinea }) {
             idSale: orden,  // Enviando el número de orden como parámetro
         };
         try {
-            const response = await axios.post('/getpdf', postData);
+            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//getpdf', postData);
 
             // Verificar si la respuesta es un array o un string
             if (Array.isArray(response.data)) {
@@ -432,7 +432,7 @@ function ModalPDF({ isOpen, onClose, numerselect, idagente, id_dlinea }) {
 
 
         try {
-            const response = await axios.post('/send-pdf', formData);
+            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//send-pdf', formData);
             console.log(`PDF enviada o:`, response.data);
         } catch (error) {
             console.error(`Error al enviar el PDF`, error);
