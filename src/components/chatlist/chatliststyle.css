@@ -1,0 +1,389 @@
+.contentlist{
+    background-color: white;
+    height:100%;
+    width: 100%;
+
+
+}
+.cbaralist{
+  height: 52px;
+  background-color: #f0f0f0;
+}
+.caberaslist{
+    text-align: center;
+    display: flex;
+    width: 100%;
+    padding-top: 5px;
+    background-color: #ffff;
+    padding: 5px;
+    height: 33px;
+
+}
+
+.cberabarra{
+    background-color: #f0f2f5;
+    border-radius: 5px;
+    color: black;
+    width: 80%;
+}
+.serrachuser{
+    background-color: #f0f2f5;
+    width: 80%;
+    height: auto;
+    border: none;
+   
+
+}
+.ldofiltro{
+    color: #aaaab6;
+    width: 20%;
+    font-size: 22px;
+
+}
+.filtoi{
+    font-size: 26px;
+    top: 8px;
+    width: 26px;
+    height: 30px;
+    color: #aaaab6;
+}
+
+
+/* Css lista de chats wP */
+.chatlist__items {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 100%;
+    padding: 5px;
+    max-width: 100%;
+    width: 100%;
+    background-color: var(--primary-color);
+  }
+
+  .chatlist {
+    color: #030303;
+    display: flex;
+    border-bottom: 1px solid #f0f2f5;
+    background-color: #f0f2f5;
+    width: 95%;
+    height: 55px; 
+    max-height: 75px;
+    max-width: 93%;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    
+    margin-top: 5px;
+    cursor: pointer;
+    padding: 15px 1px 2px 10px;
+    transition: all 0.3s cubic-bezier(0.88, 0.19, 0.37, 1.11);
+    transform: scale(0);
+    animation-name: showIn;
+    animation-duration: 0.2s;
+    /* or: Xms */
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    /* or: normal */
+  
+    animation-timing-function: cubic-bezier(0.88,
+        0.19,
+        0.37,
+        1.11);
+    /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
+    animation-fill-mode: both;
+    /* or: backwards, both, none */
+    animation-delay: 0.1s;
+    /* or: Xms */
+  }
+  
+  @keyframes showIn {
+    0% {
+      transform: scale(0);
+    }
+  
+    100% {
+      transform: scale(1);
+    }
+  
+  
+  
+  }
+  
+  .chatlist:hover,
+  .chatlist.active {
+    background-color: #aaaab6;
+    color: #030303;
+    /* Hace que el elemento se agrande un 5% al pasar el mouse */
+  }
+  .chatlist:hover .notificacion{
+    color: #030303;
+  }
+  .chatlist.active .notificacion{
+    color: #030303;
+  }
+
+  .chatlist-background-locked {
+    background-color: #a3595a;
+    /* Define el color de fondo deseado */
+  }
+
+
+
+.chatlistcontet {
+    width: 30%;
+    max-width: 30%;  
+    overflow-x: hidden; /* Evita el desbordamiento horizontal */
+  
+  }
+
+  .chatlist-background-green {
+    background-color:#023f81;
+    color: white;
+  }
+ .chatlist-background-green .notificacion{
+    color: white;
+ }
+
+
+  
+/* Modificar el color de la barra de desplazamiento de WebKit */
+.chatlist__items::-webkit-scrollbar {
+    width: 10px;
+    max-width: 18px;
+    /* Ancho de la barra de desplazamiento */
+  }
+  
+  .chatlist__items::-webkit-scrollbar-thumb {
+    background-color: #aaaab6;
+    /* Color del pulgar de la barra de desplazamiento */
+    border-radius: 10px;
+    /* Radio de borde del pulgar */
+  }
+  
+  .chatlist__items::-webkit-scrollbar-track {
+    background-color:  #f0f2f5;
+    /* Color del fondo de la barra de desplazamiento */
+  }
+  
+
+
+  .contenedor-circular {
+    position: relative;
+    width: 47px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #dfe5e7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icono-usuario {
+    font-size: 25px;
+    color: black;
+  }
+
+  .notificacion {
+    position: absolute;
+    bottom: 8px;
+    right: 4px;
+    width: 10px;
+    height: 10px;
+    font-size: 25px;
+    border-radius: 50%;
+  }
+
+  .noticircle{
+    margin-left: 25%;
+    color:#0096FF;
+    font-size: 15px;
+  }
+
+  .color-rojo {
+    color:#0096FF;
+  }
+  
+  .color-gris {
+    color: #aaaab6;
+  }
+
+  .dtoclilist{
+    margin-left: 8%;
+    text-align: left;
+    font-size: 16px;
+    width: 65%;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Añade puntos suspensivos si el texto se desborda */
+    white-space: nowrap; /* Evita que el texto se pase a la siguiente línea */
+}
+  
+
+  .dtoclilist p {
+    margin: 0; /* Elimina los márgenes por defecto del párrafo */
+    padding-bottom: 5px; /* Puedes ajustar este valor según tus necesidades */
+    font-size: 15px;
+  }
+  
+  .dtoclilist span {
+   margin-top: 0;
+   font-size: 12px;
+  }
+
+  .contenedor-centrado {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    font-size: 20px;
+    align-items: center; /* Centra verticalmente */
+    height: 100%; /* O el alto que necesites */
+    width: 30%;
+    /* Otros estilos que puedas necesitar, como anchura, fondo, etc. */
+  }
+  
+  /* Agrega estos estilos en tu archivo de hoja de estilo CSS */
+/* Estilos CSS para el botón flotante */
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  left: 8%;
+  background-color: #aaaab6;
+  color: #000000;
+  border: none;
+  border-radius: 50%;
+  width: 66px;
+  height: 67px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+
+  font-size: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 9999; /* Asegúrate de que el valor de z-index sea mayor que los otros elementos */
+}
+
+.floating-button:hover {
+
+  color: #ffff;
+  background-color: #000000;
+}
+
+.modal-overlayuser {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-containeruser {
+  background: white;
+  width: 40%;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 5px;
+  z-index: 1001;
+}
+
+.cbramodaluser{
+  background-color: #f0f2f5;
+  margin-top: -4%;
+  width: 100%;
+  display: flex;
+  border-top-right-radius: 10px;;
+  border-top-left-radius: 10px;;
+  
+}
+
+.tlmu{
+  width: 95%;
+  text-align: center;
+
+}
+.bnclus{
+  margin-right: 2%;
+  
+}
+.cls{
+  text-align: left;
+  margin-left: 5%;
+}
+
+.btnclomu{
+  background-color: transparent;
+  color: #aaaab6;
+  border: none;
+  margin-top: 55%;
+  font-size: 30px;
+  cursor: pointer;
+
+
+}
+
+
+.ipaduser{
+  top: 116px;
+  left: 164px;
+  width: 501px;
+  height: 43px;
+  padding: 0px 8px;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.16);
+  background-color: #ffffff;
+  color: #8a8a8a;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;  line-height: 20px;
+  outline: none;
+
+}
+
+.txtaduser{
+  color: #1e1f26;
+  font-size: 16px;
+  line-height: 18px;
+  margin-bottom: 1.4%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.txtaduserAlert{
+  color: red;
+  font-size: 16px;
+  line-height: 18px;
+  margin-bottom: 1.4%;
+  font-family: 'Poppins', sans-serif;
+}
+
+.butoncont{
+  text-align: center;
+  height: 100px;
+}
+
+.btngenerico{
+  background-color: #8a8a8a;
+  border: none;
+  color: #ffffff;
+  border-radius: 5px;
+  height: 50%;
+  margin-top: 3%;
+  cursor: pointer;
+  transition: transform 0.3s ease; /* Agrega una transición suave para el efecto de escala */
+}
+
+.btngenerico:hover {
+  transform: scale(1.2); /* Aumenta el tamaño del botón en un 10% */
+}
+
+.titlesearch{
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.btnAnchor{
+  cursor: pointer;
+}

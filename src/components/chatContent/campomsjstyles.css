@@ -1,0 +1,659 @@
+.contenidoenviarmsj {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #ffcc00;
+  border: 1px solid #f0f0f0;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.12);
+
+  padding: 5px;
+  border-radius: 30px;
+  max-height: 80px;
+
+}
+
+
+.btnmsj {
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.stylewabarra {
+  color: #aaaab6;
+
+}
+
+.stylefbbarra {
+  color: #287cff;
+
+}
+
+.styleigbarra {
+  color: #f8275c;
+
+}
+
+.stylewebbarra {
+  color: #95bf47;
+  background-color: transparent;
+
+
+}
+
+.btnmsjpdf {
+  color: #ffcc00;
+
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.btnmsjtag {
+  color: #a24689;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+
+}
+
+.contenidoenviarmsj textarea {
+  flex-grow: 1;
+  padding-left: 5px;
+  padding-top: 5px;
+  background-color: #f0f2f5;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  color: #030303;
+  font-size: 20px;
+  max-height: 78px;
+  line-height: 30px;
+  outline: none !important;
+  width: 70%;
+  margin-left: 5px;
+  margin-right: 5px;
+  font-family: 'Poppins', sans-serif;
+
+
+}
+
+.emoji-picker-container {
+  position: fixed;
+  top: 55%;
+  left: 43%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  display: none;
+}
+
+.emoji-picker-container.active {
+  display: block;
+}
+
+/*Vista previa de la iamgen */
+.contenprev {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+  transform: translate(-10%, -50%);
+  width: 40%;
+  /* Ajusta el ancho del contenedor según tu preferencia */
+  border-radius: 8px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  background-color: #012A45;
+  padding: 10px;
+}
+
+
+.conmsjres {
+  position: absolute;
+  top: 85%;
+  left: 50%;
+  transform: translate(-10%, -50%);
+  width: 40%;
+  /* Ajusta el ancho del contenedor según tu preferencia */
+  border-radius: 8px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  background-color: #ffffff;
+  color: #030303;
+  height: 50px;
+  overflow: hidden;
+
+
+}
+
+.divcongen {
+
+  width: 100%;
+  height: 50px;
+  display: flex;
+  border-radius: 8px;
+
+}
+
+
+.divlineares {
+  background-color: #0bc5b6;
+  width: 2%;
+  border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+
+}
+
+.msjrespueta {
+  display: flex;
+  width: 98%;
+  background-color: rgba(0, 0, 0, 0.05);
+  /* Sombra leve */
+  border-radius: 8px;
+
+
+}
+
+.msjrespueta i {
+  margin-left: 20%;
+  margin-top: 1%;
+  font-size: 40px;
+  margin-right: 2%;
+}
+
+.clearInput {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  z-index: 2;
+  background-color: #fff;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  color: red;
+  border: 2px solid #012A45;
+
+}
+
+.clearInput:hover {
+  background-color: red;
+  color: white;
+}
+
+.contepdf {
+  background-color: #012A45;
+  color: #fff;
+  width: "100%";
+  height: "300px";
+  display: block;
+}
+
+.conteimg {
+  background-color: #012A45;
+  color: #fff;
+  width: 100%;
+  height: 350px;
+  display: block;
+}
+
+.contepdf a {
+  color: #fff;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.contepdf a:hover {
+  font-size: 18px;
+  transform: scale(1.5);
+}
+
+
+/*MODAL Sugerencia MSJ*/
+.modalOverlaysuge {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000; /* Valor alto para estar encima de otros elementos */
+
+  background-color: rgba(0, 0, 0, 0.5);
+  /* fondo semi-transparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContentsuge {
+  background-color: #ffffff;
+  max-height: 70%;
+  width: 50%;
+  border-radius: 10px;
+  overflow: hidden;
+
+
+}
+
+
+.headermodals {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 20px;
+  background-color: #dfe5e7;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  height: 50px;
+}
+
+.headermodals button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #aaaab6;
+  font-size: 30px;
+  margin-right: 2%;
+
+
+}
+
+/* Estilos adicionales para el título y el botón, si son necesarios */
+.headermodals p {
+  margin: 0;
+  flex-grow: 1;
+  text-align: center;
+  color: #030303;
+  font-size: 24px;
+
+}
+
+.headermodals button {
+  flex-grow: 0;
+  /* Evita que el botón se estire */
+}
+
+.contentsuge {
+  background-color: #a24689;
+  height: 90%;
+  display: flex;
+}
+
+.dtospasug {
+  background-color: #ffffff;
+  width: 30%;
+  text-align: center;
+  align-items: center;
+}
+
+.buttonSuge {
+  display: inline-block;
+  width: 90%;
+  margin-bottom: 10px;
+  text-align: left;
+  height: 42px;
+  border: 1px solid #aaaab6;
+  background-color: #ffffff;
+  border-radius: 2px;
+  color: #030303;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  /* Agrega una transición suave al transformar */
+}
+
+.buttonSuge:hover {
+  transform: scale(1.05);
+  /* Aumenta el tamaño del botón un 5% */
+}
+
+
+.butosnsuyg {
+  width: 100%;
+  margin-top: 5%;
+
+}
+
+.dtoscontesuge {
+  background-color: #efeae2;
+
+  width: 70%;
+
+  padding: 10px;
+  display: flex;
+
+}
+
+
+.dtolista {
+
+  width: 70%;
+  height: 90%;
+  max-height: 91%;
+}
+
+
+
+/* Modificar el color de la barra de desplazamiento de WebKit */
+.dtolista::-webkit-scrollbar {
+  width: 10px;
+  /* Ancho de la barra de desplazamiento */
+}
+
+.contentdtolista__body::-webkit-scrollbar-thumb {
+  background-color: #aaaab6;
+  /* Color del pulgar de la barra de desplazamiento */
+  border-radius: 10px;
+  /* Radio de borde del pulgar */
+}
+
+.dtolista::-webkit-scrollbar-track {
+  background-color: white;
+  /* Color del fondo de la barra de desplazamiento */
+}
+
+
+.pdfViewer {
+
+  margin-left: 2%;
+}
+
+.listaSinPuntos {
+
+  height: 100%;
+  list-style-type: none;
+  /* Esto elimina los puntos */
+  color: #030303;
+  padding-left: 0;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  overflow-y: auto;
+  /* Esto elimina el espacio reservado para los marcadores, ajusta según sea necesario */
+}
+
+.lielement {
+  background-color: #d9fdd3;
+  margin-top: 2%;
+  background-color: #d9fdd3;
+  border-radius: 10px;
+  padding: 5px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  cursor: pointer;
+  overflow: hidden;
+
+}
+
+.contaudio-container {
+  display: flex;
+  justify-content: right;
+  text-align: right;
+  max-height: 78px;
+  overflow: hidden;
+  width: 80%;
+}
+
+.contaudio {
+  width: 100%;
+  text-align: center;
+  /* Centrar el contenido horizontalmente */
+  display: flex;
+}
+
+.sendaudio {
+  height: 30px;
+  margin-left: 10%;
+}
+
+.btntrash {
+  margin-top: -100px;
+}
+
+.conbttrahs {
+  padding-top: 2px;
+}
+
+.msjaudio {
+  width: 90%;
+  display: flex;
+  border-radius: 10px;
+  height: auto;
+
+
+}
+
+.divudio {
+  width: 70%;
+}
+
+.divbtnsenaduio {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+  text-align: right;
+  margin-right: 2%;
+}
+
+.divudio audio {
+  width: 70%;
+  height: 35px;
+
+}
+
+.btncatalogo {
+  margin-top: 2%;
+  background-color: white;
+  height: 30px;
+  border-radius: 6px;
+  color: #030303;
+  border: 1px solid #aaaab6;
+  cursor: pointer;
+}
+
+.imgmini {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  cursor: pointer;
+  margin: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  /* Añadir sombra */
+  transition: transform 0.2s;
+  /* Opcional: añadir un efecto de transición */
+}
+
+.imgmini:hover {
+  transform: scale(1.05);
+  /* Opcional: efecto al pasar el mouse */
+}
+
+.imgprev {
+
+  width: 70%;
+  height: 250px;
+  object-fit: contain;
+}
+
+.butnosns {
+  padding-top: 8px;
+}
+
+.btnprvs {
+  background-color: #f0f2f5;
+  border: none;
+  margin: 5px;
+  height: 30px;
+  width: 100px;
+  border-radius: 10px;
+  color: #030303;
+  cursor: pointer;
+  transition: transform 0.2s;
+  /* Opcional: añadir un efecto de transición */
+}
+
+.btnprvs:hover {
+  transform: scale(1.05);
+  /* Opcional: efecto al pasar el mouse */
+}
+
+.btncampanaschats {
+  cursor: pointer;
+  top: 622px;
+  left: 168px;
+  width: 502px;
+  height: 40px;
+  padding: 0px 8px;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+  color: #787878;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  outline: none;
+}
+
+.divarchcarg {
+  background-color: #e4e6eb;
+  color: #030303;
+
+  width: 80%;
+  border-radius: 10px;
+  height: 30px;
+
+}
+
+.divarchcarg p {
+  margin-top: 2px;
+  font-weight: 500;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+.contentBloqueo {
+  padding-left: 5%;
+  height: 100px;
+  max-height: 250px;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+
+}
+
+.textarea {
+  width: 95%;
+
+  resize: none;
+  font-family: 'Poppins', sans-serif;
+  padding: 5px 8px;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.20);
+  background-color: #ffffff;
+  color: #8a8a8a;
+  font-size: 16px;
+  line-height: 20px;
+  outline: none;
+
+}
+
+.contenpdfmodal {
+  display: flex;
+  width: 100%;
+  padding-bottom: 2%;
+
+}
+
+.ladoder {
+  width: 35%;
+  padding-left: 1%;
+  padding-top: 2%;
+  text-align: center;
+
+}
+
+.ladodelpdf {
+  width: 65%;
+
+}
+
+.inpordn {
+  width: 80%;
+  height: 30px;
+  top: 206px;
+  left: 164px;
+
+  padding: 0px 8px;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.16);
+  background-color: #ffffff;
+  color: #8a8a8a;
+  font-size: 16px;
+  line-height: 20px;
+  outline: none;
+
+}
+
+.btnordetn{
+  height: 40px;
+  margin-top: 10%;
+  padding: 0px 8px;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.16);
+  background-color: #ffffff;
+  color: #1e1f26;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  outline: none;
+  cursor: pointer;
+
+}
+
+
+.pdfor20{
+  align-items: center;
+  text-align: center;
+
+}
+
+.btnsedord{
+  padding: 1%;
+  text-align: center;
+}
+
+.btnordetn20{
+  height: 40px;
+  margin-top: 1%;
+  padding: 0px 8px;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 6px;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.16);
+  background-color: #ffffff;
+  color: #1e1f26;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+
+}

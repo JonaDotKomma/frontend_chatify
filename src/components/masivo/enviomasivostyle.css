@@ -1,0 +1,192 @@
+.envio-masivo {
+    text-align: center;
+    height: 93%;
+    /* Nuevo alto para ocupar toda la pantalla */
+    overflow: hidden;
+
+}
+
+.envio-masivo-header {
+    background-color: #023f81;
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.envio-masivo-content {
+    display: flex;
+    margin-top: 0px;
+    height: 83%;
+    margin-left: 2px;
+    overflow: hidden;
+}
+
+
+.envio-masivo-left,
+.envio-masivo-right {
+    flex: 1;
+    padding: 20px;
+}
+
+.envio-masivo-left {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.envio-masivo-left img {
+    max-width: 100%;
+    max-height: 100%;
+    width: 35%;
+
+}
+
+.envio-masivo-right {
+    display: flex;
+    justify-content: center;
+}
+
+.envio-masivo-right form {
+    max-width: 300px;
+    margin: auto;
+    text-align: left;
+}
+
+.envio-masivo-right form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.envio-masivo-right form label input,
+.envio-masivo-right form label textarea {
+    width: 100%;
+}
+
+.envio-masivo-right form button {
+    margin-top: 10px;
+}
+
+.btnup {
+    height: 30px;
+    width: 150px;
+    background-color: transparent;
+    cursor: pointer;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 15px;
+
+
+}
+
+.upbutos {
+    color: black;
+    font-size: 20px;
+
+}
+
+
+.msvprimg {
+    position: relative;
+    display: flex;
+    margin-top: 3%;
+
+}
+
+.imgch {
+    background-color: #023f81;
+    border: 2px solid #023f81;
+    height: 200px;
+    width: 200px;
+    overflow: hidden;
+}
+
+.btnclosepre {
+    margin-left: -2%;
+    margin-top: -2%;
+}
+
+.imgprv {
+    margin-top: 1%;
+    width: 90%;
+    max-width: 92%;
+
+}
+
+.btnx {
+    background-color: white;
+    border: none;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid red;
+}
+
+.inputmiasivo {
+    background-color: transparent;
+    color: black;
+    height: 30px;
+    width: 250px;
+    margin-top: 1%;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px;
+
+}
+
+.slcuser {
+    width: 250px;
+    height: auto;
+    background-color: ghostwhite;
+    cursor: pointer;
+    border-radius: 10px;
+    color: #000;
+
+
+}
+
+.msvfooter {
+    font-size: 12px;
+    text-align: left;
+    margin-left: 2px;
+}
+
+
+
+@media (max-width: 600px) {
+
+    /* Puedes ajustar este valor según tus necesidades */
+    .envio-masivo {
+        overflow: auto;
+        /* Permite desplazar para ver todo el contenido */
+        height: auto;
+        /* O puedes mantenerlo como 90vh si prefieres */
+    }
+
+    .envio-masivo-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .envio-masivo-left,
+    .envio-masivo-right {
+        flex-basis: auto;
+        /* Resetear o ajustar la base flexible según sea necesario */
+        width: 90%;
+        /* Ajusta este valor según prefieras */
+        max-width: 400px;
+        /* Evita que se vea demasiado ancho en dispositivos más grandes */
+    }
+
+    .envio-masivo-left img {
+        width: auto;
+        /* O ajusta según sea necesario para la imagen */
+        max-height: 100px;
+        /* Ajusta según el tamaño deseado de la imagen */
+    }
+}

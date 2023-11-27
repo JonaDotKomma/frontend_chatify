@@ -1,0 +1,147 @@
+.menu-lateral {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+  }
+  
+  .menu-superior, .menu-inferior {
+    padding: 20px;
+
+   align-content: center;
+    align-items: center; /* Centra horizontalmente en flexbox */
+    justify-content: center; /* Centra verticalmente en flexbox */
+  }
+  
+  img {
+    width: 30px;
+    align-items: center;
+    margin-left: 5px;
+    
+    
+  }
+  
+  /* Estilos para los íconos - ajusta según sea necesario */
+  .inav{
+    font-size: 24px; /* Tamaño del ícono */
+    margin: 10px;    /* Espaciado alrededor de los íconos */
+    cursor: pointer;
+    color: #aaaab6;
+  }
+  
+  .inav {
+    margin-top: 2%;
+    font-size: 30px; /* Tamaño del ícono */
+    margin: 10px;    /* Espaciado alrededor de los íconos */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el ícono */
+    transition: transform 0.3s ease; /* Transición suave para el efecto de zoom */
+  }
+  
+  .inav:hover {
+    transform: scale(1.2); /* Hace el ícono 20% más grande al pasar el cursor */
+  }
+  .inocnconte{
+    margin-top: 50px;
+  }
+
+  .menu {
+    display: flex;
+    justify-content: flex-end; /* Alinea los elementos del menú a la derecha */
+    background-color: white;
+    color: black;
+    padding-right: 20px;
+    height: 40px;
+    padding-top: 5px;
+  }
+  
+  .menu-item {
+    margin-left: 20px; /* Espacio entre elementos del menú */
+  }
+  
+  input[type="text"] {
+    padding: 5px;
+    margin-right: 5px;
+  }
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    color: black;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    margin-right: 2%;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+  }
+
+  .dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.2s; /* Añade una transición suave */
+}
+
+.dropdown-content button:hover {
+    transform: scale(1.1); /* Aumenta el tamaño del botón en un 10% */
+}
+
+  
+  
+  .dropdown-content a:hover {background-color: #f1f1f1}
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  .menuicon{
+    color: black;
+    font-size: 25px;
+  }
+  .bteb{
+    background-color: transparent;
+    border: none;
+    margin-top: -10%;
+  }
+
+  .dato1{
+     margin-top: -10%;
+  }
+  .dropdown-content-right {
+    right: 0; /* Alinea el menú a la derecha */
+  }
+  /* Añade más estilos a tus elementos del menú según sea necesario */
+  
+  .btnnav{
+    border: none;
+    display: flex;
+    text-decoration: none;
+  }
+
+  .notificaciones {
+    width: 50px; /* Tamaño del círculo */
+    height: 30px; /* Tamaño del círculo */
+    background-color: red; /* Color de fondo */
+    border-radius: 50%; /* Hace el div circular */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; /* Color del texto */
+    font-weight: bold; /* Peso de la fuente del texto */
+    font-size: 14px; /* Tamaño del texto */
+}

@@ -1,0 +1,19 @@
+.contentchats{
+    display: flex;
+    overflow: hidden;
+    height: 99vh;
+    width: 100%;
+    background-color: #f0f0f0;
+
+}
+
+.prtechats{
+    width: 25%;
+    
+    
+}
+.partechat{
+    width: 73%;
+    margin-left: 0.9%;
+}
+

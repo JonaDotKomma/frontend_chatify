@@ -1,0 +1,40 @@
+/* Contenedor principal */
+.container {
+    display: flex;
+    height: 100vh; /* 100% del viewport height */
+   
+  }
+  
+  /* Barra lateral */
+  .barralateral {
+    width: 6%;
+    background-color: #eff0f2;
+    height: 100vh; /* 100% del viewport height */
+    overflow-y: auto; /* Para manejar contenido que exceda la altura */
+  }
+  
+  /* Contenido principal */
+  .contenido-principal {
+    width: 94%;
+    
+    height: 100vh; /* 100% del viewport height */
+    overflow-y: hidden; /* Para manejar contenido que exceda la altura */
+  }
+
+  .menumovil {
+    display: blnoock; /* Muestra el menú de hamburguesa en móviles */
+}
+
+.menuweb {
+    display: none; /* Oculta el menú normal en móviles */
+}
+
+@media (min-width: 768px) {
+  .menumovil {
+      display: none; /* Oculta el menú de hamburguesa en pantallas grandes */
+  }
+
+  .menuweb {
+      display: block; /* Muestra el menú normal en pantallas grandes */
+  }
+}

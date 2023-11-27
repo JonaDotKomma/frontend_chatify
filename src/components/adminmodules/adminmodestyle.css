@@ -1,0 +1,86 @@
+.conadmin {
+    overflow: hidden;
+    padding: 0.2%;
+    height: 96%;
+    max-height: 96%;
+    font-family: 'Poppins', sans-serif;
+
+}
+
+
+
+
+
+.sendmsv {
+    margin-top: 2%;
+    background-color: #023f81;
+    border: none;
+    color: white;
+    height: 35px;
+    width: 150px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+    margin-right: 2%;
+
+
+}
+
+.sendmsv:hover {
+    transform: scale(1.1);
+    /* Aquí, el botón se hará un 10% más grande. Puedes ajustar este valor a tus necesidades */
+}
+
+.headeradmin {
+    display: flex;
+}
+
+.btndadmin {
+    display: flex;
+
+    align-items: center;
+    /* Alinea los botones verticalmente en el centro */
+    margin-bottom: 20px;
+    /* Espacio debajo del contenedor de botones */
+}
+
+.conadmbody {
+    width: 100%;
+    height: 100%;
+    padding-left: 1%;
+
+}
+
+.btn20{
+    margin-bottom: 0.5%;
+
+}
+.prmsj {
+    width: 100%;
+    height: 450px;
+}
+
+.txtmsjpr {
+    width: 30%;
+    border-radius: 10px;
+    height: 100px;
+    font-family: 'Poppins', sans-serif;
+    resize: none;
+    /* Deshabilita el redimensionamiento */
+
+}
+
+.ipn{
+    display: none;
+}
+
+.contenpdfpr{
+    display: flex;
+}
+
+.btnpdfpr{
+    margin-left: 1%;
+    margin-right: 2%;
+}
