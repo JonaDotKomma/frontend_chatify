@@ -1,18 +1,13 @@
-# container app "demoreact" - Development v.0.1.0
-# by <your name> | <date># pull official base image
-FROM node:alpine
-
-# set working directory
-WORKDIR "/app"
-
-
-# install app dependencies
-COPY ./package.json ./
-COPY ./package-lock.json ./
-RUN npm install --legacy-peer-deps
-
-# add app
+# Etapa de construcción
+FROM node:alpine as build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm install --silent
 COPY . ./
+RUN npm run build
 
-# start app
-CMD ["npm", "start"]
+# Etapa de producción con Nginx
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
