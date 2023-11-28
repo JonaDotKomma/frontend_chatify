@@ -3,7 +3,7 @@ import './navstyles.css';
 import Logo from "../img/HChatify.png"
 import { Link } from "react-router-dom";
 import io from 'socket.io-client';
-import audioNoti from '../../media/noti.mp3'
+import audioNoti from '../../media/notiWa.mp3'
 import ModalPDF from '../chatContent/modales/ModalPDF';
 
 
