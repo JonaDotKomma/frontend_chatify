@@ -27,7 +27,7 @@ function ModalOportunidad({closeModal, idUsuario, nameLinea}) {
             }
     
             const response = await axios.post(
-                "https://apiservhtc-d76a501f67be.herokuapp.com//newLeadOdoo",
+                "https://backend-chatify-sjkbu6lfrq-uc.a.run.app/newLeadOdoo",
                 data
             )
             

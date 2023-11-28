@@ -22,7 +22,7 @@ function Enviomasivo() {
 
     useEffect(() => {
         // Realizar una solicitud GET a tu API
-        axios.get('https://apiservhtc-d76a501f67be.herokuapp.com//getcate') // Asegúrate de que la URL sea correcta
+        axios.get('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getcate') // Asegúrate de que la URL sea correcta
             .then((response) => {
                 // Cuando se reciba una respuesta exitosa
                 const data = response.data;
@@ -54,7 +54,7 @@ function Enviomasivo() {
             };
     
             try {
-              const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//listlines', postData);
+              const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/listlines', postData);
               const jsonData = response.data;
               setListlines(jsonData);
             } catch (error) {
@@ -73,7 +73,7 @@ function Enviomasivo() {
         };
     
         try {
-          const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//getTemplate', postData);
+          const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getTemplate', postData);
           const jsonData = response.data;
           setListPlantillas(jsonData);
         } catch (error) {
@@ -99,7 +99,7 @@ function Enviomasivo() {
                 // let categoryInt = parseInt(category, 10);
                 // console.log(categoryInt, "use", idUser)
 
-                const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//listuserbycategory', { idUser, idCategoria: parseInt(category) });
+                const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/listuserbycategory', { idUser, idCategoria: parseInt(category) });
                 const jsonData = response.data;
                 console.log(jsonData);
                 setAllChats(jsonData);
@@ -146,7 +146,7 @@ function Enviomasivo() {
             
                 };
             try {
-                const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//initChat', postData);
+                const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/initChat', postData);
                 console.log(response)
                 // console.log(`Mensaje enviado a ${numero}:`, response.data);
             } catch (error) {
@@ -181,7 +181,7 @@ function Enviomasivo() {
 
             };
             try {
-                const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//sendmensaje', postData);
+                const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/sendmensaje', postData);
                 console.log(response)
                 // console.log(`Mensaje enviado a ${numero}:`, response.data);
                 console.log("Mensaje enviado")

@@ -21,7 +21,7 @@ function PerfilUser({ user, onLogout, nombreUsuario }) {
         };
 
         try {
-            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//getDataAgent', postData);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getDataAgent', postData);
             setdatosuser(response.data);
             const elementoName = response.data[0][0];
             const linkImguser = response.data[0][1];

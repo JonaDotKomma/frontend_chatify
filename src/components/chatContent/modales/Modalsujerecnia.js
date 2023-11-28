@@ -11,7 +11,7 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
     useEffect(() => {
         const cargarMensajes = async () => {
             try {
-                const response = await axios.get('https://apiservhtc-d76a501f67be.herokuapp.com//showPredeterminateMessages');
+                const response = await axios.get('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/showPredeterminateMessages');
                 setContenido(response.data);
             } catch (error) {
                 console.error("Error al obtener los datos de la API:", error);
@@ -59,7 +59,7 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
         try {
            
 
-            const respuesta = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//initChat', postData);
+            const respuesta = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/initChat', postData);
 
             console.log('Catálogo enviado con éxito.', respuesta.data);
             pdfsend()

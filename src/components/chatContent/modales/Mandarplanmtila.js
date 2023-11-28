@@ -37,7 +37,7 @@ function ModalPlatilla({ isOpen, onClose,numroclitne, idAgentec, idlinemsj }) {
         };
 
         try {
-            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//getTemplate', postData);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getTemplate', postData);
             const jsonData = response.data;
             setListplantilla(jsonData);
             console.log('Platilla pa', jsonData);
@@ -86,7 +86,7 @@ function ModalPlatilla({ isOpen, onClose,numroclitne, idAgentec, idlinemsj }) {
         try {
 
 
-            const respuesta = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//initChat', postData);
+            const respuesta = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/initChat', postData);
 
             console.log('plantilla enviada con éxito.', respuesta.data);
 

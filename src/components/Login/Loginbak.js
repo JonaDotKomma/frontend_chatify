@@ -49,7 +49,7 @@ function LoginBack() {
     };
 
     try {
-      const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//googleoauth', postData);
+      const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/googleoauth', postData);
       console.log(response.data);
       try {
         localStorage.setItem('idAgente', response.data.id_agente);
@@ -72,7 +72,7 @@ function LoginBack() {
 
   const handleSubmit = async ({ username, password }) => {
     try {
-      const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//login', { username, password });
+      const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/login', { username, password });
       const token = response.data.token;
       const idAgente = response.data.data[0][0];
       const correoAgente = response.data.data[0][1];

@@ -41,7 +41,7 @@ export default class ListItemWP extends Component {
         };
 
         try {
-            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//agenteLibre', postData);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/agenteLibre', postData);
             console.log(response.data);
 
         } catch (error) {
@@ -57,7 +57,7 @@ export default class ListItemWP extends Component {
         };
 
         try {
-            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//agenteLibre', postData);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/agenteLibre', postData);
             console.log(response.data);
 
         } catch (error) {

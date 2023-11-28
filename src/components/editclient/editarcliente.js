@@ -100,7 +100,7 @@ function EditClient({ user, onLogout, }) {
         };
 
         try {
-            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//editarUsuarioOdoo', payload);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/editarUsuarioOdoo', payload);
             console.log("Cliente actualizado Que bonitos ojos tienes:", response.data);
             window.location.reload();
         } catch (error) {
@@ -133,7 +133,7 @@ function EditClient({ user, onLogout, }) {
 
 
         try {
-            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//crearUsuario', payload);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/crearUsuario', payload);
             console.log("NUEVO CLIENTE CREADO :", response.data);
             window.location.reload();
 
@@ -171,7 +171,7 @@ function EditClient({ user, onLogout, }) {
         };
 
         try {
-            const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//getInfoUserOdoo', postData);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getInfoUserOdoo', postData);
 
             // Actualiza clientData con los valores de la respuesta o con una cadena vacía si no existen.
             setClientData(prevState => ({
@@ -230,7 +230,7 @@ function EditClient({ user, onLogout, }) {
                 const postData = {
                     number: data.phone,
                 };
-                const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//getInfoUserOdooForNumber', postData);
+                const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getInfoUserOdooForNumber', postData);
                 console.log("datos de odddooo:", response.data);
                 if (response.data && Array.isArray(response.data)) {
                     setDataList(response.data);

@@ -24,7 +24,7 @@ function Dashboard({ user, onLogout, }, props) {
     };
 
     try {
-      const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//getDataAgent', postData);
+      const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getDataAgent', postData);
       setdatosuser(response.data);
       const elementoName = response.data[0][0];
       const linkImguser = response.data[0][1];
@@ -80,7 +80,7 @@ function Dashboard({ user, onLogout, }, props) {
   const listchat = async (idUser) => {
 
     try {
-      const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//listuser', { idUser });
+      const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/listuser', { idUser });
       const jsonData = response.data;
       const filteredData = jsonData.filter(item => item[6] !== undefined && item[6] !== null);
       setChatOdoo(filteredData);

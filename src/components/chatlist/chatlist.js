@@ -47,7 +47,7 @@ function Chatlist(props) {
   const listchat = async (idUser, localTipoChat) => {
 
     try {
-      const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//listuser', { idUser });
+      const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/listuser', { idUser });
       const jsonData = response.data;
       setChatData(jsonData); // Actualiza el estado con los nuevos datos
 
@@ -98,7 +98,7 @@ function Chatlist(props) {
 
      try {
 
-       const response = await axios.post('https://apiservhtc-d76a501f67be.herokuapp.com//buscarMensaje', postData);
+       const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/buscarMensaje', postData);
        setResults(Array.isArray(response.data) ? response.data : []);
        console.log('Los datos son', response.data)
 
