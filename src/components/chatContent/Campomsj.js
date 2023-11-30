@@ -155,22 +155,25 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
     };
 
 
+    
+
     const handleAddFilesClick = () => {
-        const fileInput = document.getElementById("fileInput");
-        fileInput.click();
-    };
-
-    const handleFileChange = (file) => {
-
-        if (file && (file.type.startsWith("image/") || file.type === "application/pdf")) {
-            setMensaje([file]);
-            const fileURL = URL.createObjectURL(file);
-            setImagePreview(fileURL);
-            setImagePreviewVisible(true);
-
-
+        document.getElementById('fileInput').click();
+      };
+      
+      const handleFileChange = (files) => {
+        const filteredFiles = Array.from(files).filter(file =>
+          file.type.startsWith("image/") || file.type === "application/pdf"
+        );
+      
+        if (filteredFiles.length > 0) {
+          const newPreviews = filteredFiles.map(file => URL.createObjectURL(file));
+      
+          setMensaje(prevMensaje => [...prevMensaje, ...filteredFiles]);
+          setImagePreview(prevPreview => [...prevPreview, ...newPreviews]);
+          setImagePreviewVisible(true); // Controla la visibilidad de las previsualizaciones
         }
-    };
+      };
 
     const handlePaste = (e) => {
         const clipboardData = e.clipboardData || window.clipboardData;
@@ -589,7 +592,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
                             </div>
 
                             {/* Botones con íconos */}
-                            <button className={`btnmsj ${chatItemStyle}`} onClick={handleAddFilesClick}><span><i className="fas fa-paperclip"></i></span></button> {/* Reemplazar con <FontAwesomeIcon icon={faPaperclip} /> */}
+                            <button className={`btnmsj ${chatItemStyle}`}   onClick={handleAddFilesClick}><span><i className="fas fa-paperclip"></i></span></button> {/* Reemplazar con <FontAwesomeIcon icon={faPaperclip} /> */}
 
 
 
@@ -612,8 +615,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
                                 id="fileInput"
                                 style={{ display: 'none' }}
                                 multiple // Permite seleccionar múltiples archivos
-
-                                onChange={(e) => handleFileChange(e.target.files[0])}
+                                onChange={(e) => handleFileChange(e.target.files)}
                             />
 
                             {isRecording && (
