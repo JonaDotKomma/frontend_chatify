@@ -100,9 +100,17 @@ export default function ChatItem({ data, openImageModal, responseMessage, respon
         );
     }
     else {
-        content = (
-            <div className="chat__msg" style={{ wordWrap: "break-word" }}>{data.mensaje}</div>
-        );
+        if(data.anuncio){
+
+            content = (
+                <div className="chat__msg" style={{ wordWrap: "break-word" }}> <a rel="noreferrer" target="_blank" href={data.anuncio}><img className="imgchat" src={data.media_anuncio} alt="" /><br></br></a>{data.mensaje}</div>
+              );
+        }else{
+            
+            content = (
+                <div className="chat__msg" style={{ wordWrap: "break-word" }}>{data.mensaje}</div>
+            );
+        }
     }
 
     ///respondidos mensjaes
