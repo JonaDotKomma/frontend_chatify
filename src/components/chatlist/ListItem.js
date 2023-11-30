@@ -9,7 +9,7 @@ export default class ListItemWP extends Component {
 
     seenApi(idUser, idAgente, nombreAgente) {
 
-        const url = '/seen'; // Solo especifica el endpoint.
+        const url = 'https://backend-chatify-sjkbu6lfrq-uc.a.run.app/seen'; // Solo especifica el endpoint.
         console.log('CLIIIIIIIIIIIIIIIIIIIIIIIIIK BUEEEEEEEEEEEEEY JAJAJA');
         const data = {
             idUser: idUser,

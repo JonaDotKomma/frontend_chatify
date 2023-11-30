@@ -279,7 +279,7 @@ export default function ChatItem({ data, openImageModal, responseMessage, respon
                 {content}
                 <div className="chat__meta">
 
-                    <span> {mexicoTime}  {data.id_agente !== 0 && data.nickname} </span>
+                    <span> {mexicoTime}  {data.id_agente !== 0 && data.nickname}  {data.id_agente === 0 && 'Visto por ' + data.visto_por} </span>
                 </div>
 
             </div>

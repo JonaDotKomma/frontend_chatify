@@ -62,6 +62,7 @@ function Chatlist(props) {
     console.log(selectedUserId)
     if (props.onSelectChat) {
       props.onSelectChat(idUser, numero, botestado, nameclient, tipochat, idlinea, idOdoo, linea);
+      listchat(idAgentesi);
     }
   };
   
