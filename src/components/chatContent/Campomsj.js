@@ -77,7 +77,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
             };
 
             try {
-                const response = await axios.post('/sendmensaje', postData);
+                const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/sendmensaje', postData);
                 console.log(response);
 
             } catch (error) {
@@ -112,7 +112,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const respuesta = await axios.post('/sendResponseWA', postData);
+            const respuesta = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/sendResponseWA', postData);
 
             console.log('Mensaje enviado:', respuesta.data);
             setMensaje([]);  // Limpiar el área de texto después de enviar
@@ -155,25 +155,22 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
     };
 
 
-    
-
     const handleAddFilesClick = () => {
-        document.getElementById('fileInput').click();
-      };
-      
-      const handleFileChange = (files) => {
-        const filteredFiles = Array.from(files).filter(file =>
-          file.type.startsWith("image/") || file.type === "application/pdf"
-        );
-      
-        if (filteredFiles.length > 0) {
-          const newPreviews = filteredFiles.map(file => URL.createObjectURL(file));
-      
-          setMensaje(prevMensaje => [...prevMensaje, ...filteredFiles]);
-          setImagePreview(prevPreview => [...prevPreview, ...newPreviews]);
-          setImagePreviewVisible(true); // Controla la visibilidad de las previsualizaciones
+        const fileInput = document.getElementById("fileInput");
+        fileInput.click();
+    };
+
+    const handleFileChange = (file) => {
+
+        if (file && (file.type.startsWith("image/") || file.type === "application/pdf")) {
+            setMensaje([file]);
+            const fileURL = URL.createObjectURL(file);
+            setImagePreview(fileURL);
+            setImagePreviewVisible(true);
+
+
         }
-      };
+    };
 
     const handlePaste = (e) => {
         const clipboardData = e.clipboardData || window.clipboardData;
@@ -227,7 +224,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const response = await axios.post('/send-image', formData, config);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/send-image', formData, config);
             console.log(`Imagen enviada a ${numerselect}:`, response.data);
             console.log(image)
 
@@ -254,7 +251,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
         console.log('kahkdsa', formData)
         try {
-            const response = await axios.post('/send-pdf', formData);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/send-pdf', formData);
             console.log(`PDF enviada o ${numerselect}:`, response.data);
         } catch (error) {
             console.error(`Error al enviar el PDf a ${numerselect}:`, error);
@@ -361,7 +358,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const response = await axios.post('/send-audio', formData);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/send-audio', formData);
             console.log(`audio enviada a ${numerselect}:`, response.data);
             console.log('Enviamos estto', formData)
             onMensajeEnviado();
@@ -592,7 +589,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
                             </div>
 
                             {/* Botones con íconos */}
-                            <button className={`btnmsj ${chatItemStyle}`}   onClick={handleAddFilesClick}><span><i className="fas fa-paperclip"></i></span></button> {/* Reemplazar con <FontAwesomeIcon icon={faPaperclip} /> */}
+                            <button className={`btnmsj ${chatItemStyle}`} onClick={handleAddFilesClick}><span><i className="fas fa-paperclip"></i></span></button> {/* Reemplazar con <FontAwesomeIcon icon={faPaperclip} /> */}
 
 
 
@@ -615,7 +612,8 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
                                 id="fileInput"
                                 style={{ display: 'none' }}
                                 multiple // Permite seleccionar múltiples archivos
-                                onChange={(e) => handleFileChange(e.target.files)}
+
+                                onChange={(e) => handleFileChange(e.target.files[0])}
                             />
 
                             {isRecording && (
