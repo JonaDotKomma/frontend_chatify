@@ -142,7 +142,7 @@ function Menu({ onLogout }) {
                 <div className="dropdown">
                     <div className='dato1'><i className="fas fa-user menuicon"></i></div>
                     <div className="dropdown-content dropdown-content-right">
-                        <button onClick={handleLogoutClick}>Cesar sesion</button>
+                        <button onClick={handleLogoutClick}>Cerrar sesión</button>
 
                     </div>
                 </div>
