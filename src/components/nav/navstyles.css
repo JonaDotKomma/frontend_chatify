@@ -134,9 +134,9 @@
   }
 
   .notificaciones {
-    width: 50px; /* Tamaño del círculo */
-    height: 30px; /* Tamaño del círculo */
-    background-color: red; /* Color de fondo */
+    width: 1.4rem; /* Tamaño del círculo */
+    height: 1.4rem; /* Tamaño del círculo */
+    background-color: rgb(255, 50, 50); /* Color de fondo */
     border-radius: 50%; /* Hace el div circular */
     display: flex;
     justify-content: center;
@@ -144,4 +144,6 @@
     color: white; /* Color del texto */
     font-weight: bold; /* Peso de la fuente del texto */
     font-size: 14px; /* Tamaño del texto */
+    position: absolute;
+    left: 3rem;
 }

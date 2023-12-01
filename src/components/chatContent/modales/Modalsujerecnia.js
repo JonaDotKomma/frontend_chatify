@@ -13,6 +13,7 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
             try {
                 const response = await axios.get('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/showPredeterminateMessages');
                 setContenido(response.data);
+                console.log('traje esto paa', response.data)
             } catch (error) {
                 console.error("Error al obtener los datos de la API:", error);
             }
@@ -26,9 +27,7 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
         setUrlPdfSeleccionado(''); // Limpiar el PDF seleccionado cuando se muestran los textos
     };
 
-    const mostrarPDFs = () => {
-        setMostrar(contenido.filter(item => item.tipo_mensaje === "application/pdf"));
-    };
+
 
     const seleccionarPdf = (url) => {
         setUrlPdfSeleccionado(url);
@@ -42,7 +41,7 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
         }
 
 
-         
+
         const postData = {
             // Aquí puedes agregar los parámetros que espera tu API
             telefono: numerotel,
@@ -50,14 +49,14 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
             tipo: "application/pdf",
             linea: idlinea.toString(), // Convertir idlinea a string
             idAgente: parseInt(idagente) // Asegurar que idagente sea un entero
-     
+
 
         };
 
 
         console.log('estoyenviado', postData)
         try {
-           
+
 
             const respuesta = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/initChat', postData);
 
@@ -68,6 +67,27 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
         }
     };
 
+
+    //campos para busqueda
+
+    const [textoBuscador, setTextoBuscador] = useState('');
+
+    // ... useEffect y otras funciones
+
+    const mostrarPDFs = () => {
+        setMostrar(contenido.filter(item =>
+            item.tipo_mensaje === "application/pdf" &&
+            item.nombre_del_archivo.toLowerCase().includes(textoBuscador.toLowerCase())
+        ));
+    };
+
+    // Cuando el texto del buscador cambia, actualiza el estado y filtra los PDFs
+    useEffect(() => {
+        setMostrar(contenido.filter(item =>
+            item.tipo_mensaje === "application/pdf" &&
+            item.nombre_del_archivo.toLowerCase().includes(textoBuscador.toLowerCase())
+        ));
+    }, [textoBuscador, contenido]);
 
     return (
         <div className="modalOverlaysuge">
@@ -95,6 +115,17 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
 
                     <div className='dtoscontesuge'> {/* Columna de lista */}
                         <div className='dtolista'>
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder="Buscar por nombre del archivo..."
+                                    value={textoBuscador}
+                                    onChange={(e) => setTextoBuscador(e.target.value)}
+                                    className='inputBusqueda'
+                                />
+                            </div>
+
+
                             <ul className="listaSinPuntos">
                                 {mostrar.map((item, index) => (
                                     <li
@@ -114,8 +145,8 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
                                 <iframe
                                     src={urlPdfSeleccionado}
                                     frameBorder="0"
-                                    width="300px" // Ajusta el ancho como necesites
-                                    height="80%" // Ajusta la altura como necesites
+                                    width="280px" // Ajusta el ancho como necesites
+                                    height="500px" // Ajusta la altura como necesites
                                     allow="fullscreen"
                                     title='pdfsend'
                                 ></iframe>
