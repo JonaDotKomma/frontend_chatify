@@ -8,6 +8,7 @@ import PerfilUser from '../perfiluser/Perfiluser';
 import Enviomasivo from '../masivo/Enviomasivo';
 import MenuHamburguesa from '../menuhamburguesa/MenuHamburguesa';
 import EditClient from '../editclient/editarcliente';
+import CodigoQr from '../qr/CodigoQr';
 
 import AdminView from '../adminmodules/Aminmode';
 import Castores from '../cotizaciones/Castores';
@@ -35,6 +36,7 @@ function Routeschmpi({ user, onLogout, nombreUsuario }) {
 
                     <Route path="/ChatInstgram" element={<Chatbody chatType="IG" />} />
                     <Route path="/ChatWeb" element={<Chatbody chatType="WEB" />} />
+                    <Route path='/CodigoQr' element={<CodigoQr user={user} onLogout={onLogout} nombreUsuario={nombreUsuario} />} />
 
                     <Route path='/PerfilUser' element={<PerfilUser user={user} onLogout={onLogout} nombreUsuario={nombreUsuario} />} />
                     <Route path='/CampanaMasiva' element={<Enviomasivo />} />

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './castorestyle.css'
-import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete';
 import axios from 'axios';
 import Select from 'react-select';
 
@@ -30,38 +29,7 @@ function Castores() {
     const [neighborhood, setNeighborhood] = useState('');
 
 
-    const handleSelect = async value => {
-        const results = await geocodeByAddress(value);
-        setAddress(value);
 
-        const addressComponents = results[0].address_components;
-
-        let updatedPostalCode = '';
-        let updatedCity = '';
-        let updatedState = '';
-        let updatedNeighborhood = '';
-
-        addressComponents.forEach(component => {
-            if (component.types.includes("postal_code")) {
-                updatedPostalCode = component.long_name;
-            }
-            if (component.types.includes("locality")) {
-                updatedCity = component.long_name;
-            }
-            if (component.types.includes("administrative_area_level_1")) {
-                updatedState = component.long_name;
-            }
-            if (component.types.includes("sublocality_level_1") || component.types.includes("neighborhood")) {
-                updatedNeighborhood = component.long_name;
-            }
-        });
-
-        // Actualiza el estado con los nuevos valores
-        setPostalCode(updatedPostalCode);
-        setCity(updatedCity);
-        setState(updatedState);
-        setNeighborhood(updatedNeighborhood);
-    };
 
 
     //funcion para poder llamar a la api
@@ -89,6 +57,7 @@ function Castores() {
     let productosSeleccionados = [];
     const handleFormSubmit = async () => {
         console.log('BOTON COTIZAR');
+
         let valorDeclaradoFinal = 0;
         opcionSeleccionada.forEach(seleccion => {
             const [valorDeclarado, contenido, noPiezas, peso, largoCm, anchoCm, altoCm] = seleccion.split('|');
@@ -101,13 +70,13 @@ function Castores() {
                 ancho: parseFloat(anchoCm), // Asumiendo que anchoCm es un número decimal
                 alto: parseFloat(altoCm) // Asumiendo que altoCm es un número decimal
             };
-        
+
             productosSeleccionados.push(producto);
         });
-        
+
         // Ahora productosSeleccionados es un arreglo con los detalles de cada producto seleccionado
         console.log(productosSeleccionados);
-        console.log('Valor declarado: '+valorDeclaradoFinal);
+        console.log('Valor declarado: ' + valorDeclaradoFinal);
 
         const formData = {
             calle: address,
@@ -120,8 +89,8 @@ function Castores() {
             paquetes: productosSeleccionados
         }
 
-         console.log('la data es ', formData);
-         try {
+        console.log('la data es ', formData);
+        try {
             // Hacer la petición POST a tu API
             const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/cotEnvio', formData);
             console.log('Si paso mano', response.data);
@@ -132,7 +101,7 @@ function Castores() {
         } catch (error) {
             console.error("Error al enviar los datos:", error);
         }
-        
+
     };
 
 
@@ -148,6 +117,8 @@ function Castores() {
         setState('');
         setNeighborhood('');
 
+        setColonias([])
+        setIsColoniaSelectDisabled(true)
         setRespuestaApi(null);
     };
 
@@ -199,277 +170,301 @@ function Castores() {
     };
 
 
+    //datos del cpdigo postal 
+    const [colonias, setColonias] = useState([]);
+    const [isColoniaSelectDisabled, setIsColoniaSelectDisabled] = useState(true);
+
+    // ... tus otros métodos y estados
+
+    const handlePostalCodeChange = async (e) => {
+        const nuevoCodigoPostal = e.target.value;
+        setPostalCode(nuevoCodigoPostal);
+        const formData = {
+            cp: nuevoCodigoPostal
+        }
+        console.log('los datos son', nuevoCodigoPostal)
+
+
+        try {
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getDistricts', formData);
+            setColonias(response.data.data);
+            setIsColoniaSelectDisabled(false);
+            console.log('las colonias son', response.data.data)
+
+        } catch (error) {
+            console.error("Error al obtener las colonias:", error);
+            // Opcionalmente manejar el estado para cuando no se encuentran colonias
+        }
+
+    };
+    const selectOcolonias = colonias && colonias.map(colonias => ({
+        value: `${colonias.text}`,
+        label: `${colonias.text}`
+    }));
 
 
     return (
         <div className='contencastores'>
 
-        <div className='ldodercas'>
-            <h1>Cotizador Castores</h1>
+            <div className='ldodercas'>
+                <h1>Cotizador Castores</h1>
 
-            <div className='divselct'>
+                <div className='divselct'>
 
-
-                <Select
-                    isMulti
-                    styles={customStyles}
-                    options={selectOptions}
-                    onChange={handleSelectChange}
-                    placeholder="Seleccione un Producto"
-                    isSearchable
-                />
-
-
-            </div>
-
-            <div>
-                <p className='txtformu'>Calle</p>
-                <PlacesAutocomplete
-                    value={address}
-                    onChange={setAddress}
-                    onSelect={handleSelect}
-                >
-                    {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                        <div>
-                            <input
-                                {...getInputProps({
-                                    placeholder: 'Buscar dirección...',
-                                    className: 'inpgrde',
-                                })}
-                            />
-                            <div>
-                                {loading && <div>Cargando...</div>}
-                                {suggestions.map(suggestion => {
-                                    const style = suggestion.active
-                                        ? { backgroundColor: '#a8a8a8', cursor: 'pointer' }
-                                        : { backgroundColor: '#ffffff', cursor: 'pointer' };
-                                    return (
-                                        <div {...getSuggestionItemProps(suggestion, { style })}>
-                                            {suggestion.description}
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </div>
-                    )}
+                    <Select
+                        isMulti
+                        styles={customStyles}
+                        options={selectOptions}
+                        value={selectOptions.filter(option => opcionSeleccionada.includes(option.value))} // Asegura que el valor del Select coincida con el estado
+                        onChange={handleSelectChange}
+                        placeholder="Seleccione un Producto"
+                        isSearchable
+                    />
 
 
-                </PlacesAutocomplete>
-            </div>
 
+                </div>
 
-            <div className='dosipt'>
+                <div>
+                    <p className='txtformu'>Calle</p>
 
-                <div className='dvuno'>
-                    <p>Número Domicilio</p>
-                    <input
-                        className='inpchico'
-                        value={numeroDomicilio}
-                        onChange={manejarCambioNumero}
+                    <input className='inpgrde'
+                        value={address} onChange={(e) => setAddress(e.target.value)}
 
                     />
-                </div>
-
-                <div className='dvdos'>
-                    <p>Colonia</p>
-                    <input className='inpchico' value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)} />
-                </div>
-
-            </div>
-
-
-            <div className='dosipt'>
-
-                <div className='dvuno'>
-                    <p>Codigo Postal</p>
-                    <input className='inpchico' value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
-                </div>
-
-                <div className='dvdos'>
-                    <p>Ciudad</p>
-                    <input className='inpchico' value={city} onChange={(e) => setCity(e.target.value)} />
-                </div>
-
-            </div>
-
-
-            <div className='dosipt'>
-
-                <div className='dvuno'>
-                    <p>Estado</p>
-                    <input className='inpchico' value={state} onChange={(e) => setState(e.target.value)} />
-
 
                 </div>
 
-            </div>
 
-            <div className='btncontent'>
-                <button className='btncassend' onClick={handleFormSubmit}>
-                    Cotizar
-                </button>
-            </div>
-        </div>
+                <div className='dosipt'>
 
 
 
 
-        {respuestaApi && (
-            <div className='ldoizqcas'>
-                <h2>Cotización</h2>
-                <div className='contedtos'>
 
-                    <div className='divder'>
-                        <p>Flete</p>
+                    <div className='dvuno'>
+                        <p>Codigo Postal</p>
+                        <input className='inpchico' value={postalCode}
+                            onChange={handlePostalCodeChange} // Aquí se llama a la función
+                        />
                     </div>
 
-                    <div className='divizq'>
-                        <p>{respuestaApi.FLETE}</p>
-
-                    </div>
-
-
-                </div>
-                <div className='contedtos'>
-
-                    <div className='divder'>
-                        <p>Seguro</p>
-                    </div>
-
-                    <div className='divizq'>
-                        <p>{respuestaApi.SEGURO}</p>
-
-                    </div>
-
-
-                </div>
-                <div className='contedtos'>
-
-                    <div className='divder'>
-                        <p>Entrega</p>
-                    </div>
-
-                    <div className='divizq'>
-                        <p>{respuestaApi.ENTREGA}</p>
-
-                    </div>
-
-
-                </div>
-                <div className='contedtos'>
-
-                    <div className='divder'>
-                        <p>Maniobras</p>
-                    </div>
-
-                    <div className='divizq'>
-                        <p>{respuestaApi.MANIOBRAS}</p>
-
-                    </div>
-
-
-                </div>
-                <div className='contedtos'>
-
-                    <div className='divder'>
-                        <p>CDP</p>
-                    </div>
-
-                    <div className='divizq'>
-                        <p>{respuestaApi.CDP}</p>
-
-                    </div>
-
-
-                </div>
-                <div className='contedtos'>
-
-                    <div className='divder'>
-                        <p>Admón. Fin</p>
-                    </div>
-
-                    <div className='divizq'>
-                        <p>{respuestaApi.ADMON_FIN}</p>
-
-                    </div>
-
-
-                </div>
-
-                <div className='divrallaz'>
-
-                    <div className='contedtos'>
-
-                        <div className='divder'>
-                            <p>Subtotal</p>
-                        </div>
-
-                        <div className='divizq'>
-                            <p>{respuestaApi.SUBTOTAL}</p>
-
-                        </div>
-
-
-                    </div>
-                    <div className='contedtos'>
-
-                        <div className='divder'>
-                            <p>IVA</p>
-                        </div>
-
-                        <div className='divizq'>
-                            <p>{respuestaApi.IVA}</p>
-
-                        </div>
-
-
-                    </div>
-
-                    <div className='contedtos'>
-
-                        <div className='divder'>
-                            <p>Retención de IVA</p>
-                        </div>
-
-                        <div className='divizq'>
-                            <p>{respuestaApi.RETENCION_DE_IVA}</p>
-
-                        </div>
+                    <div className='dvdos'>
+                        <p>Colonia</p>
+                        <Select
+                            isDisabled={isColoniaSelectDisabled}
+                            options={selectOcolonias}
+                            value={selectOcolonias ? selectOcolonias.find(option => option.value === neighborhood) : ''}
+                            onChange={(selectedOption) => setNeighborhood(selectedOption ? selectedOption.value : '')}
+                            placeholder="Seleccione una Colonia"
+                        />
 
 
                     </div>
 
                 </div>
 
-                <div className='contedtos'>
 
-                    <div className='divder'>
-                        <p>TOTAL</p>
+                <div className='dosipt'>
+
+                    <div className='dvuno'>
+                        <p>Número Domicilio</p>
+                        <input
+                            className='inpchico'
+                            value={numeroDomicilio}
+                            onChange={manejarCambioNumero}
+
+                        />
+
+
+
                     </div>
 
-                    <div className='divizq'>
-                        <p>{respuestaApi.TOTAL}</p>
-
+                    <div className='dvdos'>
+                        <p>Ciudad</p>
+                        <input className='inpchico' value={city} onChange={(e) => setCity(e.target.value)} />
                     </div>
-
 
                 </div>
 
 
+                <div className='dosipt'>
+
+                    <div className='dvuno'>
+                        <p>Estado</p>
+                        <input className='inpchico' value={state} onChange={(e) => setState(e.target.value)} />
 
 
+                    </div>
+
+                </div>
 
                 <div className='btncontent'>
-
-                    <button className='btncassend' onClick={resetearEstado}>
-                        Generar Nueva Cotización
+                    <button className='btncassend' onClick={handleFormSubmit}>
+                        Cotizar
                     </button>
                 </div>
             </div>
-        )}
 
 
-    </div>
+
+
+            {respuestaApi && (
+                <div className='ldoizqcas'>
+                    <h2>Cotización</h2>
+                    <div className='contedtos'>
+
+                        <div className='divder'>
+                            <p>Flete</p>
+                        </div>
+
+                        <div className='divizq'>
+                            <p>{respuestaApi.FLETE}</p>
+
+                        </div>
+
+
+                    </div>
+                    <div className='contedtos'>
+
+                        <div className='divder'>
+                            <p>Seguro</p>
+                        </div>
+
+                        <div className='divizq'>
+                            <p>{respuestaApi.SEGURO}</p>
+
+                        </div>
+
+
+                    </div>
+                    <div className='contedtos'>
+
+                        <div className='divder'>
+                            <p>Entrega</p>
+                        </div>
+
+                        <div className='divizq'>
+                            <p>{respuestaApi.ENTREGA}</p>
+
+                        </div>
+
+
+                    </div>
+                    <div className='contedtos'>
+
+                        <div className='divder'>
+                            <p>Maniobras</p>
+                        </div>
+
+                        <div className='divizq'>
+                            <p>{respuestaApi.MANIOBRAS}</p>
+
+                        </div>
+
+
+                    </div>
+                    <div className='contedtos'>
+
+                        <div className='divder'>
+                            <p>CDP</p>
+                        </div>
+
+                        <div className='divizq'>
+                            <p>{respuestaApi.CDP}</p>
+
+                        </div>
+
+
+                    </div>
+                    <div className='contedtos'>
+
+                        <div className='divder'>
+                            <p>Admón. Fin</p>
+                        </div>
+
+                        <div className='divizq'>
+                            <p>{respuestaApi.ADMON_FIN}</p>
+
+                        </div>
+
+
+                    </div>
+
+                    <div className='divrallaz'>
+
+                        <div className='contedtos'>
+
+                            <div className='divder'>
+                                <p>Subtotal</p>
+                            </div>
+
+                            <div className='divizq'>
+                                <p>{respuestaApi.SUBTOTAL}</p>
+
+                            </div>
+
+
+                        </div>
+                        <div className='contedtos'>
+
+                            <div className='divder'>
+                                <p>IVA</p>
+                            </div>
+
+                            <div className='divizq'>
+                                <p>{respuestaApi.IVA}</p>
+
+                            </div>
+
+
+                        </div>
+
+                        <div className='contedtos'>
+
+                            <div className='divder'>
+                                <p>Retención de IVA</p>
+                            </div>
+
+                            <div className='divizq'>
+                                <p>{respuestaApi.RETENCION_DE_IVA}</p>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <div className='contedtos'>
+
+                        <div className='divder'>
+                            <p>TOTAL</p>
+                        </div>
+
+                        <div className='divizq'>
+                            <p>{respuestaApi.TOTAL}</p>
+
+                        </div>
+
+
+                    </div>
+
+
+
+
+
+                    <div className='btncontent'>
+
+                        <button className='btncassend' onClick={resetearEstado}>
+                            Generar Nueva Cotización
+                        </button>
+                    </div>
+                </div>
+            )}
+
+
+        </div>
     );
 }
 
