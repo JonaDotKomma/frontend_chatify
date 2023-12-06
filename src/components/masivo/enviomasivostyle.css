@@ -7,12 +7,12 @@
 }
 
 .envio-masivo-header {
-    background-color: #023f81;
+    background-color: #aaaab6;
     min-height: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: #eff0f2;
 }
 
 .envio-masivo-content {
@@ -27,11 +27,10 @@
 .envio-masivo-left,
 .envio-masivo-right {
     flex: 1;
-    padding: 20px;
+    padding: 10px;
 }
 
 .envio-masivo-left {
-    background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,17 +46,20 @@
 .envio-masivo-right {
     display: flex;
     justify-content: center;
+    width: 50%;
+
+
 }
 
 .envio-masivo-right form {
-    max-width: 300px;
+    max-width: 90%;
     margin: auto;
     text-align: left;
 }
 
 .envio-masivo-right form label {
     display: block;
-    margin-bottom: 10px;
+ 
 }
 
 .envio-masivo-right form label input,
@@ -153,9 +155,33 @@
 .msvfooter {
     font-size: 12px;
     text-align: left;
-    margin-left: 2px;
+    margin-left: 2%;
 }
 
+.btncampana{
+ 
+    cursor: pointer;
+   
+    width: 300px;
+    height: 40px;
+    padding: 0px 8px;
+    border: 0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: #eff0f2;
+    color: #aaaab6;
+    font-size: 18px;
+    font-family: "Poppins";
+    font-weight: 500;
+    line-height: 23px;
+    outline: none;
+    transition: transform 0.3s ease; /* Agrega transición suave */
+}
+
+
+.btncampana:hover {
+    transform: scale(1.1); /* Aumenta el tamaño en un 10% */
+}
 
 
 @media (max-width: 600px) {

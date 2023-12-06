@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './enviomasivostyle.css'; // Asegúrate de que el nombre del archivo CSS coincida
-import Logomaisve from '../img/masivoAzul.png'
+import Logomaisve from '../img/masivo.png'
 import axios from "axios";
 
 
@@ -44,53 +44,53 @@ function Enviomasivo() {
 
     const handleSelectChange = (e) => {
         setSelectedLine(e.target.value);
-    
-      };
+
+    };
 
     useEffect(() => {
-          (async () => {
+        (async () => {
             const postData = {
-              idUser: idUser, // Poner el id del agente que lo envía
+                idUser: idUser, // Poner el id del agente que lo envía
             };
-    
+
             try {
-              const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/listlines', postData);
-              const jsonData = response.data;
-              setListlines(jsonData);
+                const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/listlines', postData);
+                const jsonData = response.data;
+                setListlines(jsonData);
             } catch (error) {
-              console.error("Error al lineas", error);
+                console.error("Error al lineas", error);
             }
-          })();     // eslint-disable-next-line   
-      }, []);
+        })();     // eslint-disable-next-line   
+    }, []);
 
     //Lista de Plantillas
     const [listPlantillas, setListPlantillas] = useState([])
-        
+
     const plantillasMsj = async (lineuser) => {
 
         const postData = {
-          idLinea: lineuser, // Poner el id del agente que lo envía
+            idLinea: lineuser, // Poner el id del agente que lo envía
         };
-    
+
         try {
-          const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getTemplate', postData);
-          const jsonData = response.data;
-          setListPlantillas(jsonData);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getTemplate', postData);
+            const jsonData = response.data;
+            setListPlantillas(jsonData);
         } catch (error) {
-          console.error("Error al lineas", error);
+            console.error("Error al lineas", error);
         }
-    
-      }
+
+    }
 
     const handleSelectTemplateChange = (e) => {
         setSelectedTemplate(e.target.value);
-    
-      };
+
+    };
 
     useEffect(() => {
-    if (selectedLine) {
-        plantillasMsj(selectedLine);
-    }
+        if (selectedLine) {
+            plantillasMsj(selectedLine);
+        }
     }, [selectedLine]);
 
     const listChatByCategory = async (idUser, category) => {
@@ -120,7 +120,7 @@ function Enviomasivo() {
     //     idAgente: parseInt(idAgentec), // Asegurar que idagente sea un entero
     //     nameTemplate: nameTemplate, //aqyui va el template.name_template seleccionado 
     //     bodyTemplate: bodyTemplate,///aqui av el template.body_template selecnionado 
-  
+
     //   };
 
     const sendTemplates = async (allChats) => {
@@ -143,8 +143,8 @@ function Enviomasivo() {
                 idAgente: parseInt(idUser), // Asegurar que idagente sea un entero
                 nameTemplate: nameTemplate, //aqyui va el template.name_template seleccionado 
                 bodyTemplate: bodyTemplate,///aqui av el template.body_template selecnionado 
-            
-                };
+
+            };
             try {
                 const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/initChat', postData);
                 console.log(response)
@@ -199,7 +199,7 @@ function Enviomasivo() {
         setSelectedTemplate("");
         setCategoriaSeleccionada('');
         setMessage('');
-      };
+    };
 
     return (
         <div className="envio-masivo">
@@ -212,23 +212,23 @@ function Enviomasivo() {
                 </div>
                 <div className="envio-masivo-right">
                     <form onSubmit={() => sendTemplates(allChats)}>
-                        
+
                         {/* Selecciona la linea */}
 
                         <div>
                             <p>Lista de lineas</p>
                             <select
-                            className='ipaduser'
-                            value={selectedLine}
-                            onChange={handleSelectChange}
-                            required
+                                className='ipaduser'
+                                value={selectedLine}
+                                onChange={handleSelectChange}
+                                required
                             >
-                            <option value="">Seleccione una linea</option>
-                            {
-                                listLines.map((line) => (
-                                    <option key={line[0]} value={line[0]}>{line[1]}</option>   
-                                ))
-                            }
+                                <option value="">Seleccione una linea</option>
+                                {
+                                    listLines.map((line) => (
+                                        <option key={line[0]} value={line[0]}>{line[1]}</option>
+                                    ))
+                                }
                             </select>
                         </div>
 
@@ -237,18 +237,18 @@ function Enviomasivo() {
                         <div>
                             <p>Lista de plantillas</p>
                             <select
-                            className='ipaduser'
-                            value={selectedTemplate}
-                            onChange={handleSelectTemplateChange}
-                            disabled={!selectedLine} // Desactivado si no se ha seleccionado una línea
-                            required
+                                className='ipaduser'
+                                value={selectedTemplate}
+                                onChange={handleSelectTemplateChange}
+                                disabled={!selectedLine} // Desactivado si no se ha seleccionado una línea
+                                required
                             >
-                            <option value="">Seleccione una plantilla</option>
-                            {listPlantillas.map((template) => (
-                                <option key={template.id_template_message} value={`${template.body_template}|${template.name_template}`}>
-                                {template.name_template}
-                                </option>
-                            ))}
+                                <option value="">Seleccione una plantilla</option>
+                                {listPlantillas.map((template) => (
+                                    <option key={template.id_template_message} value={`${template.body_template}|${template.name_template}`}>
+                                        {template.name_template}
+                                    </option>
+                                ))}
                             </select>
                         </div>
 
@@ -271,7 +271,7 @@ function Enviomasivo() {
 
                         <button
                             type="submit"
-                            className={`sendmsv ${!selectedLine ? 'disabled' : ''}`}
+                            className={`btncampana ${!selectedLine ? 'disabled' : ''}`}
                             disabled={!selectedLine}
                         >
                             Enviar Campaña Masiva
@@ -281,11 +281,7 @@ function Enviomasivo() {
             </div>
 
 
-            <div className='msvfooter'>
-                <p>
-                    *Recuerda que si tu cliente esta bloqueado no llegara la campaña hasta que pase el tiempo de bloqueo de Whatsapp
-                </p>
-            </div>
+
         </div>
     );
 }
