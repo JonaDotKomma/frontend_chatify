@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './codigoqrstyle.css';
 import Qrimg from "../img/frameqr.png";
+import Recarga from "../img/recarga.png";
+
+
 
 function CodigoQr() {
     const [showQr, setShowQr] = useState(true);
@@ -48,10 +51,9 @@ function CodigoQr() {
                     ) : (
                         <div>
                             <div className='container-qr'>
-                                <img src={Qrimg} alt='Escanea el QR' />
+                                <img src={Recarga} alt='recarga' />
                                 <div className='bloqueoqr'>
                                     <p>La imagen caducó</p>
-
                                 </div>
 
                             </div>

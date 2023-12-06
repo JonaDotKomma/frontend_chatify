@@ -146,7 +146,7 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
                                     src={urlPdfSeleccionado}
                                     frameBorder="0"
                                     width="280px" // Ajusta el ancho como necesites
-                                    height="500px" // Ajusta la altura como necesites
+                                    height="450px" // Ajusta la altura como necesites
                                     allow="fullscreen"
                                     title='pdfsend'
                                 ></iframe>
