@@ -491,7 +491,18 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         onMensajeEnviado();
     };
 
- 
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault(); // Previene el salto de línea por defecto
+            // Llama a la función que se ejecuta al hacer clic en el botón
+            if (selectedMessageId) {
+                responderMensaje();
+            } else {
+                enviarMensaje();
+            }
+        }
+        // Si Shift + Enter se presiona, simplemente deja que el evento continúe para el salto de línea
+    };
 
     return (
 
@@ -653,6 +664,8 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
                                         onChange={handleTextChange}
                                         style={{ flex: 1, resize: 'none' }}
                                         rows={lineas}
+                                        onKeyDown={handleKeyPress}
+
                                     />
                                 )
                             ) : (
