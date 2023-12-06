@@ -14,10 +14,6 @@ function Castores() {
 
     const [numeroDomicilio, setNumeroDomicilio] = useState(''); // Estado para almacenar el número
 
-    // Función para actualizar el estado cuando cambia el valor del input
-    const manejarCambioNumero = (e) => {
-        setNumeroDomicilio(e.target.value);
-    };
 
     //funcion formulario google 
     const [address, setAddress] = useState('');
@@ -225,15 +221,7 @@ function Castores() {
 
                 </div>
 
-                <div>
-                    <p className='txtformu'>Calle</p>
 
-                    <input className='inpgrde'
-                        value={address} onChange={(e) => setAddress(e.target.value)}
-
-                    />
-
-                </div>
 
 
                 <div className='dosipt'>
@@ -265,39 +253,7 @@ function Castores() {
                 </div>
 
 
-                <div className='dosipt'>
 
-                    <div className='dvuno'>
-                        <p>Número Domicilio</p>
-                        <input
-                            className='inpchico'
-                            value={numeroDomicilio}
-                            onChange={manejarCambioNumero}
-
-                        />
-
-
-
-                    </div>
-
-                    <div className='dvdos'>
-                        <p>Ciudad</p>
-                        <input className='inpchico' value={city} onChange={(e) => setCity(e.target.value)} />
-                    </div>
-
-                </div>
-
-
-                <div className='dosipt'>
-
-                    <div className='dvuno'>
-                        <p>Estado</p>
-                        <input className='inpchico' value={state} onChange={(e) => setState(e.target.value)} />
-
-
-                    </div>
-
-                </div>
 
                 <div className='btncontent'>
                     <button className='btncassend' onClick={handleFormSubmit}>
