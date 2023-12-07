@@ -122,9 +122,11 @@ function Chatlist(props) {
    if (query.length === 0) {
      setLocalResults([]);
    } else {
-     const filtered = chatData.filter(chat =>
-       chat[1].toLowerCase().includes(query.toLowerCase()) && chat[5] === localTipoChat
-     );
+    const filtered = chatData.filter(chat =>
+      (String(chat[0]).toLowerCase().includes(query.toLowerCase()) || 
+      chat[1].toLowerCase().includes(query.toLowerCase())) && 
+      chat[5] === localTipoChat
+  );
      setLocalResults(filtered);
    }
  }, [query, chatData, localTipoChat]);

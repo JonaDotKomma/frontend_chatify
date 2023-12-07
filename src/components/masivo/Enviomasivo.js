@@ -57,6 +57,7 @@ function Enviomasivo() {
                 const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/listlines', postData);
                 const jsonData = response.data;
                 setListlines(jsonData);
+                console.log('las lineas son',jsonData )
             } catch (error) {
                 console.error("Error al lineas", error);
             }
@@ -76,6 +77,7 @@ function Enviomasivo() {
             const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getTemplate', postData);
             const jsonData = response.data;
             setListPlantillas(jsonData);
+           
         } catch (error) {
             console.error("Error al lineas", error);
         }
@@ -200,6 +202,7 @@ function Enviomasivo() {
         setCategoriaSeleccionada('');
         setMessage('');
     };
+    
 
     return (
         <div className="envio-masivo">
