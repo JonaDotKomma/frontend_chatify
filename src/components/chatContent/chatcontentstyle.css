@@ -571,9 +571,11 @@ width: 80%;
 .dtonmaeedit {
   text-align: center;
   display: flex;
+  margin-top: 1%;
+  height:  25px;
 }
 .dtonmaeedit i{
-  margin-top: 35%;
+  margin-top: 40%;
   margin-right: 10%;
 }
 
@@ -585,9 +587,11 @@ width: 80%;
 
 .deodeod{
   display: flex;
-  flex-direction: column; /* Cambia la dirección del flexbox a columna */
+ text-align: center;
+ justify-content: center;
   align-items: center;
   background-color: #fff;
+  margin-top: 0;
 }
 
 

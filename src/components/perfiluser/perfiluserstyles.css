@@ -163,8 +163,8 @@
   }
 
   .iconstats{
-    background-color: #023f81;
-    color: #fff;
+    background-color: #eff0f2;
+    color: #aaaab6;
     width: 100%;
     height: 50%;
     text-align: center;
@@ -204,9 +204,9 @@
   }
 
   .medallaicon{
-    background-color: #023f81;
+    background-color: #eff0f2;
     width: 20%;
-    color: #fff;
+    color: #aaaab6;
     display: flex;
     justify-content: center;  
     align-items: center; 

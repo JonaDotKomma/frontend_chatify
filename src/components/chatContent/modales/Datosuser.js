@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 
-function DatosUser({ sendiduser, onClose }) {
+function DatosUser({ sendiduser, nombrecliente, onClose }) {
     //funciondes para la navegacion
 
 
@@ -101,13 +101,14 @@ function DatosUser({ sendiduser, onClose }) {
 
 
 
+
     return (
 
         <div className='didete' >
 
             {isLoading && <div className='loaderdatos'>Cargando...</div>}
 
-            
+
             {!isLoading && (
                 <div>
                     <div className='divunoconflex'>
@@ -121,11 +122,16 @@ function DatosUser({ sendiduser, onClose }) {
                         </div>
 
                         <div className='dtonmaeedit'>
-                            <p>{clientData.name}</p>
+                            <p>{nombrecliente}</p>
 
                             <button className='btneditclient' onClick={handleNavigation}>
                                 <i className="fas fa-pen"></i>
                             </button>
+                        </div>
+                        <div className='dtonmaeedit'>
+                            <p>Id de Usuario {sendiduser}</p>
+
+                           
                         </div>
 
                     </div>
@@ -133,13 +139,13 @@ function DatosUser({ sendiduser, onClose }) {
 
                     <div className='deodeod'>
 
-                        <div className='dtonmaeedit'>
+                    
                             <i className="fas fa-circle"></i>
 
                             <p>Activo</p>
 
 
-                        </div>
+                     
                     </div>
 
                     <div>

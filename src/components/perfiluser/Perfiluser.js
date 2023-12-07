@@ -55,7 +55,7 @@ function PerfilUser({ user, onLogout, nombreUsuario }) {
 
     return (
         <div>
-                <Menu onLogout={onLogout}/>
+            <Menu onLogout={onLogout} />
             <div className="perfil">
                 <img src={linkImguser} alt="Perfil" className="imagen-perfil" />
                 <div className="info-perfil">
@@ -96,18 +96,7 @@ function PerfilUser({ user, onLogout, nombreUsuario }) {
                         </div>
                     </div>
 
-                    <div className='contmsjs'>
-                        <div className='iconstats'>
-                            <i class="fa fa-trophy" aria-hidden="true"></i>
 
-                        </div>
-                        <div className='txtstats'>
-                            <p className='titlestat2'>Logros</p>
-                            <p className='conteostats'>
-                                0
-                            </p>
-                        </div>
-                    </div>
 
 
 
@@ -125,14 +114,16 @@ function PerfilUser({ user, onLogout, nombreUsuario }) {
                         </div>
                         <div className='medalaldatos'>
                             <h2>Contesta 100 mensajes</h2>
-                            <progress className='barraprogres' value="20" max="100"></progress>
-                            <p>Mantén una racha de 3 días</p>
+                            <progress
+                                className='barraprogres'
+                                value="20"
+                                max="100"
+                             
+                            ></progress>                            <p>Mantén una racha de 3 días</p>
                         </div>
                     </div>
 
-                    <div>
-                        <p>Points </p>
-                    </div>
+
                 </div>
             </div>
         </div>

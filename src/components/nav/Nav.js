@@ -134,11 +134,20 @@ function Nav() {
             </header>
             <footer className="menu-inferior">
 
-                <Link className="btnnav" to="/CodigoQr" >
 
-                    <i className="fas fa-qrcode inav"></i>
 
-                </Link>
+
+                {
+                    usertipo === "Administrador" ? (
+                        <Link className="btnnav" to="/CodigoQr" >
+
+                            <i className="fas fa-qrcode inav"></i>
+
+                        </Link>
+                    ) : (
+                   null
+                    )
+                }
                 <button onClick={abrirModalpdf} className="btnnav"> <i className="fas fa-file-invoice-dollar inav"></i></button>
 
 

@@ -117,6 +117,20 @@
     transform: scale(1.1); /* Aumentar la escala en un 10% al pasar el cursor */
 }
 
+
+.btncassend:disabled {
+    background-color: #cccccc; /* Color de fondo para el botón desactivado */
+    color: #787878; /* Color del texto para el botón desactivado */
+    cursor: default; /* Cursor predeterminado para el botón desactivado */
+}
+/* Anular el efecto hover para botones desactivados */
+.btncassend:disabled:hover {
+    transform: none; /* Esto asegura que el efecto hover no se aplique */
+}
+.btncassend:disabled:hover {
+    transform: none; /* Esto asegura que el efecto hover no se aplique */
+}
+
 .contedtos{
 
     width: 100%;

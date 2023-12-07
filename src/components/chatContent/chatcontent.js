@@ -277,7 +277,7 @@ function Chatcontent(props) {
       <div className={`contechatcuerpo ${holiVisible ? 'contechatcuerpo-wide' : ''} ${chatItemStyle}`}>
         <header className='cbrachats' >
           <p className='nmcecleint' onClick={toggleHoliVisibility}>
-            {nameclientf}
+            {nameclientf} 
           </p>
 
 
@@ -387,7 +387,7 @@ function Chatcontent(props) {
       {holiVisible && (
 
         <div className='conttdtosuser'>
-          <DatosUser sendiduser={sendiduser} onClose={toggleHoliVisibility} />
+          <DatosUser sendiduser={sendiduser} nombrecliente={nameclientf} onClose={toggleHoliVisibility} />
 
 
 

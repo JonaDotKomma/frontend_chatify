@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback  } from 'react';
 import './castorestyle.css'
 import axios from 'axios';
 import Select from 'react-select';
@@ -23,11 +23,6 @@ function Castores() {
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [neighborhood, setNeighborhood] = useState('');
-
-
-
-
-
     //funcion para poder llamar a la api
     const [listproductosdata, setListproductosdata] = useState([]);
 
@@ -198,6 +193,16 @@ function Castores() {
         label: `${colonias.text}`
     }));
 
+  // Estado para manejar si el botón está activado
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const validarCampos = useCallback(() => {
+    // ... tu lógica de validación ...
+    return postalCode !== '' && neighborhood !== '' && opcionSeleccionada.length > 0;
+}, [postalCode, neighborhood, opcionSeleccionada]); // Dependencias de la función
+
+useEffect(() => {
+    setIsButtonEnabled(validarCampos());
+}, [validarCampos]); // Ahora validarCampos es una dependencia del efecto
 
     return (
         <div className='contencastores'>
@@ -256,7 +261,7 @@ function Castores() {
 
 
                 <div className='btncontent'>
-                    <button className='btncassend' onClick={handleFormSubmit}>
+                    <button  disabled={!isButtonEnabled} className='btncassend'   onClick={handleFormSubmit}>
                         Cotizar
                     </button>
                 </div>

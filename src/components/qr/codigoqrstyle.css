@@ -28,6 +28,7 @@
     border-radius: 6px;
     display: flex;
 
+
   }
 
   .ladotxto{
@@ -92,9 +93,8 @@
     box-sizing: border-box;
     border-radius: 6px;
     background-color: #eff0f2;
-    color: #030303;
+    color: #787878;
     font-size: 18px;
-    font-family: "Poppins";
     font-weight: 500;
     line-height: 23px;
     outline: none;
