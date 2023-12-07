@@ -63,11 +63,18 @@ function LoginBack() {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    const storedIdAgent = localStorage.getItem('idAgente');    
     setUser({});
     setLoggedIn(false);
-    localStorage.removeItem('loggedIn'); // Elimina el estado de autenticación de localStorage
-    localStorage.removeItem('user');
+    console.log('El id del agente es: ', storedIdAgent)  
+    try {
+      await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/logout', {idAgent: storedIdAgent})
+      localStorage.removeItem('loggedIn'); // Elimina el estado de autenticación de localStorage
+      localStorage.removeItem('user');
+    } catch (error) {
+      console.error(error)
+    }  
   };
 
   const handleSubmit = async ({ username, password }) => {
