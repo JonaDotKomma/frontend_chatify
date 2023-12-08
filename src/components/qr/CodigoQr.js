@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './codigoqrstyle.css';
-import Qrimg from "../img/frameqr.png";
+//import Qrimg from "../img/frameqr.png";
 import Recarga from "../img/recarga.png";
-
-
+import io from 'socket.io-client';
+import axios from "axios";
 
 function CodigoQr() {
     const [showQr, setShowQr] = useState(true);
     const timerRef = useRef(null);
+    const idAgentesi = localStorage.getItem('idAgente');
+    const hasFetched = useRef(false);
+    const [qr64, setQR64] = useState('');
 
     const resetTimer = () => {
         if (timerRef.current) {
@@ -28,10 +31,45 @@ function CodigoQr() {
         };
     }, []);
 
+    useEffect(() => {
+        if (!hasFetched.current) {
+            getQR64(idAgentesi);
+            hasFetched.current = true;
+        }
+    }, [idAgentesi]);
+
+    useEffect(() => {
+        const socket = io('https://socialcenterhtc-5d6f4ba539de.herokuapp.com', {
+            transports: ['polling', 'websocket']
+        });
+
+        socket.on('validado', (data) => {
+            console.log('Se valida');
+            console.log(data.message);
+             console.log(data.agent);
+        });
+        return () => {
+            socket.disconnect();
+        };
+    });
+
     const resetQr = () => {
         setShowQr(true);
         resetTimer();
+        getQR64(idAgentesi);
     };
+
+    const getQR64 = async (idAgente) => {
+        try {
+            const response = await axios.post('http://localhost:8080/getQR', { idAgente });
+            const jsonData = response.data;
+            console.log(jsonData.qr);
+            setQR64(jsonData.qr);
+          } catch (error) {
+            console.error("Error al obtener los datos de la API para el QR:", error);
+          }
+    }
+    
 
     return (
         <div className='conteqr'>
@@ -47,7 +85,7 @@ function CodigoQr() {
 
                 <div className='ladoqr'>
                     {showQr ? (
-                        <img src={Qrimg} alt='Escanea el QR' />
+                        <img src={qr64} alt='Escanea el QR' />
                     ) : (
                         <div>
                             <div className='container-qr'>
