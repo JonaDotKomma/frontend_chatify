@@ -37,7 +37,7 @@ function ListResultsSearch({ results, localResults, onSelectChat }) {
 
     };
 
-    
+
 
     return (
         <div className="chatlistSarch">
@@ -54,8 +54,12 @@ function ListResultsSearch({ results, localResults, onSelectChat }) {
                                 <i className="fas fa-user icono-usuario"></i>
                             </div>
                             <div className="dtoclilist">
-                                <p className="nameuser"> {localResult[1]} N° {localResult[0]} </p>
+                                <p className="nameuser"> {localResult[1]} </p>
                                 <span className="nametipo">linea {localResult[4]}</span>
+                            </div>
+                            <div className="divnum">
+
+                                <p className="numerouser">N° {localResult[0]}</p>
                             </div>
                         </div>
                     ))

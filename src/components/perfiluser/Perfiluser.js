@@ -118,8 +118,9 @@ function PerfilUser({ user, onLogout, nombreUsuario }) {
                                 className='barraprogres'
                                 value="20"
                                 max="100"
-                             
-                            ></progress>                            <p>Mantén una racha de 3 días</p>
+
+                            ></progress>
+                            <p>Mantén una racha de 3 días</p>
                         </div>
                     </div>
 

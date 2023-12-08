@@ -104,3 +104,18 @@
 .btnqr:hover {
     transform: scale(1.1); /* Aumenta el tamaño en un 10% */
 }
+
+
+.contadagentesline{
+  background-color: aquamarine;
+  padding:10px;
+  display: flex;
+  height: 550px;
+  width: 95%;
+  margin-left: 1%;
+}
+
+.ladoselct{
+  width: 20%;
+
+}

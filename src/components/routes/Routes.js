@@ -9,7 +9,7 @@ import Enviomasivo from '../masivo/Enviomasivo';
 import MenuHamburguesa from '../menuhamburguesa/MenuHamburguesa';
 import EditClient from '../editclient/editarcliente';
 import CodigoQr from '../qr/CodigoQr';
-
+import AddAgenteAlinear from '../qr/Addagntealineaqr';
 import AdminView from '../adminmodules/Aminmode';
 import Castores from '../cotizaciones/Castores';
 function Routeschmpi({ user, onLogout, nombreUsuario }) {
@@ -42,9 +42,10 @@ function Routeschmpi({ user, onLogout, nombreUsuario }) {
                     <Route path='/CampanaMasiva' element={<Enviomasivo />} />
                     <Route path="/EditarCliente" element={<EditClient user={user} onLogout={onLogout} nombreUsuario={nombreUsuario}  />} />
                     <Route path="/Adminmodule" element={<AdminView user={user} onLogout={onLogout} nombreUsuario={nombreUsuario}  />} />
+                    <Route path="/AddAgenteAlinear" element={<AddAgenteAlinear/>} />
 
                     <Route path="/Castores" element={<Castores user={user} onLogout={onLogout} nombreUsuario={nombreUsuario}  />} />
-
+                    
                 </Routes>
             </div>
         </div>

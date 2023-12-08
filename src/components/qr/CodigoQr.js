@@ -4,6 +4,8 @@ import './codigoqrstyle.css';
 import Recarga from "../img/recarga.png";
 import io from 'socket.io-client';
 import axios from "axios";
+import { Link } from 'react-router-dom';
+
 
 function CodigoQr() {
     const [showQr, setShowQr] = useState(true);
@@ -46,7 +48,7 @@ function CodigoQr() {
         socket.on('validado', (data) => {
             console.log('Se valida');
             console.log(data.message);
-             console.log(data.agent);
+            console.log(data.agent);
         });
         return () => {
             socket.disconnect();
@@ -65,11 +67,15 @@ function CodigoQr() {
             const jsonData = response.data;
             console.log(jsonData.qr);
             setQR64(jsonData.qr);
-          } catch (error) {
+        } catch (error) {
             console.error("Error al obtener los datos de la API para el QR:", error);
-          }
+        }
     }
-    
+    const datosParaEnviar = {
+        numeroDeLinea: 5,
+        otroDato: "Información adicional"
+        // Puedes agregar más datos según sea necesario
+    };
 
     return (
         <div className='conteqr'>
@@ -81,6 +87,11 @@ function CodigoQr() {
                     <p>2. Preciona Menu o ajustes y seleciona Dispositivos Vinculados.</p>
                     <p>3. Toca Vincular Dispositivo.</p>
                     <p>4. Apunta tu teléfono hacia la pantalla para escanear el código QR.</p>
+
+                    <div>
+                    <Link to="/AddAgenteAlinear" state={datosParaEnviar}>Agregar Agentes</Link>
+
+                    </div>
                 </div>
 
                 <div className='ladoqr'>
