@@ -1,121 +1,134 @@
 .conteqr{
-    background-color: white;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    justify-content: center;
-    align-content: center;
-    position: relative; /* Esto permitirá posicionar absolutamente los hijos dentro de este contenedor */
-    font-family: 'Poppins', sans-serif;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  position: relative; /* Esto permitirá posicionar absolutamente los hijos dentro de este contenedor */
+  font-family: 'Poppins', sans-serif;
 }
 .cbcra{
-    background-color: #aaaab6;
-    width: 100%;
-    height: 25%;
-    opacity: 0.45;
+  background-color: #aaaab6;
+  width: 100%;
+  height: 25%;
+  opacity: 0.45;
 }
 
 .cardqr {
-    position: absolute; 
-    top: 50%;   
-    left: 50%;  
-    transform: translate(-50%, -50%);  
-    width: 65%;   
-    height: 80%; 
-    background-color: #fff;
-    box-shadow: 0px 2px 6px rgba(0,0,0,0.16);
-    box-sizing: border-box;
-    border-radius: 6px;
-    display: flex;
+  position: absolute; 
+  top: 50%;   
+  left: 50%;  
+  transform: translate(-50%, -50%);  
+  width: 65%;   
+  height: 80%; 
+  background-color: #fff;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.16);
+  box-sizing: border-box;
+  border-radius: 6px;
+  display: flex;
 
 
-  }
+}
 
-  .ladotxto{
-    
-    width: 50%;
-    text-align: left;
-    padding-left: 5%;
-
-  }
-
-  .ladotxto h2{
-    margin-top: 30%;
-  }
-
-  .ladoqr {
-    width: 50%;
-    
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    height: 50%; /* Ajusta la altura según sea necesario */
-  }
+.ladotxto{
   
-  .ladoqr img {
-    width: 70%; /* Hace que la imagen ocupe el 50% del ancho de su contenedor */
-    height: auto; /* Mantiene la proporción de la imagen */
-    margin-top: 30%;
-  }
+  width: 50%;
+  text-align: left;
+  padding-left: 5%;
 
- 
+}
 
-  .container-qr {
-    position: relative;
-    display: inline-block; /* O según tu diseño específico */
+.ladotxto h2{
+  margin-top: 30%;
+}
+
+.ladoqr {
+  width: 50%;
+  
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  height: 50%; /* Ajusta la altura según sea necesario */
+}
+
+.ladoqr img {
+  width: 70%; /* Hace que la imagen ocupe el 50% del ancho de su contenedor */
+  height: auto; /* Mantiene la proporción de la imagen */
+  margin-top: 30%;
+}
+
+
+
+.container-qr {
+  position: relative;
+  display: inline-block; /* O según tu diseño específico */
 }
 
 .bloqueoqr {
-    position: absolute;
-    top: 30%;   
-    left: 15%;  
-    width: 70%;
-    height: 70%;
-    background-color: rgba(0, 0, 0, 0.5); /* Ejemplo de fondo semitransparente */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white; /* Color del texto */
-    font-size: 30px;
-    font-weight: bold;
+  position: absolute;
+  top: 30%;   
+  left: 15%;  
+  width: 70%;
+  height: 70%;
+  background-color: rgba(0, 0, 0, 0.5); /* Ejemplo de fondo semitransparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; /* Color del texto */
+  font-size: 30px;
+  font-weight: bold;
 }
 .contebtnqr{
-    margin-top: 5%;
+  margin-top: 5%;
 
 
 }
 .btnqr {
-    cursor: pointer;
-   
-    width: 200px;
-    height: 40px;
-    padding: 0px 8px;
-    border: 0;
-    box-sizing: border-box;
-    border-radius: 6px;
-    background-color: #eff0f2;
-    color: #787878;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 23px;
-    outline: none;
-    transition: transform 0.3s ease; /* Agrega transición suave */
+  cursor: pointer;
+ 
+  width: 200px;
+  height: 40px;
+  padding: 0px 8px;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 6px;
+  background-color: #eff0f2;
+  color: #787878;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 23px;
+  outline: none;
+  transition: transform 0.3s ease; /* Agrega transición suave */
 }
 
 .btnqr:hover {
-    transform: scale(1.1); /* Aumenta el tamaño en un 10% */
+  transform: scale(1.1); /* Aumenta el tamaño en un 10% */
 }
 
 
 .contadagentesline{
-  background-color: aquamarine;
-  padding:10px;
-  display: flex;
-  height: 550px;
-  width: 95%;
-  margin-left: 1%;
+padding:10px;
+display: flex;
+height: 550px;
+width: 95%;
+margin-left: 1%;
+font-family: 'Poppins', sans-serif
+
 }
 
 .ladoselct{
-  width: 20%;
+width: 20%;
 
+}
+
+.ladoagregado{
+width: 30%;
+margin-left: 5%;
+border: 1px solid #787878;
+padding-left: 10px;
+}
+
+.ladoagregado ul {
+list-style-type: none; /* Esto quita los puntos de la lista */
+padding-left: 0; /* Esto quita el espacio a la izquierda de la lista */
 }

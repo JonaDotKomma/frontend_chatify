@@ -4,7 +4,9 @@ import './codigoqrstyle.css';
 import Recarga from "../img/recarga.png";
 import io from 'socket.io-client';
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+//import { Link } from 'react-router-dom';
 
 
 function CodigoQr() {
@@ -13,6 +15,8 @@ function CodigoQr() {
     const idAgentesi = localStorage.getItem('idAgente');
     const hasFetched = useRef(false);
     const [qr64, setQR64] = useState('');
+
+    const navigate = useNavigate();
 
     const resetTimer = () => {
         if (timerRef.current) {
@@ -40,6 +44,8 @@ function CodigoQr() {
         }
     }, [idAgentesi]);
 
+   
+
     useEffect(() => {
         const socket = io('https://socialcenterhtc-5d6f4ba539de.herokuapp.com', {
             transports: ['polling', 'websocket']
@@ -49,6 +55,18 @@ function CodigoQr() {
             console.log('Se valida');
             console.log(data.message);
             console.log(data.agent);
+            console.log(data.linea);
+            console.log(data.nombre);
+            console.log(idAgentesi);
+            if(data.agent === parseInt(idAgentesi)){
+                console.log('Si entra a la esta mierda');
+                const datosParaEnviar = {
+                    numeroDeLinea: parseInt(data.linea),
+                    nombre_Linea: data.nombre
+                    // Puedes agregar más datos según sea necesario
+                };
+                navigate('/AddAgenteAlinear', { state: datosParaEnviar });
+            }
         });
         return () => {
             socket.disconnect();
@@ -63,7 +81,7 @@ function CodigoQr() {
 
     const getQR64 = async (idAgente) => {
         try {
-            const response = await axios.post('http://localhost:8080/getQR', { idAgente });
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getQR', { idAgente });
             const jsonData = response.data;
             console.log(jsonData.qr);
             setQR64(jsonData.qr);
@@ -71,11 +89,7 @@ function CodigoQr() {
             console.error("Error al obtener los datos de la API para el QR:", error);
         }
     }
-    const datosParaEnviar = {
-        numeroDeLinea: 5,
-        otroDato: "Información adicional"
-        // Puedes agregar más datos según sea necesario
-    };
+   
 
     return (
         <div className='conteqr'>
@@ -89,7 +103,7 @@ function CodigoQr() {
                     <p>4. Apunta tu teléfono hacia la pantalla para escanear el código QR.</p>
 
                     <div>
-                    <Link to="/AddAgenteAlinear" state={datosParaEnviar}>Agregar Agentes</Link>
+                    {/* <Link to="/AddAgenteAlinear" state={datosParaEnviar}>Agregar Agentes</Link> */}
 
                     </div>
                 </div>
