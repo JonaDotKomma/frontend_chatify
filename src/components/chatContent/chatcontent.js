@@ -16,8 +16,10 @@ import ModalPDF from './modales/ModalPDF';
 
 function Chatcontent(props) {
 
-  const { sendiduser, numerselect, nameclientf, idagente, typeclient, id_dlinea, id_odoo, namelineac } = props;
-  const messagesContainerRef = useRef(null);
+  const { sendiduser, numerselect, nameclientf, idagente, typeclient, id_dlinea, id_odoo, namelineac,issesionqr, estadoqrseison } = props;
+  let estadoqrseisonString = estadoqrseison ? estadoqrseison.toString() : false;
+  
+    const messagesContainerRef = useRef(null);
   const [numberOfMessages, setNumberOfMessages] = useState(0);
 
   const [mensajes, setMensajes] = useState([]);
@@ -378,6 +380,10 @@ function Chatcontent(props) {
               selectedTypeMsj={selectedTypeMsj}
               tipochat={typeclient}
               fechaulmsjcliente={ultimoMensajeRecibido.fecha}
+              idssionqr={issesionqr}
+              estadoqrsesion={estadoqrseisonString}
+         
+
             />
           )}
 

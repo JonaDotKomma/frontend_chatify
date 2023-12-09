@@ -82,11 +82,13 @@ export default class ListItemWP extends Component {
         const idAgnt = localStorage.getItem('idAgente');
         const nameAgnt = localStorage.getItem('nombreUsuario');
         const idlinea = this.props.id_linea
-        const idOdoo=  this.props.id_odoo
+        const idOdoo = this.props.id_odoo
+        const estdoQr = this.props.estadoqr
+        const issesionQr = this.props.idsesionqr
 
         // const seen = this.props.visto;
-        console.log("---PASO1", idUser, numero, botestado, nameclient, linea, idOdoo);
-        this.props.onSelectChat(idUser, numero, botestado, nameclient, idlinea, idOdoo, linea); // Llama a la función onSelectChat
+        console.log("---PASO1", idUser, numero, botestado, nameclient, linea, idOdoo,estdoQr,issesionQr );
+        this.props.onSelectChat(idUser, numero, botestado, nameclient, idlinea, idOdoo, linea, estdoQr,issesionQr ); // Llama a la función onSelectChat
         this.seenApi(idUser, idAgnt, nameAgnt);
 
         if (this.props.quientienchat === 0) {

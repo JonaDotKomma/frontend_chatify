@@ -53,15 +53,15 @@ function Chatlist(props) {
 
       console.log('Listdtos', jsonData, localTipoChat);
     } catch (error) {
-      console.error("Error al obtener los datos de la API:", error);
+      console.error("Error al obtener los datos de la API :(", error);
     }
   };
 
-  const handleSelectChat = (idUser, numero, botestado, nameclient, idlinea, idOdoo, linea) => {
+  const handleSelectChat = (idUser, numero, botestado, nameclient, idlinea, idOdoo, linea, estdoQr,issesionQr ) => {
     setSelectedUserId(idUser);
     console.log(selectedUserId)
     if (props.onSelectChat) {
-      props.onSelectChat(idUser, numero, botestado, nameclient, tipochat, idlinea, idOdoo, linea);
+      props.onSelectChat(idUser, numero, botestado, nameclient, tipochat, idlinea, idOdoo, linea, estdoQr,issesionQr);
       listchat(idAgentesi);
     }
   };
@@ -177,11 +177,13 @@ function Chatlist(props) {
                 id_odoo={item[6]}
                 status={item[3]}
                 linea={item[4]}
-                fecha={item[11]}
-                ultimomsj={item[10]}
+                fecha={item[13]}
+                ultimomsj={item[12]}
                 visto={item[7]}
                 quientienchat={item[8]}
                 id_linea={item[9]}
+                estadoqr={item[10]}
+                idsesionqr={item[11]}
                 onSelectChat={handleSelectChat}
               />
             ))

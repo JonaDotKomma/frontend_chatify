@@ -107,15 +107,32 @@
 
 
 .contadagentesline{
-  background-color: aquamarine;
   padding:10px;
   display: flex;
   height: 550px;
   width: 95%;
   margin-left: 1%;
+  font-family: 'Poppins', sans-serif
+
 }
 
 .ladoselct{
   width: 20%;
+
+}
+
+.ladoagregado{
+  width: 30%;
+  margin-left: 5%;
+  border: 1px solid #787878;
+  padding-left: 10px;
+}
+
+.ladoagregado ul {
+  list-style-type: none; /* Esto quita los puntos de la lista */
+  padding-left: 0; /* Esto quita el espacio a la izquierda de la lista */
+}
+
+.ladoagregado li {
 
 }

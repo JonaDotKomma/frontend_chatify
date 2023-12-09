@@ -34,11 +34,13 @@ function Chatbody({ chatType }) {
   const [iddlinea, setIddlinea] = useState(routeridlinea || null)
   const [idOdoochat, setIdOdooChat] = useState(routerOdo || null)
   const[namlineaname, setLineaname]=useState(null)
+  const[estadoqr, setEstadoQr]=useState(null)
+  const[idsesionqr, setIdsesionQr]=useState(null)
 
 
 
 
-  const handleSelectChat = (id, numero, botestado2, nameclient2, tipochat, idlinea, idOdoo, linea) => {
+  const handleSelectChat = (id, numero, botestado2, nameclient2, tipochat, idlinea, idOdoo, linea, estdoQr,issesionQr) => {
     setSelectedId(id);
     setNumerselect(numero);
     setBoottas(botestado2);
@@ -47,6 +49,8 @@ function Chatbody({ chatType }) {
     setIddlinea(idlinea)
     setIdOdooChat(idOdoo)
     setLineaname(linea)
+    setEstadoQr(estdoQr)
+    setIdsesionQr(issesionQr)
     console.log('LO QUE MANDO A CONTENT', id, numero, botestado2, nameclient2, tipochat, idlinea,idOdoo );
   };
 
@@ -59,7 +63,7 @@ function Chatbody({ chatType }) {
       
       <div className="partechat">
         
-        {selectedId ? <Chatcontent  typeclient={tipechat} sendiduser={selectedId} numerselect={numerselect} boottas={boottas} nameclientf={nameclientf} idagente={idUser} nameagente={nombreAgente} id_dlinea={iddlinea} id_odoo={idOdoochat} namelineac={namlineaname}/> : <ChatVacio />}
+        {selectedId ? <Chatcontent  typeclient={tipechat} sendiduser={selectedId} numerselect={numerselect} boottas={boottas} nameclientf={nameclientf} idagente={idUser} nameagente={nombreAgente} id_dlinea={iddlinea} id_odoo={idOdoochat} namelineac={namlineaname} estadoqrseison={estadoqr} issesionqr={idsesionqr}/> : <ChatVacio />}
 
       </div>
     </div>

@@ -9,7 +9,7 @@ import ModalPlatilla from './modales/Mandarplanmtila';
 
 
 
-function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selectedMessageId, selectedMsjUser, selectedTypeMsj, tipochat, fechaulmsjcliente }) {
+function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selectedMessageId, selectedMsjUser, selectedTypeMsj, tipochat, fechaulmsjcliente, idssionqr, estadoqrsesion }) {
 
     const [mensaje, setMensaje] = useState([]);
     const [lineas, setLineas] = useState(1);
@@ -155,25 +155,25 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
     };
 
 
-    
+
 
     const handleAddFilesClick = () => {
         document.getElementById('fileInput').click();
-      };
-      
-      const handleFileChange = (files) => {
+    };
+
+    const handleFileChange = (files) => {
         const filteredFiles = Array.from(files).filter(file =>
-          file.type.startsWith("image/") || file.type === "application/pdf"
+            file.type.startsWith("image/") || file.type === "application/pdf"
         );
-      
+
         if (filteredFiles.length > 0) {
-          const newPreviews = filteredFiles.map(file => URL.createObjectURL(file));
-      
-          setMensaje(prevMensaje => [...prevMensaje, ...filteredFiles]);
-          setImagePreview(prevPreview => [...prevPreview, ...newPreviews]);
-          setImagePreviewVisible(true); // Controla la visibilidad de las previsualizaciones
+            const newPreviews = filteredFiles.map(file => URL.createObjectURL(file));
+
+            setMensaje(prevMensaje => [...prevMensaje, ...filteredFiles]);
+            setImagePreview(prevPreview => [...prevPreview, ...newPreviews]);
+            setImagePreviewVisible(true); // Controla la visibilidad de las previsualizaciones
         }
-      };
+    };
 
     const handlePaste = (e) => {
         const clipboardData = e.clipboardData || window.clipboardData;
@@ -375,6 +375,40 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
     };
 
+    
+
+    const AudioQr = async () => {
+        const blob = await fetch(audioURL).then(r => r.blob());
+        const audioFile = new File([blob], 'recording.webm', {
+            type: 'audio/webm; codecs=opus', // el tipo MIME para mp3 es audio/mpeg
+            lastModified: Date.now(), // establece la fecha de modificación actual
+        });
+
+        console.log('es este', audioFile)
+        const formData = new FormData();
+
+        formData.set('numero', numerselect);
+        formData.append('audio', audioFile);
+        formData.append('idAgente', idagente);
+        formData.append('linea', id_dlinea)
+
+
+        try {
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/send-audio', formData);
+            console.log(`audio enviada a ${numerselect}:`, response.data);
+            console.log('Enviamos estto', formData)
+            onMensajeEnviado();
+
+
+        } catch (error) {
+            console.error(`Error al enviar el audio a ${numerselect}:`, error);
+        }
+        setIsRecording(false)
+        setAudioURL('')
+
+    };
+
+
     const clearAudio = () => {
         setIsRecording(false);
         setAudioURL('');
@@ -494,14 +528,129 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault(); // Previene el salto de línea por defecto
-            // Llama a la función que se ejecuta al hacer clic en el botón
-            if (selectedMessageId) {
-                responderMensaje();
+            // Comprueba si estadoQrSesion es igual a "estaqr"
+            if (estadoqrsesion === "true") {
+                mandarQr();
             } else {
-                enviarMensaje();
+                // Llama a la función que se ejecuta al hacer clic en el botón
+                if (selectedMessageId) {
+                    responderMensaje();
+                } else {
+                    enviarMensaje();
+                }
             }
         }
         // Si Shift + Enter se presiona, simplemente deja que el evento continúe para el salto de línea
+    };
+
+
+    const mandarQr = async () => {
+        console.log('el msj es', mensaje)
+
+        if (Array.isArray(mensaje) && mensaje.length > 0) {
+            for (let item of mensaje) {
+                console.log('elitem', item.type)
+                if (item.type === 'image/jpeg' || item.type === 'image/png') {
+                    // Enviar cada imagen
+                    await sendImageToUserQr(item);
+                } else if (item.type === 'application/pdf') {
+                    // Enviar PDF
+                    await sendPdfToUserQr(item);
+                } else {
+                    alert("Formato de archivo no válido. Solo se admiten imágenes (JPEG/PNG) y PDF.");
+                }
+            }
+            setMensaje([]); // Limpiar el arreglo después de enviar los archivos
+
+        } else if (typeof mensaje === "string" && mensaje.trim() !== "") {
+            console.log('entre al if')
+            const postData = {
+                id: idssionqr,
+                number: numerselect,
+                message: mensaje,
+                idAgente: idagente, // Poner el id del agente que lo envía
+                linea: id_dlinea
+            };
+
+            try {
+                const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/sendText', postData);
+                console.log(response);
+
+            } catch (error) {
+                console.error('Error al enviar mensajes a la API:', error);
+            }
+
+        } else {
+            alert("No se puede enviar un mensaje vacío.");
+        }
+
+        setMensaje([]);  // Limpiar el área de texto después de enviar
+        onMensajeEnviado();
+        setImagePreview([]);
+        setImagePreviewVisible(false)
+    };
+
+
+    const sendImageToUserQr = async (image) => {
+
+        console.log('la imagen es ', image)
+        const formData = new FormData();
+        formData.append('image', image);
+        formData.append('idAgente', idagente);
+        formData.append('linea', id_dlinea);
+        formData.append('caption', '');
+        formData.append('id', idssionqr);
+        formData.set('number', numerselect);
+
+
+
+        const config = {
+            onUploadProgress: progressEvent => {
+                const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                setUploadProgress(percentCompleted);
+            }
+        };
+
+
+        try {
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/sendImage', formData, config);
+            console.log(`Imagen enviada a ${numerselect}:`, response.data);
+            console.log(image)
+
+        } catch (error) {
+            console.error(`Error al enviar la imagen a ${numerselect}:`, error);
+        }
+
+        setMensaje([]);  // Limpiar el área de texto después de enviar
+        onMensajeEnviado();
+        setImagePreview([]);
+        setImagePreviewVisible(false)
+    };
+
+    const sendPdfToUserQr = async (image) => {
+
+
+        const formData = new FormData();
+        formData.append('file', image);
+        formData.append('idAgente', idagente);
+        formData.append('linea', id_dlinea)
+        formData.append('id', idssionqr)
+        formData.set('number', numerselect);
+
+
+
+        console.log('kahkdsa', formData)
+        try {
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/sendFile', formData);
+            console.log(`PDF enviada o ${numerselect}:`, response.data);
+        } catch (error) {
+            console.error(`Error al enviar el PDf a ${numerselect}:`, error);
+        }
+
+        setMensaje([]);  // Limpiar el área de texto después de enviar
+        onMensajeEnviado();
+        setImagePreview([]);
+        setImagePreviewVisible(false)
     };
 
     return (
@@ -603,7 +752,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
                             </div>
 
                             {/* Botones con íconos */}
-                            <button className={`btnmsj ${chatItemStyle}`}   onClick={handleAddFilesClick}><span><i className="fas fa-paperclip"></i></span></button> {/* Reemplazar con <FontAwesomeIcon icon={faPaperclip} /> */}
+                            <button className={`btnmsj ${chatItemStyle}`} onClick={handleAddFilesClick}><span><i className="fas fa-paperclip"></i></span></button> {/* Reemplazar con <FontAwesomeIcon icon={faPaperclip} /> */}
 
 
 
@@ -648,7 +797,14 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
                                     <div className='divbtnsenaduio'>
                                         <button className={`btnmsj ${chatItemStyle}`} onClick={clearAudio}><i className="fas fa-trash"></i></button>
 
-                                        <button className={`btnmsj ${chatItemStyle}`} onClick={uploadAudio}><i className="fas fa-paper-plane"></i></button>
+                                        <button className={`btnmsj ${chatItemStyle}`} onClick={() => {
+                                            if (estadoqrsesion === "true") {
+                                                AudioQr();
+                                            } else {
+                                                uploadAudio();
+                                            }
+                                        }}>
+                                            <i className="fas fa-paper-plane"></i></button>
 
                                     </div>
                                 </div>
@@ -676,7 +832,13 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
                             {!isRecording && !audioURL && (
 
-                                <button className={`btnmsj ${chatItemStyle}`} onClick={selectedMessageId ? responderMensaje : enviarMensaje}>
+                                <button className={`btnmsj ${chatItemStyle}`} onClick={() => {
+                                    if (estadoqrsesion === "true") {
+                                        mandarQr();
+                                    } else {
+                                        selectedMessageId ? responderMensaje() : enviarMensaje();
+                                    }
+                                }}>
                                     <span><i className="fas fa-paper-plane"></i></span>
                                 </button>
 
