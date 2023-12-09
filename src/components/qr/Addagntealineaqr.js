@@ -10,18 +10,19 @@ function AddAgenteAlinear() {
 
     const [opciones, setOpciones] = useState([]); // Para almacenar los datos de la API
     const [seleccionados, setSeleccionados] = useState([]); // Para almacenar los datos seleccionados
-
+    const idLin = location.state?.numeroDeLinea;
+    
     // Cargar datos de la API
     useEffect(() => {
-        listaAgentes()
-    }, []); // El array vacío asegura que se ejecute solo una vez
+        listaAgentes(idLin);
+    }, [idLin]); // El array vacío asegura que se ejecute solo una vez
 
 
 
 
-    const listaAgentes = async () => {
+    const listaAgentes = async (linea) => {
         const formData ={
-            idLinea:5
+            idLinea:linea
         }
 
         try {
@@ -39,7 +40,7 @@ function AddAgenteAlinear() {
 
             console.log('listaAgentes', jsonData);
         } catch (error) {
-            console.error("Error al obtener los datos de la API :(", error);
+            console.error("Error al obtener los datos de la API :( challleeee", error);
         }
     };
 
@@ -79,13 +80,38 @@ function AddAgenteAlinear() {
             };
         },
         // Puedes agregar más personalizaciones a otros componentes si lo deseas
+
+
     };
 
+    const guardarAgentes = () => {
+        //let contador = seleccionados.length; // Asegúrate de que 'seleccionados' esté definido y accesible en este contexto
+        seleccionados.forEach((element, index) => {
+            console.log(seleccionados[index].value);
+            //alert(`Hola ${index + 1}`);
+            asignar(seleccionados[index].value, location.state?.numeroDeLinea);
+        });
+        window.location.reload();
+    };
+
+    const asignar = async (idAgente, linea) => {
+        console.log(idAgente);
+        console.log(linea);
+        
+        try {
+            await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/addLineToAgent', { idAgente: idAgente, linea: linea});
+            
+        
+            
+        } catch (error) {
+            console.error("Error al obtener los datos de la API para el QR vlv:", error);
+        }
+    }
 
     return (
         <div>
-            <p>Número de línea recibido: {location.state?.numeroDeLinea}</p>
-            <p>Otro dato: {location.state?.otroDato}</p>
+            {/* <p>Número de línea recibido: {location.state?.numeroDeLinea}</p> */}
+            <p>Nombre de la linea: {location.state?.nombre_Linea}</p>
 
             <div className='contadagentesline'>
 
@@ -112,6 +138,9 @@ function AddAgenteAlinear() {
                     </ul>
                 </div>
 
+            </div>
+            <div>
+                <button onClick={guardarAgentes}>Enlazar a la linea</button>
             </div>
 
         </div>

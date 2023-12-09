@@ -394,7 +394,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/send-audio', formData);
+            const response = await axios.post('https://backend-qr-sjkbu6lfrq-uc.a.run.app/send-audio', formData);
             console.log(`audio enviada a ${numerselect}:`, response.data);
             console.log('Enviamos estto', formData)
             onMensajeEnviado();
@@ -573,7 +573,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
             };
 
             try {
-                const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/sendText', postData);
+                const response = await axios.post('https://backend-qr-sjkbu6lfrq-uc.a.run.app/sendText', postData);
                 console.log(response);
 
             } catch (error) {
@@ -613,7 +613,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/sendImage', formData, config);
+            const response = await axios.post('https://backend-qr-sjkbu6lfrq-uc.a.run.app/sendImage', formData, config);
             console.log(`Imagen enviada a ${numerselect}:`, response.data);
             console.log(image)
 
@@ -641,7 +641,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
         console.log('kahkdsa', formData)
         try {
-            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/sendFile', formData);
+            const response = await axios.post('https://backend-qr-sjkbu6lfrq-uc.a.run.app/sendFile', formData);
             console.log(`PDF enviada o ${numerselect}:`, response.data);
         } catch (error) {
             console.error(`Error al enviar el PDf a ${numerselect}:`, error);
