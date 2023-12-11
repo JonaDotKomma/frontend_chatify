@@ -5,9 +5,7 @@ import Picker from '@emoji-mart/react';
 import data from '@emoji-mart/data';
 import Modalsujerecnia from './modales/Modalsujerecnia';
 import ModalPlatilla from './modales/Mandarplanmtila';
-
-
-
+import io from 'socket.io-client';
 
 function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selectedMessageId, selectedMsjUser, selectedTypeMsj, tipochat, fechaulmsjcliente, idssionqr, estadoqrsesion }) {
 
@@ -17,7 +15,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const emojiPickerRef = useRef(null);
     const [imageDetected, setImageDetected] = useState(false);
-
+    const idAgentesi = localStorage.getItem('idAgente');
     const [imagePreview, setImagePreview] = useState([]); // Estado para previsualización de imágenes
     const [imagePreviewVisible, setImagePreviewVisible] = useState(false);
 
@@ -93,6 +91,30 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         setImagePreview([]);
         setImagePreviewVisible(false)
     };
+
+    useEffect(() => {
+        const socket = io('https://socialcenterhtc-5d6f4ba539de.herokuapp.com', {
+            transports: ['polling', 'websocket']
+        });
+        
+        socket.on('validado', (data) => {
+            onMensajeEnviado();
+            console.log('Se valida');
+            console.log(data.message);
+            console.log(data.agent);
+            console.log(data.linea);
+            console.log(data.nombre);
+            console.log(idAgentesi);
+            if(data.agent === parseInt(idAgentesi)){
+                console.log('Si entra a la esta mierda');
+                
+                onMensajeEnviado();
+            }
+        });
+        return () => {
+            socket.disconnect();
+        };
+    });
 
 
     // Función para responder a un mensaje
@@ -394,7 +416,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const response = await axios.post('https://backend-qr-sjkbu6lfrq-uc.a.run.app/send-audio', formData);
+            const response = await axios.post('http://35.208.76.71:8080/send-audio', formData);
             console.log(`audio enviada a ${numerselect}:`, response.data);
             console.log('Enviamos estto', formData)
             onMensajeEnviado();
@@ -573,7 +595,9 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
             };
 
             try {
-                const response = await axios.post('https://backend-qr-sjkbu6lfrq-uc.a.run.app/sendText', postData);
+                console.log('entrando con QQQQQQQQQQQQQQQQQRRRRRRRRRRRRRRR');
+                const response = await axios.post('http://35.208.76.71:8080/sendText', postData);
+                
                 console.log(response);
 
             } catch (error) {
@@ -613,7 +637,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const response = await axios.post('https://backend-qr-sjkbu6lfrq-uc.a.run.app/sendImage', formData, config);
+            const response = await axios.post('http://35.208.76.71:8080/sendImage', formData, config);
             console.log(`Imagen enviada a ${numerselect}:`, response.data);
             console.log(image)
 
@@ -641,7 +665,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
         console.log('kahkdsa', formData)
         try {
-            const response = await axios.post('https://backend-qr-sjkbu6lfrq-uc.a.run.app/sendFile', formData);
+            const response = await axios.post('http://35.208.76.71:8080/sendFile', formData);
             console.log(`PDF enviada o ${numerselect}:`, response.data);
         } catch (error) {
             console.error(`Error al enviar el PDf a ${numerselect}:`, error);

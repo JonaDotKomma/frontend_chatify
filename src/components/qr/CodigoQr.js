@@ -58,7 +58,7 @@ function CodigoQr() {
             console.log(data.linea);
             console.log(data.nombre);
             console.log(idAgentesi);
-            if(data.agent === parseInt(idAgentesi)){
+            if(data.agent === idAgentesi){
                 console.log('Si entra a la esta mierda');
                 const datosParaEnviar = {
                     numeroDeLinea: parseInt(data.linea),
@@ -81,7 +81,7 @@ function CodigoQr() {
 
     const getQR64 = async (idAgente) => {
         try {
-            const response = await axios.post('https://backend-qr-sjkbu6lfrq-uc.a.run.app/getQR', { idAgente });
+            const response = await axios.post('http://35.208.76.71:8080/getQR', { idAgente });
             const jsonData = response.data;
             console.log(jsonData.qr);
             setQR64(jsonData.qr);
