@@ -380,6 +380,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         formData.append('audio', audioFile);
         formData.append('idAgente', idagente);
         formData.append('linea', id_dlinea)
+        formData.append('id', idssionqr)
 
 
         try {
@@ -409,7 +410,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         console.log('es este', audioFile)
         const formData = new FormData();
 
-        formData.set('numero', numerselect);
+        formData.set('number', numerselect);
         formData.append('audio', audioFile);
         formData.append('idAgente', idagente);
         formData.append('linea', id_dlinea)
