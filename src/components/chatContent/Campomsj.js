@@ -380,7 +380,6 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         formData.append('audio', audioFile);
         formData.append('idAgente', idagente);
         formData.append('linea', id_dlinea)
-        formData.append('id', idssionqr)
 
 
         try {
@@ -414,7 +413,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         formData.append('audio', audioFile);
         formData.append('idAgente', idagente);
         formData.append('linea', id_dlinea)
-
+        formData.append('id', idssionqr)
 
         try {
             const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/qrSendAudio', formData);
