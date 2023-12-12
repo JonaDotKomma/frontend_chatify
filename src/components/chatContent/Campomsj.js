@@ -416,7 +416,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const response = await axios.post('http://35.208.76.71:8080/send-audio', formData);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/qrSendAudio', formData);
             console.log(`audio enviada a ${numerselect}:`, response.data);
             console.log('Enviamos estto', formData)
             onMensajeEnviado();
@@ -637,7 +637,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
 
         try {
-            const response = await axios.post('http://35.208.76.71:8080/sendImage', formData, config);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/qrSendImage', formData, config);
             console.log(`Imagen enviada a ${numerselect}:`, response.data);
             console.log(image)
 
@@ -665,7 +665,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
         console.log('kahkdsa', formData)
         try {
-            const response = await axios.post('http://35.208.76.71:8080/sendFile', formData);
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/qrSendPDF', formData);
             console.log(`PDF enviada o ${numerselect}:`, response.data);
         } catch (error) {
             console.error(`Error al enviar el PDf a ${numerselect}:`, error);
