@@ -596,7 +596,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
             try {
                 console.log('entrando con QQQQQQQQQQQQQQQQQRRRRRRRRRRRRRRR');
-                const response = await axios.post('http://35.208.76.71:8080/sendText', postData);
+                const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/qrSendText', postData);
                 
                 console.log(response);
 

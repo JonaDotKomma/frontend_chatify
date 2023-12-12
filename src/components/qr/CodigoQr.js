@@ -81,7 +81,7 @@ function CodigoQr() {
 
     const getQR64 = async (idAgente) => {
         try {
-            const response = await axios.post('https://35.208.76.71:8080/getQR', { idAgente });
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/qrNewConn', { idAgente });
             const jsonData = response.data;
             console.log(jsonData.qr);
             setQR64(jsonData.qr);
