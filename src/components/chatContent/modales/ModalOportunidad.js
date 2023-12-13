@@ -53,7 +53,7 @@ function ModalOportunidad({closeModal, idUsuario, nameLinea}) {
 
     return (
         <form className="modal-overlayuser">
-      <div className="modal-containeruser">
+      <div className="modal-containeruser-s">
         <div className='cbramodaluser'>
           <div className='tlmu'>
             <h2>Crear Oportunidad</h2>
@@ -63,7 +63,7 @@ function ModalOportunidad({closeModal, idUsuario, nameLinea}) {
           </div>
         </div>
 
-        <div className='cls'>
+        <div className='cls-s'>
           
           <div>
             <p className='txtaduser'>Valor esperado</p>

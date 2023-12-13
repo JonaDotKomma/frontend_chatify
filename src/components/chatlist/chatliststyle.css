@@ -282,7 +282,16 @@
 
 .modal-containeruser {
   background: white;
-  width: 40%;
+  width: 65%;
+  border-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 5px;
+  z-index: 1001;
+}
+
+.modal-containeruser-s {
+  background: white;
+  width: auto;
   border-radius: 10px;
   font-family: 'Poppins', sans-serif;
   border-radius: 5px;
@@ -311,6 +320,41 @@
 .cls{
   text-align: left;
   margin-left: 5%;
+}
+
+.cls-s{
+  text-align: left;
+  margin: 1rem;
+}
+
+.clr{
+  width: 65%;
+  height: auto;
+  margin: 5%;
+  background-color: #efeae2;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.titlePreview{
+  text-align: center;
+}
+
+.bodyTemplate{
+  width: auto;
+}
+
+.previewTemplate{
+  background-color: #ffffff;
+  margin: 2%;
+  padding: 1%;
+  border-radius: 0 5px 5px 5px;
+  text-align: center;
+}
+
+.containerMain{
+  display: flex;
+  align-content: space-around;
 }
 
 .btnclomu{

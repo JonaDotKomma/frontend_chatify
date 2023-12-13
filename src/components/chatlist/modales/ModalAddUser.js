@@ -88,7 +88,6 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
 
   const handleSelectTemplateChange = (e) => {
     setSelectedTemplate(e.target.value);
-
   };
 
   if (!isOpen) return null;
@@ -103,7 +102,7 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
     console.log('el', selectedTemplate)
     const fullCustomerNumber = `521${customerNumber}`;
 
-    const [bodyTemplate, nameTemplate] = selectedTemplate.split('|');
+    const [bodyTemplate, nameTemplate, tipo, link_media] = selectedTemplate.split('|');
 
     console.log('cuertpobody', bodyTemplate)
 
@@ -115,7 +114,8 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
       idAgente: parseInt(idAgentec), // Asegurar que idagente sea un entero
       nameTemplate: nameTemplate, //aqyui va el template.name_template seleccionado 
       bodyTemplate: bodyTemplate,///aqui av el template.body_template selecnionado 
-
+      tipoTemplate: tipo ? tipo : '',
+      urlMediaTemplate: link_media ? link_media : ''
     };
 
 
@@ -142,7 +142,6 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
     <div className="modal-overlayuser">
       <div className="modal-containeruser">
 
-
         <div className='cbramodaluser'>
           <div className='tlmu'>
             <h2>Agregar Cliente</h2>
@@ -152,6 +151,7 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
           </div>
         </div>
 
+        <div className='containerMain'>          
         <div className='cls'>
           <div>
             <p className='txtaduser'>Número cliente</p>
@@ -186,17 +186,39 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
             >
 
               <option value="0">Seleccione una plantilla</option>
-              {listplantilla.map((template) => (
-                <option key={template.id_template_message} value={`${template.body_template}|${template.name_template}`}>
+              {listplantilla.map((template) => {
+                
+                return (
+                  <option key={template.id_template_message} value={`${template.body_template}|${template.name_template}|${template.tipo}|${template.link_media}`}>
                   {template.name_template}
                 </option>
-              ))}
+                )
+            }
+              )}
             </select>
           </div>
-
-        </div>
-
-
+          </div>
+          <div className='clr'>
+            <div className='titlePreview'>
+            Previsualización
+            </div>
+            
+            <div className='previewTemplate'>
+              {/* eslint-disable-next-line */}
+              {selectedTemplate.split('|')[2] == 'video' ?
+                <video
+                    width="100%"
+                    height="197.77"
+                    controls
+                >
+                    <source src={selectedTemplate.split('|')[3]} type="video/mp4" />
+                    Tu navegador no admite el elemento de video.
+                </video> : <div> </div>                                          
+              }
+              <p className='bodyTemplate'>{selectedTemplate.split('|')[0]}</p>
+            </div>            
+          </div>
+        </div>        
         <div className='butoncont'>
           <button className='btngenerico' onClick={enviarCatalogo}>Enviar datos</button>
 

@@ -66,7 +66,7 @@ function ModalCambiarEstatus({closeModal, idUsuario}) {
 
   return (
     <form className="modal-overlayuser">
-    <div className="modal-containeruser">
+    <div className="modal-containeruser-s">
       <div className='cbramodaluser'>
         <div className='tlmu'>
           <h2>Cambiar estatus</h2>
@@ -76,7 +76,7 @@ function ModalCambiarEstatus({closeModal, idUsuario}) {
         </div>
       </div>
 
-      <div className='cls'>
+      <div className='cls-s'>
 
          {/* Select para seleccionar lead */}
          <div>
