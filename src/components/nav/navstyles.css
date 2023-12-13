@@ -137,6 +137,7 @@
     border: none;
     display: flex;
     text-decoration: none;
+    position: relative;
   }
 
   .notificaciones {
@@ -151,5 +152,12 @@
     font-weight: bold; /* Peso de la fuente del texto */
     font-size: 14px; /* Tamaño del texto */
     position: absolute;
-    left: 3rem;
+    left: 1.5rem;
+}
+
+.menu-inferior {
+  position: absolute;
+  bottom: 0;
+
+  /* Otros estilos que necesites */
 }
