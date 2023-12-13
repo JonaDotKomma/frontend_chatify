@@ -66,7 +66,7 @@ function ModalPlatilla({ isOpen, onClose,numroclitne, idAgentec, idlinemsj }) {
         console.log('el', selectedTemplate)
         
 
-        const [bodyTemplate, nameTemplate] = selectedTemplate.split('|');
+        const [bodyTemplate, nameTemplate, tipo, link_media] = selectedTemplate.split('|');
 
         console.log('cuertpobody', bodyTemplate,customerNumber )
 
@@ -78,7 +78,8 @@ function ModalPlatilla({ isOpen, onClose,numroclitne, idAgentec, idlinemsj }) {
             idAgente: parseInt(idAgentec), // Asegurar que idagente sea un entero
             nameTemplate: nameTemplate, //aqyui va el template.name_template seleccionado 
             bodyTemplate: bodyTemplate,///aqui av el template.body_template selecnionado 
-
+            tipoTemplate: tipo ? tipo : '',
+            urlMediaTemplate: link_media ? link_media : ''
         };
 
 
@@ -117,12 +118,8 @@ function ModalPlatilla({ isOpen, onClose,numroclitne, idAgentec, idlinemsj }) {
                         <button className='btnclomu' onClick={onClose}><i className="fas fa-times"></i></button>
                     </div>
                 </div>
-
-                <div className='cls'>
-                
-
-                 
-
+                <div className='containerMain'> 
+                <div className='cls'>                            
                     <div>
                         <p>Plantilla mensaje</p>
                         <select
@@ -134,7 +131,7 @@ function ModalPlatilla({ isOpen, onClose,numroclitne, idAgentec, idlinemsj }) {
 
                             <option value="0">Seleccione una plantilla</option>
                             {listplantilla.map((template) => (
-                                <option key={template.id_template_message} value={`${template.body_template}|${template.name_template}`}>
+                                <option key={template.id_template_message} value={`${template.body_template}|${template.name_template}|${template.tipo}|${template.link_media}`}>
                                     {template.name_template}
                                 </option>
                             ))}
@@ -142,7 +139,28 @@ function ModalPlatilla({ isOpen, onClose,numroclitne, idAgentec, idlinemsj }) {
                     </div>
 
                 </div>
+                <div className='clr'>
+                    <div className='titlePreview'>
+                    Previsualización
+                    </div>
+                    
+                    <div className='previewTemplate'>
+                    {/* eslint-disable-next-line */}
+                    {selectedTemplate.split('|')[2] == 'video' ?
+                        <video
+                            width="65%"
+                            height="197.77"
+                            controls
+                        >
+                            <source src={selectedTemplate.split('|')[3]} type="video/mp4" />
+                            Tu navegador no admite el elemento de video.
+                        </video> : <div> </div>                                          
+                    }
+                    <p>{selectedTemplate.split('|')[0]}</p>
+                    </div>
+                </div>
 
+                </div>
 
                 <div className='butoncont'>
                     <button className='btngenerico' onClick={enviarCatalogo}>Enviar datos</button>
