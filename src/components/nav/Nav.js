@@ -98,7 +98,7 @@ function Nav() {
     };
 
     return (
-        <div className="menu-lateral">
+        <div >
             <header className="menu-superior">
                 <Link to="/">
                     <img src={Logo} alt="Logo" />

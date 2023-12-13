@@ -1,16 +1,34 @@
-/* Contenedor principal */
-.container {
+
+  .container {
+    max-width: 1550px; /* o el ancho que prefieras */
+    margin: auto; /* Esto centra el contenido */
+    background-color: white; /* Color de fondo para el contenido */
     display: flex;
     height: 100vh; /* 100% del viewport height */
-   
-  }
+}
+
+body {
+  background-color: rgba(170, 170, 182, 0.5); /* Opacidad del 50% */
+
+}
+
+@media screen and (max-width: 1200px) {
+    .container {
+        max-width: 100%; /* En pantallas pequeñas, permite que el contenedor se expanda */
+    }
+}
+
   
   /* Barra lateral */
   .barralateral {
-    width: 6%;
+    width: 100px;
     background-color: #eff0f2;
     height: 100vh; /* 100% del viewport height */
     overflow-y: auto; /* Para manejar contenido que exceda la altura */
+    display: flex; /* Activa Flexbox */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    flex-direction: column; /* Alinea los elementos en dirección vertical */
   }
   
   /* Contenido principal */

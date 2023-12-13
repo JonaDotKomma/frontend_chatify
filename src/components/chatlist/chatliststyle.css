@@ -2,6 +2,7 @@
     background-color: white;
     height:100%;
     width: 100%;
+    position: relative; /* Needed to position children absolutely within it */
 
 
 }
@@ -241,9 +242,10 @@
   /* Agrega estos estilos en tu archivo de hoja de estilo CSS */
 /* Estilos CSS para el botón flotante */
 .floating-button {
-  position: fixed;
-  bottom: 20px;
-  left: 8%;
+  position: absolute; /* Absolute positioning within the parent div */
+  bottom: 10px;       /* Adjust as needed for distance from bottom */
+  left: 10px; 
+  
   background-color: #aaaab6;
   color: #000000;
   border: none;
