@@ -4,7 +4,8 @@ import axios from 'axios';
 function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, pdfsend }) {
     const [contenido, setContenido] = useState([]);
     const [mostrar, setMostrar] = useState([]);
-    const [urlPdfSeleccionado, setUrlPdfSeleccionado] = useState('');
+    const [vistaActiva, setVistaActiva] = useState(''); // New state for tracking active view
+
 
 
 
@@ -24,28 +25,24 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
 
     const mostrarTextos = () => {
         setMostrar(contenido.filter(item => item.tipo_mensaje === "text"));
-        setUrlPdfSeleccionado(''); // Limpiar el PDF seleccionado cuando se muestran los textos
+        setVistaActiva('textos'); // Set active view to textos
+
     };
 
 
 
-    const seleccionarPdf = (url) => {
-        setUrlPdfSeleccionado(url);
-    };
 
 
-    const enviarCatalogo = async () => {
-        if (!urlPdfSeleccionado) {
-            console.error("No hay un catálogo seleccionado para enviar.");
-            return;
-        }
+
+    const enviarCatalogo = async (mensajePdf) => {
+
 
 
 
         const postData = {
             // Aquí puedes agregar los parámetros que espera tu API
             telefono: numerotel,
-            mensaje: urlPdfSeleccionado,
+            mensaje: mensajePdf,
             tipo: "application/pdf",
             linea: idlinea.toString(), // Convertir idlinea a string
             idAgente: parseInt(idagente) // Asegurar que idagente sea un entero
@@ -68,26 +65,26 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
     };
 
 
-    //campos para busqueda
-
-    const [textoBuscador, setTextoBuscador] = useState('');
-
     // ... useEffect y otras funciones
 
     const mostrarPDFs = () => {
-        setMostrar(contenido.filter(item =>
-            item.tipo_mensaje === "application/pdf" &&
-            item.nombre_del_archivo.toLowerCase().includes(textoBuscador.toLowerCase())
-        ));
+        setMostrar(contenido.filter(item => item.tipo_mensaje === "application/pdf"));
+
+
+        setVistaActiva('pdfs'); // Set active view to pdfs
+
     };
 
     // Cuando el texto del buscador cambia, actualiza el estado y filtra los PDFs
     useEffect(() => {
-        setMostrar(contenido.filter(item =>
-            item.tipo_mensaje === "application/pdf" &&
-            item.nombre_del_archivo.toLowerCase().includes(textoBuscador.toLowerCase())
-        ));
-    }, [textoBuscador, contenido]);
+        setMostrar(contenido.filter(item => item.tipo_mensaje === "application/pdf"));
+
+    }, [ contenido]);
+
+
+    const handleSeleccion = (mensaje) => {
+        onSeleccion(mensaje); // Call onSeleccion with the selected message
+    };
 
     return (
         <div className="modalOverlaysuge">
@@ -113,52 +110,48 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
                         </button>
                     </div>
 
-                    <div className='dtoscontesuge'> {/* Columna de lista */}
-                        <div className='dtolista'>
+                    <div className='dtoscontesuge'>
+                        {vistaActiva === 'textos' && (
                             <div>
-                                <input
-                                    type="text"
-                                    placeholder="Buscar por nombre del archivo..."
-                                    value={textoBuscador}
-                                    onChange={(e) => setTextoBuscador(e.target.value)}
-                                    className='inputBusqueda'
-                                />
+
+                                <ul className="listaSinPuntos">
+                                    {mostrar.map((item, index) => (
+                                        <li key={index} onClick={() => handleSeleccion(item.mensaje)} className='lielement'>
+                                            {item.mensaje}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
+                        )}
+                        {vistaActiva === 'pdfs' && (
+                            <div className="iframeContainer">
 
-
-                            <ul className="listaSinPuntos">
                                 {mostrar.map((item, index) => (
-                                    <li
-                                        className='lielement'
-                                        key={index}
-                                        onClick={() => item.tipo_mensaje === "text" ? onSeleccion(item.mensaje) : seleccionarPdf(item.mensaje)}
-                                    >
-                                        {item.tipo_mensaje === "text" ? item.mensaje : item.nombre_del_archivo}
-                                    </li>
+
+                                    <div className='divpfd'>
+                                        <iframe
+                                            key={index}
+                                            src={`${item.mensaje}#page=1`}
+                                            style={{ width: '300px', height: '300px', marginRight: '10px' }}
+                                            title={`iframe-${index}`}
+                                        ></iframe>
+
+                                        <div>
+                                            <p className='txtpdf'>{item.nombre_del_archivo}</p>
+                                            <button
+                                                className='sendmsv'
+                                                onClick={() => enviarCatalogo(item.mensaje)} // Llamar a enviarCatalogo con item.mensaje
+                                            >
+                                                Enviar
+                                            </button>                                        </div>
+
+                                    </div>
+
                                 ))}
-                            </ul>
-                        </div>
-
-
-                        {urlPdfSeleccionado && (
-                            <div className="pdfViewer"> {/* Columna del visor de PDF */}
-                                <iframe
-                                    src={urlPdfSeleccionado}
-                                    frameBorder="0"
-                                    width="280px" // Ajusta el ancho como necesites
-                                    height="450px" // Ajusta la altura como necesites
-                                    allow="fullscreen"
-                                    title='pdfsend'
-                                ></iframe>
-                                <button className='btncatalogo' onClick={enviarCatalogo}>
-                                    Enviar Catálogo
-                                </button>
-
 
                             </div>
                         )}
                     </div>
-
 
                 </div>
             </div>

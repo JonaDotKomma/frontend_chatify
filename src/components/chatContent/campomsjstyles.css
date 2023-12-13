@@ -334,9 +334,9 @@
 
 .dtolista {
 
-  width: 70%;
-  height: 47%;
-  max-height: 50%;
+  width: 99%;
+ 
+  max-height: 20%;
 }
 
 
@@ -352,23 +352,6 @@ color: #030303;
 
 
 
-/* Modificar el color de la barra de desplazamiento de WebKit */
-.dtolista::-webkit-scrollbar {
-  width: 10px;
-  /* Ancho de la barra de desplazamiento */
-}
-
-.contentdtolista__body::-webkit-scrollbar-thumb {
-  background-color: #aaaab6;
-  /* Color del pulgar de la barra de desplazamiento */
-  border-radius: 10px;
-  /* Radio de borde del pulgar */
-}
-
-.dtolista::-webkit-scrollbar-track {
-  background-color: white;
-  /* Color del fondo de la barra de desplazamiento */
-}
 
 
 .pdfViewer {
@@ -376,9 +359,41 @@ color: #030303;
   margin-left: 2%;
 }
 
-.listaSinPuntos {
 
-  height: 90%;
+/* Modificar el color de la barra de desplazamiento de WebKit */
+.listaSinPuntos::-webkit-scrollbar {
+  width: 10px;
+  /* Ancho de la barra de desplazamiento */
+}
+
+.listaSinPuntos::-webkit-scrollbar-thumb {
+  background-color: #aaaab6;
+  /* Color del pulgar de la barra de desplazamiento */
+  border-radius: 10px;
+  /* Radio de borde del pulgar */
+}
+
+.listaSinPuntos::-webkit-scrollbar-track {
+  background-color: white;
+  /* Color del fondo de la barra de desplazamiento */
+}
+
+.divpfd{
+  background-color: rgba(170, 170, 182, 0.3); /* Opacidad del 50% */
+  margin-right: 1%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.txtpdf{
+  color: #030303;
+}
+
+.listaSinPuntos {
+   
+  height: 400px;
+  max-height: 400px;
   list-style-type: none;
   /* Esto elimina los puntos */
   color: #030303;
@@ -388,11 +403,12 @@ color: #030303;
   justify-content: center;
   align-content: center;
   overflow-y: auto;
+
   /* Esto elimina el espacio reservado para los marcadores, ajusta según sea necesario */
 }
 
 .lielement {
-  background-color: #d9fdd3;
+ 
   margin-top: 2%;
   background-color: #d9fdd3;
   border-radius: 10px;
@@ -403,7 +419,12 @@ color: #030303;
   align-content: center;
   cursor: pointer;
   overflow: hidden;
+}
 
+.iframeContainer {
+  display: flex;
+  overflow-x: auto;
+  height: 450px; /* Set the height to 400px */
 }
 
 .contaudio-container {
@@ -414,6 +435,29 @@ color: #030303;
   overflow: hidden;
   width: 80%;
 }
+
+
+/* Modificar el color de la barra de desplazamiento de WebKit */
+.iframeContainer::-webkit-scrollbar {
+  width: 15px;
+  /* Ancho de la barra de desplazamiento */
+}
+
+.iframeContainer::-webkit-scrollbar-thumb {
+  background-color: #aaaab6;
+  /* Color del pulgar de la barra de desplazamiento */
+  border-radius: 10px;
+  /* Radio de borde del pulgar */
+}
+
+.iframeContainer::-webkit-scrollbar-track {
+  background-color: white;
+  /* Color del fondo de la barra de desplazamiento */
+}
+
+
+
+
 
 .contaudio {
   width: 100%;
