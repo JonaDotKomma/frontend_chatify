@@ -19,7 +19,9 @@ function Enviomasivo() {
     const [allChats, setAllChats] = useState([]);
     const [message, setMessage] = useState('');
 
-
+    //Manejar estado al realizar una peticion
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
     useEffect(() => {
         // Realizar una solicitud GET a tu API
         axios.get('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getcate') // Asegúrate de que la URL sea correcta
@@ -126,7 +128,8 @@ function Enviomasivo() {
     //   };
 
     const sendTemplates = async (allChats) => {
-
+        setLoading(true)
+        setError(null)
         // const formData = new FormData();
         // formData.append('imagen', image);
         // formData.append('idAgente', idUser);
@@ -153,6 +156,9 @@ function Enviomasivo() {
                 // console.log(`Mensaje enviado a ${numero}:`, response.data);
             } catch (error) {
                 console.error(`Error al enviar la imagen a ${numero}:`, error);
+                setError('Ha ocurrido un error, vuelve a intentarlo.')
+            } finally {
+                setLoading(false)
             }
         }
 
@@ -271,14 +277,17 @@ function Enviomasivo() {
                             </select>
 
                         </div>
-
                         <button
                             type="submit"
                             className={`btncampana ${!selectedLine ? 'disabled' : ''}`}
-                            disabled={!selectedLine}
-                        >
+                            disabled={!selectedLine || loading}
+                            >
                             Enviar Campaña Masiva
                         </button>
+                            {loading && <div className="spinner-container">
+                                        <div className="spinner"></div>
+                                        </div>}
+                            {error && <p className='messageAlert'>{error}</p>}
                     </form>
                 </div>
             </div>

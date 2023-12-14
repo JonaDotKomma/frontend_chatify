@@ -7,6 +7,8 @@ import { useLocation } from 'react-router-dom';
 function EditClient({ user, onLogout, }) {
     const location = useLocation();
     const sendiduserclient = location.state?.sendiduser;
+    const [loadingSend, setLoadingSend] = useState(false)
+    const [error, setError] = useState(null)
     console.log("Received sendiduser:", sendiduserclient);
 
 
@@ -80,6 +82,8 @@ function EditClient({ user, onLogout, }) {
 
     //Enviar los datos al precionar boton
     async function updateClient(data) {
+        setError(null)
+        setLoadingSend(true)
         const payload = {
             "idUser": sendiduserclient,
             "contact_id": data.id_odoo,
@@ -105,12 +109,16 @@ function EditClient({ user, onLogout, }) {
             window.location.reload();
         } catch (error) {
             console.error('Error al actualizar el cliente Valio verga valio verga', error);
+            setError('Ha ocurrido un error, vuelve a intentarlo.')
+        } finally {
+            setLoadingSend(false)
         }
     }
 
     async function createClient(data) {
         console.log('la data es', data)
-
+        setLoadingSend(true)
+        setError(null)
 
         const payload = {
             "idUser": sendiduserclient,
@@ -139,6 +147,9 @@ function EditClient({ user, onLogout, }) {
 
         } catch (error) {
             console.error('No conecto:', error);
+            setError('Ha ocurrido un error, vuelve a intentarlo.')
+        } finally {
+            setLoadingSend(false)
         }
     }
 
@@ -636,9 +647,12 @@ function EditClient({ user, onLogout, }) {
 
                 </div>
 
-
+                {error && <p className='messageAlert'>{error}</p>}
+                {loadingSend && <div className="spinner-container">
+                          <div className="spinner"></div>
+                        </div>}
                 <div className='btnsendformu'>
-                    <button className='btnenvirformu' type="submit">
+                    <button className='btnenvirformu' type="submit" disabled={loadingSend}>
                         {clientData.id_odoo ? 'Actualizar Cliente' : 'Crear Cliente'}
 
                     </button>

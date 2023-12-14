@@ -13,6 +13,13 @@ function ModalPDF({ isOpen, onClose, numerselect, idagente, id_dlinea }) {
 
     const [respuesta, setRespuesta] = useState([]);
 
+    //Manejar estado de carga y error
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
+
+    const [loadingSendPDF, setLoadingSendPDF] = useState(false)
+    const [errorSend, setErrorSend] = useState(null)
+
     useEffect(() => {
         if (isOpen) {
             setOrden('');
@@ -33,7 +40,8 @@ function ModalPDF({ isOpen, onClose, numerselect, idagente, id_dlinea }) {
     }
 
     const handleGenerarOrden = async () => {
-
+        setLoading(true)
+        setError(null)
         const postData = {
             idSale: orden,  // Enviando el número de orden como parámetro
         };
@@ -52,7 +60,9 @@ function ModalPDF({ isOpen, onClose, numerselect, idagente, id_dlinea }) {
         } catch (error) {
             console.error('Error al enviar la solicitud a la API:', error);
             setRespuesta('Ocurrió un error al buscar la orden');
-
+            setError('Ha ocurrido un error, vuelve a intentarlo')
+        } finally {
+            setLoading(false)
         }
     };
     const formatDate = (originalDate) => {
@@ -421,7 +431,8 @@ function ModalPDF({ isOpen, onClose, numerselect, idagente, id_dlinea }) {
 
 
     const sendPdfToUser = async () => {
-
+        setLoadingSendPDF(true)
+        setErrorSend(null)
 
         const formData = new FormData();
         formData.append('pdf', pdfconte);
@@ -436,6 +447,9 @@ function ModalPDF({ isOpen, onClose, numerselect, idagente, id_dlinea }) {
             console.log(`PDF enviada o:`, response.data);
         } catch (error) {
             console.error(`Error al enviar el PDF`, error);
+            setErrorSend('Ha ocurrido un error, vuelve a intentarlo')
+        } finally {
+            setLoadingSendPDF(false)
         }
 
         onClose()
@@ -466,7 +480,11 @@ function ModalPDF({ isOpen, onClose, numerselect, idagente, id_dlinea }) {
                         </div>
 
 
-                        <button className='btnordetn' onClick={handleGenerarOrden}>Generar PDF</button>
+                        <button className='btnordetn' onClick={handleGenerarOrden} disabled={loading}>Generar PDF</button>
+                        {loading && <div className="spinner-container">
+                                        <div className="spinner"></div>
+                                    </div>}
+                        {error && <p className='messageAlert'>Error</p>}                        
                     </div>
 
                     <div className='ladodelpdf'>
@@ -484,22 +502,21 @@ function ModalPDF({ isOpen, onClose, numerselect, idagente, id_dlinea }) {
 
                                 <div className='pdfor20'>
                                     <iframe title='orden' src={pdfUrl} width="90%" height="360px"></iframe>
-
                                 </div>
                                 <div className='btnsedord'>
 
                                     {numerselect
-                                        ? <button className='btnordetn20' onClick={sendPdfToUser}>Enviar Orden</button>
+                                        ? <button className='btnordetn20' onClick={sendPdfToUser} disabled={loadingSendPDF}>Enviar Orden</button>
                                         : <a href={pdfUrl} download={`Ficha-${orden}.pdf`} className='btnordetn20'>Descargar PDF</a>
                                     }
-
-
-
+                                    {loadingSendPDF && <div className="spinner-container">
+                                                            <div className="spinner"></div>
+                                                        </div>}
+                                    {errorSend && <p className='messageAlert'>{errorSend}</p>}
                                 </div>
                             </div>
                         )}
                     </div>
-
 
                 </div>
 

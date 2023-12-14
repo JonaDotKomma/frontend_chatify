@@ -12,6 +12,11 @@ function AdminView({ user, onLogout, nombreUsuario }) {
 
     const [pdfPreview, setPdfPreview] = useState(null);
 
+    //Manejar estado de carga y error
+    const [loadingCrearPDF, setLoadingCrearPDF] = useState(false)
+    const [errorCrearPDF, setErrorCrearPDF] = useState(null)
+    const [loadingCrearMsg, setLoadingCrearMsg] = useState(false)
+    const [errorCrearMsg, setErrorCrearMsg] = useState(null)
 
     const removeSelectedFile = () => {
         setFile(null);
@@ -34,7 +39,8 @@ function AdminView({ user, onLogout, nombreUsuario }) {
 
     const handleSubmitMessage = async (e) => {
         e.preventDefault();
-
+        setLoadingCrearMsg(true);
+        setErrorCrearMsg(null)
         console.log('Mensaje:', message);
 
 
@@ -49,6 +55,9 @@ function AdminView({ user, onLogout, nombreUsuario }) {
 
         } catch (error) {
             console.error(`Mamo hasta pareces del Cenihes`, error);
+            setErrorCrearMsg('Ha ocurrido un error, vuelve a intenterlo');
+        } finally {
+            setLoadingCrearMsg(false)
         }
 
         setMessage(null)
@@ -60,7 +69,8 @@ function AdminView({ user, onLogout, nombreUsuario }) {
 
     const handleSubmitPdf = async (e) => {
         e.preventDefault();
-
+        setLoadingCrearPDF(true);
+        setErrorCrearPDF(null);
 
         if (!file) {
             console.error('No se ha seleccionado ningún archivo');
@@ -84,6 +94,9 @@ function AdminView({ user, onLogout, nombreUsuario }) {
 
         } catch (error) {
             console.error(`Mamo hasta pareces del Cenihes`, error);
+            setErrorCrearPDF('Ha ocurrido un error, vuelve a intentarlo')
+        } finally {
+            setLoadingCrearPDF(false)
         }
 
         setFile(null)
@@ -190,9 +203,12 @@ function AdminView({ user, onLogout, nombreUsuario }) {
 
 
                             <div>
-                                <button className='sendmsv' type="submit">Guardar Mensaje</button>
-
-
+                                <button className='sendmsv' type="submit" disabled={loadingCrearMsg}>Guardar Mensaje</button>
+                                {errorCrearMsg && <p className='messageAlert'>{errorCrearMsg}</p>}
+                                    {loadingCrearMsg && 
+                                    <div className="spinner-container">
+                                        <div className="spinner"></div>
+                                    </div>}
                             </div>
                         </div>
                     </form>
@@ -229,9 +245,14 @@ function AdminView({ user, onLogout, nombreUsuario }) {
 
 
                                     <div className="btnpdfpr">
-                                        <button className='sendmsv' type="submit">Guardar Catálogo</button>
+                                        <button className='sendmsv' type="submit" disabled={loadingCrearPDF}>Guardar Catálogo</button>
 
                                     </div>
+                                    {errorCrearPDF && <p className='messageAlert'>{errorCrearPDF}</p>}
+                                    {loadingCrearPDF && 
+                                    <div className="spinner-container">
+                                        <div className="spinner"></div>
+                                    </div>}
                                 </div>
 
 

@@ -6,8 +6,9 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
     const [mostrar, setMostrar] = useState([]);
     const [vistaActiva, setVistaActiva] = useState(''); // New state for tracking active view
 
-
-
+    //Manejar estado de cargar y error
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         const cargarMensajes = async () => {
@@ -36,8 +37,8 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
 
     const enviarCatalogo = async (mensajePdf) => {
 
-
-
+        setLoading(true);
+        setError(null);
 
         const postData = {
             // Aquí puedes agregar los parámetros que espera tu API
@@ -61,6 +62,9 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
             pdfsend()
         } catch (error) {
             console.error("Error al enviar el catálogo:", error);
+            setError('Ha ocurrido un error, vuelve a intentarlo.')
+        } finally {
+            setLoading(false)
         }
     };
 
@@ -108,8 +112,13 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
                         >
                             Catálogo interactivo
                         </button>
+                    {error && 
+                    <p className='messageAlert' style={{color: '#030303'}}>Error</p>}
+                    {loading && 
+                        <div className="spinner-container">
+                                <div className="spinner"></div>
+                            </div>}
                     </div>
-
                     <div className='dtoscontesuge'>
                         {vistaActiva === 'textos' && (
                             <div>
@@ -141,6 +150,7 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
                                             <button
                                                 className='sendmsv'
                                                 onClick={() => enviarCatalogo(item.mensaje)} // Llamar a enviarCatalogo con item.mensaje
+                                                disabled={loading}
                                             >
                                                 Enviar
                                             </button>                                        </div>

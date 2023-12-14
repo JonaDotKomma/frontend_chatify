@@ -10,6 +10,8 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
   const [customerNumber, setCustomerNumber] = useState(''); // Estado para el número del cliente
   const botestado = '1'; // Reemplazar con el estado fijo deseado
 
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     if (isOpen) {
@@ -94,6 +96,8 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
 
 
   const enviarCatalogo = async () => {
+    setLoading(true)
+    setError(null)
     if (!customerNumber || !selectedLine) {
       alert('Por favor, complete todos los campos.');
       return;
@@ -132,6 +136,9 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
 
     } catch (error) {
       console.error("Error al enviar plantilla:", error);
+      setError('Ha ocurrido un error, vuelve a intentarlo.')
+    } finally {
+      setLoading(false)
     }
 
     console.log('el id de respuesta es ',idrespuesta)
@@ -220,9 +227,12 @@ function ModalAddUser({ isOpen, onClose, idAgentec, onSelectChat }) {
           </div>
         </div>        
         <div className='butoncont'>
-          <button className='btngenerico' onClick={enviarCatalogo}>Enviar datos</button>
-
-        </div>
+          <button className='btngenerico' onClick={enviarCatalogo} disabled={loading}>Enviar datos</button>
+        </div>        
+          {loading && <div className="spinner-container">
+                          <div className="spinner"></div>
+                        </div>}
+          {error && <p className='messageAlert'>{error}</p>}
       </div>
     </div>
   );

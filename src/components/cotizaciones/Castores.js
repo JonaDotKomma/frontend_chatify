@@ -26,6 +26,8 @@ function Castores() {
     //funcion para poder llamar a la api
     const [listproductosdata, setListproductosdata] = useState([]);
 
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         const obtenerProductos = async () => {
@@ -47,6 +49,8 @@ function Castores() {
     //enviar datos a castores
     let productosSeleccionados = [];
     const handleFormSubmit = async () => {
+        setLoading(true)
+        setError(null)
         console.log('BOTON COTIZAR');
 
         let valorDeclaradoFinal = 0;
@@ -87,10 +91,12 @@ function Castores() {
             console.log('Si paso mano', response.data);
             setRespuestaApi(response.data); // Actualiza el estado con la respuesta
 
-
             // Manejar la respuesta de la API
         } catch (error) {
             console.error("Error al enviar los datos:", error);
+            setError('Ha ocurrido un error, vuelve a intentarlo');
+        } finally {
+            setLoading(false)
         }
 
     };
@@ -255,16 +261,18 @@ useEffect(() => {
 
                     </div>
 
-                </div>
-
-
-
-
+                </div>                
+                
                 <div className='btncontent'>
-                    <button  disabled={!isButtonEnabled} className='btncassend'   onClick={handleFormSubmit}>
+                    <button  disabled={!isButtonEnabled || loading} className='btncassend'   onClick={handleFormSubmit}>
                         Cotizar
                     </button>
                 </div>
+
+                {loading && <div className="spinner-container">
+                    <div className="spinner"></div>
+                </div>}
+                {error && <p className='messageAlert'>{error}</p>}
             </div>
 
 

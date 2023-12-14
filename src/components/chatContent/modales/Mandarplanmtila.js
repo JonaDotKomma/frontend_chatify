@@ -8,9 +8,9 @@ function ModalPlatilla({ isOpen, onClose,numroclitne, idAgentec, idlinemsj }) {
     const selectedLine=idlinemsj; // Estado para la línea seleccionada
     const customerNumber= numroclitne ; // Estado para el número del cliente
 
-   
-
-
+   //Manejar estado de carga y errores
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
 
 
     useEffect(() => {
@@ -58,6 +58,8 @@ function ModalPlatilla({ isOpen, onClose,numroclitne, idAgentec, idlinemsj }) {
 
 
     const enviarCatalogo = async () => {
+        setError(null)
+        setLoading(true)
         if (!customerNumber || !selectedLine) {
             alert('Por favor, complete todos los campos.');
             return;
@@ -96,6 +98,9 @@ function ModalPlatilla({ isOpen, onClose,numroclitne, idAgentec, idlinemsj }) {
 
         } catch (error) {
             console.error("Error al enviar plantilla:", error);
+            setError('Ha ocurrido un error, vuelve a intentarlo.')
+        } finally {
+            setLoading(false)
         }
 
         console.log('el id de respuesta es ', idrespuesta)
@@ -163,9 +168,14 @@ function ModalPlatilla({ isOpen, onClose,numroclitne, idAgentec, idlinemsj }) {
                 </div>
 
                 <div className='butoncont'>
-                    <button className='btngenerico' onClick={enviarCatalogo}>Enviar datos</button>
+                    <button className='btngenerico' onClick={enviarCatalogo} disabled={loading}>Enviar datos</button>
 
                 </div>
+                {error && <p className='messageAlert'>{error}</p>}
+                {loading && 
+                <div className="spinner-container">
+                          <div className="spinner"></div>
+                        </div>}
             </div>
 
             

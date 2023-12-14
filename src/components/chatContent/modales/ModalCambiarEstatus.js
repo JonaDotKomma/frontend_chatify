@@ -5,6 +5,10 @@ function ModalCambiarEstatus({closeModal, idUsuario}) {
     const [listLeads, setListLeads] = useState([])
     const [listStages, setListStages] = useState([]);
     const [msgAlertValue, setMsgAlertValue] = useState(false);
+
+    //Manejar estados de carga y errores
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
   
     useEffect(() => {
         (async () => {
@@ -44,6 +48,8 @@ function ModalCambiarEstatus({closeModal, idUsuario}) {
 
     const changeStatus = async (e) => {
         e.preventDefault();
+        setError(null)
+        setLoading(true)
         if(lead === "" || status === ""){
           setMsgAlertValue(true);
           return null;
@@ -61,6 +67,9 @@ function ModalCambiarEstatus({closeModal, idUsuario}) {
             return response.data
         } catch (error) {
             console.error(error)
+            setError('Ha ocurrido un error, vuelve a intentarlo.')
+        } finally {
+          setLoading(false)
         }     
     }        
 
@@ -117,13 +126,18 @@ function ModalCambiarEstatus({closeModal, idUsuario}) {
               <div>
                   <p name="registrar" className="txtaduserAlert">Es necesario seleccionar los elementos*</p>
               </div>
-          }
+          }          
       </div>
 
 
       <div className='butoncont'>
-        <button className='btngenerico' onClick={changeStatus} >Cambiar estado</button>
+        <button className='btngenerico' onClick={changeStatus} disabled={loading} >Cambiar estado</button>
       </div>
+      {loading && 
+      <div className="spinner-container">
+              <div className="spinner"></div>
+          </div>}
+      {error && <p className='messageAlert'>{error}</p>}
     </div>
   </form>
   )

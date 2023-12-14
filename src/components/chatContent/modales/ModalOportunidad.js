@@ -7,12 +7,17 @@ function ModalOportunidad({closeModal, idUsuario, nameLinea}) {
     const [usuarioEncontrado, setUsuarioEncontrado] = useState(true);
     const [msgAlertValue, setMsgAlertValue] = useState(false);
 
+    //Manejar estado de carga y errores
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
     const handleValorEsperado = (e) => {
         setValorEsperado(e.target.value);
     }
 
     const crearLead = async (e) => {
         e.preventDefault();
+        setLoading(true)
+        setError(null)
         if(valorEsperado === 0) {
             setMsgAlertValue(true)
             return "Valor esperado";
@@ -39,6 +44,9 @@ function ModalOportunidad({closeModal, idUsuario, nameLinea}) {
             }
         } catch (error) {
             console.error(error)
+            setError('Ha ocurrido un error, vuelve a intentarlo.')
+        } finally {
+            setLoading(false)
         }        
     }        
 
@@ -79,7 +87,7 @@ function ModalOportunidad({closeModal, idUsuario, nameLinea}) {
                 <div>
                     <p name="registrar" className="txtaduserAlert">Es necesario completar los datos*</p>
                     {/* eslint-disable-next-line */}
-                    <a className="btnAnchor txtaduserAlert" onClick={handleNavigation}>Registrarme</a>
+                    <a className="btnAnchor txtaduserAlert" onClick={handleNavigation}>Registrar</a>
                 </div>
             }            
 
@@ -92,8 +100,13 @@ function ModalOportunidad({closeModal, idUsuario, nameLinea}) {
 
 
         <div className='butoncont'>
-          <button className='btngenerico' onClick={crearLead} >Crear oportunidad</button>
+          <button className='btngenerico' onClick={crearLead} disabled={loading}>Crear oportunidad</button>
         </div>
+        {error && <p className='messageAlert'>{error}</p>}
+        {loading && 
+        <div className="spinner-container">
+              <div className="spinner"></div>
+          </div>}
       </div>
     </form>
     )
