@@ -334,6 +334,7 @@ function EditClient({ user, onLogout, }) {
                                 name="numtel"
                                 value={clientData.phone}
                                 required
+                                readOnly
                                 onChange={(e) => setClientData(prevState => ({ ...prevState, phone: e.target.value }))}
                             />
                         </div>
@@ -345,7 +346,6 @@ function EditClient({ user, onLogout, }) {
                                 value={clientData.email}
                                 id="mail"
                                 name="mail"
-                                required
                                 onChange={(e) => setClientData(prevState => ({ ...prevState, email: e.target.value }))}
                             />
                         </div>
@@ -368,7 +368,6 @@ function EditClient({ user, onLogout, }) {
                                                 placeholder: 'Buscar dirección...',
                                                 
                                             })}
-                                            required
                                         />
                                         <div>
                                             {loading && <div>Cargando...</div>}
@@ -396,13 +395,12 @@ function EditClient({ user, onLogout, }) {
                                     id="numstret"
                                     name="numstret"
                                     value={clientData.numstret}
-                                    required
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, numstret: e.target.value }))}
                                 />
                             </div>
                             <div>
                                 <p className='textp der'>Colonia</p>
-                                <input className='ipuntchico der' required/>
+                                <input className='ipuntchico der'/>
                             </div>
 
 
@@ -417,7 +415,6 @@ function EditClient({ user, onLogout, }) {
                                     id="state"
                                     name="state"
                                     value={clientData.state}
-                                    required
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, state: e.target.value }))}
 
                                 />
@@ -430,7 +427,6 @@ function EditClient({ user, onLogout, }) {
                                     id="city"
                                     name="city"
                                     value={clientData.city}
-                                    required
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, city: e.target.value }))}
 
                                 />
@@ -448,7 +444,6 @@ function EditClient({ user, onLogout, }) {
                                     id="cp"
                                     name="cp"
                                     value={clientData.CP}
-                                    required
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, CP: e.target.value }))}
                                 />
                             </div>
@@ -488,7 +483,6 @@ function EditClient({ user, onLogout, }) {
                                     id="rfc"
                                     name="rfc"
                                     value={clientData.rfc}
-                                    required
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, rfc: e.target.value }))}
                                 />
                             </div>
@@ -500,7 +494,6 @@ function EditClient({ user, onLogout, }) {
                                     id="curp"
                                     name="curp"
                                     value={clientData.curp}
-                                    required
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, curp: e.target.value }))}
                                 />
                             </div>
@@ -521,7 +514,6 @@ function EditClient({ user, onLogout, }) {
                                 name="regimenf"
                                 value={clientData.regimen}
                                 onChange={(e) => setClientData(prevState => ({ ...prevState, regimen: e.target.value }))}
-                                required
                             >
                                 <option value="">Selecciona...</option>
                                 <option value="601">General de Ley Personas Morales</option>
@@ -588,7 +580,7 @@ function EditClient({ user, onLogout, }) {
                         <p className='txtcategoria'>Agregar Categorias</p>
                         <div className='pgtaldo'>
                             <select id="mySelect"
-                                className='inpugrd' value={selectedOption} onChange={handleSelectChange} required>
+                                className='inpugrd' value={selectedOption} onChange={handleSelectChange}>
                                 <option value="">Selecciona una categoria de Odoo...</option>
                                 <option value="opcion1">Opción 1</option>
                                 <option value="opcion2">Opción 2</option>
