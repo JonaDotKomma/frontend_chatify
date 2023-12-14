@@ -3,7 +3,7 @@
     height: 100vh;
     box-sizing: border-box;
     /* Añadido */
-
+    background-color: white;
 }
 
 .login-left {
