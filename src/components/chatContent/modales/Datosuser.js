@@ -116,6 +116,8 @@ function DatosUser({ sendiduser, nombrecliente, onClose }) {
                         <div className='btninfot'>  <button onClick={handleClose}><i class="fas fa-times"></i></button></div>
                     </div>
 
+
+
                     <div className='dtosimagenuser'>
                         <div className='circle-img'>
                             <img src='https://cdn-icons-png.flaticon.com/512/552/552721.png' alt='' />
@@ -131,7 +133,7 @@ function DatosUser({ sendiduser, nombrecliente, onClose }) {
                         <div className='dtonmaeedit'>
                             <p>Id de Usuario {sendiduser}</p>
 
-                           
+
                         </div>
 
                     </div>
@@ -139,13 +141,36 @@ function DatosUser({ sendiduser, nombrecliente, onClose }) {
 
                     <div className='deodeod'>
 
-                    
-                            <i className="fas fa-circle"></i>
 
-                            <p>Activo</p>
+                        <i className="fas fa-circle"></i>
+
+                        <p>Activo</p>
 
 
-                     
+
+                    </div>
+
+                    <div className='divcuentas'>
+                        <div className='divuno'>
+
+
+
+                   
+
+                            <p>         <i className="fas fa-dollar-sign"></i> {clientData.sales_count || clientData.sales_count == 0 ? '0' : clientData.sales_count}
+
+                            </p>
+                        </div>
+
+                        <div  className='divuno'>
+
+                         
+                            <p>
+                            <i className="fas fa-star"></i> {clientData.opportunities_count || clientData.opportunities_count == 0 ? '0' : clientData.opportunities_count}
+
+                            </p>
+                        </div>
+
                     </div>
 
                     <div>

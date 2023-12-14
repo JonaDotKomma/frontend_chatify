@@ -51,7 +51,7 @@ function Castores() {
 
         let valorDeclaradoFinal = 0;
         opcionSeleccionada.forEach((seleccion, index)=> {
-            const [valorDeclarado, contenido, noPiezas, peso, largoCm, anchoCm, altoCm] = seleccion.split('|');
+            const [valorDeclarado, contenido, peso, largoCm, anchoCm, altoCm] = seleccion.split('|');
             valorDeclaradoFinal = valorDeclaradoFinal + parseFloat(valorDeclarado);
             const cantidadPiezas = parseInt(noPiezasPorProducto[index], 10) || 1; // Usa el valor del input o 1 por defecto
 
@@ -106,7 +106,7 @@ function Castores() {
         setCity('');
         setState('');
         setNeighborhood('');
-
+        setNoPiezasPorProducto('');
         setColonias([])
         setIsColoniaSelectDisabled(true)
         setRespuestaApi(null);
@@ -115,7 +115,7 @@ function Castores() {
 
     //Datos del select 
     const selectOptions = listproductosdata.map(producto => ({
-        value: `${producto.valor_declarado}|${producto.contenido}|${producto.no_piezas}|${producto.peso}|${producto.largo_cm}|${producto.ancho_cm}|${producto.alto_cm}`,
+        value: `${producto.valor_declarado}|${producto.contenido}|${producto.peso}|${producto.largo_cm}|${producto.ancho_cm}|${producto.alto_cm}`,
         label: `${producto.sku} - ${producto.contenido}`
     }));
 
@@ -145,7 +145,7 @@ function Castores() {
                     {nombreProducto} {/* Mostrar solo el nombre del producto */}
                     <input 
                         type="number" 
-                        value={noPiezasPorProducto[index] || ''} 
+                        value={noPiezasPorProducto[index] || 1} 
                         onChange={(e) => handleNoPiezasChange(index, e.target.value)}
                         placeholder="No. Piezas"
                     />
