@@ -194,13 +194,14 @@ function EditClient({ user, onLogout, }) {
             }));
             setAddress(response.data.city)
             console.log("Datos de API 1", response.data);
-
+            consultaodo(response.data.phone)
 
         } catch (error) {
             console.error('Error API ODO:', error);
         }
 
         setLoading(false);
+
     };
 
 
@@ -243,8 +244,51 @@ function EditClient({ user, onLogout, }) {
             } catch (error) {
                 console.error('Error al obtener datos de getInfoUserOdooForNumber:', error);
             }
+
+
+
         }
     };
+
+    const [dataListCategoria, setDataListCategoria] = useState([]);
+    const consultaodo = async (data) => {
+
+        try {
+
+
+            const postData = {
+                number: data,
+            };
+            const response = await axios.post('http://192.168.100.41:8000/getCategoriesOdooForNumber', postData);
+            console.log("datos de categoria:", response.data);
+            if (response.data && Array.isArray(response.data)) {
+                setDataListCategoria(response.data);
+            } else {
+                setDataListCategoria([]); // asegúrate de que siempre es un array
+            }
+
+            // Si necesitas actualizar algún estado o realizar alguna otra operación con la respuesta, hazlo aquí.
+
+        } catch (error) {
+            console.error('Error al obtener datos de getInfoUserOdooForNumber:', error);
+        }
+
+    }
+
+    useEffect(() => {
+        console.log('categoryData:', dataListCategoria);
+        if (dataListCategoria && dataListCategoria.length > 0 && dataListCategoria[0].categories) {
+            const options = dataListCategoria[0].categories.map(cat => ({
+                value: cat.id,
+                label: cat.name
+            }));
+            setDataListCategoria(options);
+        }
+    }, [dataListCategoria]);
+
+
+
+
     const [selectedItem, setSelectedItem] = useState(null);
 
     function handleSelectItem(item) {
@@ -285,12 +329,8 @@ function EditClient({ user, onLogout, }) {
     const [loading, setLoading] = useState(false);
 
 
-    //select de categorias de odo
-    const [selectedOption, setSelectedOption] = useState('');
 
-    const handleSelectChange = (e) => {
-        setSelectedOption(e.target.value);
-    };
+
 
 
     return (
@@ -312,7 +352,7 @@ function EditClient({ user, onLogout, }) {
                         <div>
                             <p className='textp'>Nombre Completo </p>
                             <input
-                                className='inpugrd'                                                
+                                className='inpugrd'
                                 type="text"
                                 id="nameclient"
                                 placeholder='Nombre...'
@@ -333,7 +373,7 @@ function EditClient({ user, onLogout, }) {
                                 id="numtel"
                                 name="numtel"
                                 value={clientData.phone}
-                                required
+
                                 onChange={(e) => setClientData(prevState => ({ ...prevState, phone: e.target.value }))}
                             />
                         </div>
@@ -345,7 +385,7 @@ function EditClient({ user, onLogout, }) {
                                 value={clientData.email}
                                 id="mail"
                                 name="mail"
-                                required
+
                                 onChange={(e) => setClientData(prevState => ({ ...prevState, email: e.target.value }))}
                             />
                         </div>
@@ -366,7 +406,7 @@ function EditClient({ user, onLogout, }) {
                                                 id: 'strett',
                                                 name: 'strett',
                                                 placeholder: 'Buscar dirección...',
-                                                
+
                                             })}
                                             required
                                         />
@@ -396,13 +436,13 @@ function EditClient({ user, onLogout, }) {
                                     id="numstret"
                                     name="numstret"
                                     value={clientData.numstret}
-                                    required
+
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, numstret: e.target.value }))}
                                 />
                             </div>
                             <div>
                                 <p className='textp der'>Colonia</p>
-                                <input className='ipuntchico der' required/>
+                                <input className='ipuntchico der' />
                             </div>
 
 
@@ -417,7 +457,7 @@ function EditClient({ user, onLogout, }) {
                                     id="state"
                                     name="state"
                                     value={clientData.state}
-                                    required
+
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, state: e.target.value }))}
 
                                 />
@@ -430,7 +470,7 @@ function EditClient({ user, onLogout, }) {
                                     id="city"
                                     name="city"
                                     value={clientData.city}
-                                    required
+
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, city: e.target.value }))}
 
                                 />
@@ -448,12 +488,20 @@ function EditClient({ user, onLogout, }) {
                                     id="cp"
                                     name="cp"
                                     value={clientData.CP}
-                                    required
+
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, CP: e.target.value }))}
                                 />
                             </div>
 
 
+
+                        </div>
+
+                        <div className='btnsendformu'>
+                            <button className='btnenvirformu' type="submit">
+                                {clientData.id_odoo ? 'Actualizar Cliente' : 'Crear Cliente'}
+
+                            </button>
 
                         </div>
 
@@ -488,7 +536,7 @@ function EditClient({ user, onLogout, }) {
                                     id="rfc"
                                     name="rfc"
                                     value={clientData.rfc}
-                                    required
+
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, rfc: e.target.value }))}
                                 />
                             </div>
@@ -500,7 +548,7 @@ function EditClient({ user, onLogout, }) {
                                     id="curp"
                                     name="curp"
                                     value={clientData.curp}
-                                    required
+
                                     onChange={(e) => setClientData(prevState => ({ ...prevState, curp: e.target.value }))}
                                 />
                             </div>
@@ -521,7 +569,7 @@ function EditClient({ user, onLogout, }) {
                                 name="regimenf"
                                 value={clientData.regimen}
                                 onChange={(e) => setClientData(prevState => ({ ...prevState, regimen: e.target.value }))}
-                                required
+
                             >
                                 <option value="">Selecciona...</option>
                                 <option value="601">General de Ley Personas Morales</option>
@@ -585,21 +633,17 @@ function EditClient({ user, onLogout, }) {
 
 
 
-                        <p className='txtcategoria'>Agregar Categorias</p>
+                        <p className='txtcategoria'> Categorias</p>
                         <div className='pgtaldo'>
-                            <select id="mySelect"
-                                className='inpugrd' value={selectedOption} onChange={handleSelectChange} required>
-                                <option value="">Selecciona una categoria de Odoo...</option>
-                                <option value="opcion1">Opción 1</option>
-                                <option value="opcion2">Opción 2</option>
-                                <option value="opcion3">Opción 3</option>
-                                <option value="opcion4">Opción 4</option>
-                            </select>
-                            <p>Categorias</p>
-                            <div>
-                                <button className='btnwhtc'>Whatsapp</button>
-                                <button className='btnmessc'> Messenger</button>
-                                <button className='btnmlc'>Mercado Libre</button>
+
+
+
+                            <div className="horizontal-list">
+                                {dataListCategoria.map((option, index) => (
+                                    <div key={index} className="list-item">
+                                        {option.label}
+                                    </div>
+                                ))}
                             </div>
 
 
@@ -607,36 +651,36 @@ function EditClient({ user, onLogout, }) {
                         </div>
 
 
-                                                        
+
                         {dataList && dataList.length > 0 && (
-                                    <div className='ldobtns'>
-                                        <div className="scrollableContainer">
-                                            {dataList.map((item, index) => (
-                                                <div
-                                                    key={index}
-                                                    onClick={() => handleSelectItem(item)}
+                            <div className='ldobtns'>
+                                <div className="scrollableContainer">
+                                    {dataList.map((item, index) => (
+                                        <div
+                                            key={index}
+                                            onClick={() => handleSelectItem(item)}
 
-                                                    className={selectedItem === item ? 'selectedItem' : 'listaodo'}
+                                            className={selectedItem === item ? 'selectedItem' : 'listaodo'}
 
-                                                >
-                                                    <div className='contendivtitlo'>
-                                                        <h3>Dato {index + 1}</h3>
+                                        >
+                                            <div className='contendivtitlo'>
+                                                <h3>Dato {index + 1}</h3>
 
-                                                    </div>
-                                                    <div className='contendivodo'>
-                                                        <p className='titlediv'>Id Odoo:</p> <p>{item.id_odoo || 'N/A'} </p>
-                                                        <p className='titlediv'>Nombre:</p> <p> {item.name || 'N/A'}</p>
-                                                        <p className='titlediv'>Email:</p> <p> {item.email || 'N/A'}</p>
+                                            </div>
+                                            <div className='contendivodo'>
+                                                <p className='titlediv'>Id Odoo:</p> <p>{item.id_odoo || 'N/A'} </p>
+                                                <p className='titlediv'>Nombre:</p> <p> {item.name || 'N/A'}</p>
+                                                <p className='titlediv'>Email:</p> <p> {item.email || 'N/A'}</p>
 
-                                                    </div>
+                                            </div>
 
-                                                    {/* Agrega otros campos si es necesario */}
-                                                </div>
-                                            ))}
+                                            {/* Agrega otros campos si es necesario */}
                                         </div>
-                                        <button className='btngenerico' onClick={handleImportData}>Importar datos</button>
-                                    </div>
-                                )}
+                                    ))}
+                                </div>
+                                <button className='btngenerico' onClick={handleImportData}>Importar datos</button>
+                            </div>
+                        )}
 
                     </div>
 
@@ -645,13 +689,7 @@ function EditClient({ user, onLogout, }) {
                 </div>
 
 
-                <div className='btnsendformu'>
-                    <button className='btnenvirformu' type="submit">
-                        {clientData.id_odoo ? 'Actualizar Cliente' : 'Crear Cliente'}
 
-                    </button>
-
-                </div>
 
             </form>
 
