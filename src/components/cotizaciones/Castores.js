@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback  } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './castorestyle.css'
 import axios from 'axios';
 import Select from 'react-select';
@@ -50,12 +50,14 @@ function Castores() {
         console.log('BOTON COTIZAR');
 
         let valorDeclaradoFinal = 0;
-        opcionSeleccionada.forEach(seleccion => {
+        opcionSeleccionada.forEach((seleccion, index)=> {
             const [valorDeclarado, contenido, noPiezas, peso, largoCm, anchoCm, altoCm] = seleccion.split('|');
             valorDeclaradoFinal = valorDeclaradoFinal + parseFloat(valorDeclarado);
+            const cantidadPiezas = parseInt(noPiezasPorProducto[index], 10) || 1; // Usa el valor del input o 1 por defecto
+
             const producto = {
                 contenido: contenido,
-                cantidad: parseInt(noPiezas, 10), // Asumiendo que noPiezas es un número entero
+                cantidad:cantidadPiezas, // Asumiendo que noPiezas es un número entero
                 peso: parseFloat(peso), // Asumiendo que peso es un número decimal
                 largo: parseFloat(largoCm), // Asumiendo que largoCm es un número decimal
                 ancho: parseFloat(anchoCm), // Asumiendo que anchoCm es un número decimal
@@ -95,9 +97,6 @@ function Castores() {
 
     };
 
-
-
-
     //limpiador
     const resetearEstado = () => {
         setOpcionSeleccionada([]);
@@ -126,6 +125,35 @@ function Castores() {
         setOpcionSeleccionada(values);
     };
 
+    const [noPiezasPorProducto, setNoPiezasPorProducto] = useState({});
+
+    // Manejar cambios en los inputs de noPiezas
+    const handleNoPiezasChange = (index, value) => {
+        setNoPiezasPorProducto(prevState => ({
+            ...prevState,
+            [index]: value
+        }));
+    };
+
+    const renderSelectedOptions = () => {
+        return opcionSeleccionada.map((opcion, index) => {
+            // Dividir la opción para obtener las partes individuales
+            const [, nombreProducto] = opcion.split('|');
+    
+            return (
+                <li className='panchilist' key={index}>
+                    {nombreProducto} {/* Mostrar solo el nombre del producto */}
+                    <input 
+                        type="number" 
+                        value={noPiezasPorProducto[index] || ''} 
+                        onChange={(e) => handleNoPiezasChange(index, e.target.value)}
+                        placeholder="No. Piezas"
+                    />
+                </li>
+            );
+        });
+    };
+    
 
     //estiulos del select
     const customStyles = {
@@ -193,16 +221,16 @@ function Castores() {
         label: `${colonias.text}`
     }));
 
-  // Estado para manejar si el botón está activado
-  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
-  const validarCampos = useCallback(() => {
-    // ... tu lógica de validación ...
-    return postalCode !== '' && neighborhood !== '' && opcionSeleccionada.length > 0;
-}, [postalCode, neighborhood, opcionSeleccionada]); // Dependencias de la función
+    // Estado para manejar si el botón está activado
+    const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+    const validarCampos = useCallback(() => {
+        // ... tu lógica de validación ...
+        return postalCode !== '' && neighborhood !== '' && opcionSeleccionada.length > 0;
+    }, [postalCode, neighborhood, opcionSeleccionada]); // Dependencias de la función
 
-useEffect(() => {
-    setIsButtonEnabled(validarCampos());
-}, [validarCampos]); // Ahora validarCampos es una dependencia del efecto
+    useEffect(() => {
+        setIsButtonEnabled(validarCampos());
+    }, [validarCampos]); // Ahora validarCampos es una dependencia del efecto
 
     return (
         <div className='contencastores'>
@@ -223,7 +251,12 @@ useEffect(() => {
                     />
 
 
-
+                    <div className='selected-options-list'>
+                        <h3 className='titlepiezas'>N° de piezas por producto:</h3>
+                        <ul className="scrollable-list">
+                            {renderSelectedOptions()}
+                        </ul>
+                    </div>
                 </div>
 
 
@@ -261,7 +294,7 @@ useEffect(() => {
 
 
                 <div className='btncontent'>
-                    <button  disabled={!isButtonEnabled} className='btncassend'   onClick={handleFormSubmit}>
+                    <button disabled={!isButtonEnabled} className='btncassend' onClick={handleFormSubmit}>
                         Cotizar
                     </button>
                 </div>
