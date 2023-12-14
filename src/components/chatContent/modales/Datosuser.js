@@ -157,7 +157,7 @@ function DatosUser({ sendiduser, nombrecliente, onClose }) {
 
                    
 
-                            <p>         <i className="fas fa-dollar-sign"></i> {clientData.sales_count || clientData.sales_count == 0 ? '0' : clientData.sales_count}
+                            <p>         <i className="fas fa-dollar-sign"></i> {clientData.sales_count || clientData.sales_count === '' ? '0' : clientData.sales_count}
 
                             </p>
                         </div>
@@ -166,7 +166,7 @@ function DatosUser({ sendiduser, nombrecliente, onClose }) {
 
                          
                             <p>
-                            <i className="fas fa-star"></i> {clientData.opportunities_count || clientData.opportunities_count == 0 ? '0' : clientData.opportunities_count}
+                            <i className="fas fa-star"></i> {clientData.opportunities_count || clientData.opportunities_count === ''? '0' : clientData.opportunities_count}
 
                             </p>
                         </div>
