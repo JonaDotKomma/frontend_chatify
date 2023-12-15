@@ -101,6 +101,7 @@
 .btnsendformu {
   margin-left: 1%;
   font-family: 'Poppins', sans-serif;
+  margin-top: 1%;
 }
 
 .txtcategoria {
@@ -236,4 +237,16 @@
   font-size: 16px;
   padding-left: 5px;
   cursor: pointer;
+}
+.horizontal-list {
+  display: flex;
+
+}
+
+.list-item {
+  margin: 5px;
+  padding: 5px;
+  background-color: #e4e6eb;
+  border-radius: 10px;
+  /* Otros estilos como bordes, colores de fondo, etc. */
 }

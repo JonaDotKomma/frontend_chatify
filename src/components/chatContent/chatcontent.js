@@ -310,12 +310,12 @@ function Chatcontent(props) {
               </div>
               :
               <div className='btnsodofuncios2'>
-                <button className='btniconodoo2'>
+                <button className='btniconodoo2' disabled={true}>
 
                   <i className="fas fa-dollar-sign"></i>
                 </button>
 
-                <button className='btniconodoo2' onClick={redirectToLink}>
+                <button className='btniconodoo2' onClick={redirectToLink} disabled={true}>
 
                   <i className="fas fa-star"></i>
                 </button>
