@@ -96,7 +96,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         const socket = io('https://socialcenterhtc-5d6f4ba539de.herokuapp.com', {
             transports: ['polling', 'websocket']
         });
-        
+
         socket.on('validado', (data) => {
             onMensajeEnviado();
             console.log('Se valida');
@@ -105,9 +105,9 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
             console.log(data.linea);
             console.log(data.nombre);
             console.log(idAgentesi);
-            if(data.agent === parseInt(idAgentesi)){
+            if (data.agent === parseInt(idAgentesi)) {
                 console.log('Si entra a la esta mierda');
-                
+
                 onMensajeEnviado();
             }
         });
@@ -150,13 +150,13 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         const updatedMessage = mensaje + emoji.native;
         setMensaje(updatedMessage);
     };
+    const [isSending, setIsSending] = useState(false); // Nuevo estado para controlar el envío
 
     ///imagenes carga de imagenen ene l input o con el boton 
-
     const handleTextChange = (e) => {
         const inputValue = e.target.value;
         setMensaje(inputValue);
-
+    
         // Verificar si el valor es una imagen o un PDF
         if (
             (inputValue instanceof File && inputValue.type.startsWith("image/")) ||
@@ -167,15 +167,20 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         } else {
             setImageDetected(false);
         }
-
+    
         const lineasActuales = e.target.value.split('\n').length;
         if (lineasActuales <= 4) {
             setLineas(lineasActuales);
         } else if (lineas < 4) {
             setLineas(4);
         }
+    
+        // Habilitar el envío de mensajes si hay texto nuevo y se había enviado un mensaje previamente
+        if (isSending && inputValue.trim() !== '') {
+            setIsSending(false);
+        }
     };
-
+    
 
 
 
@@ -397,7 +402,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
 
     };
 
-    
+
 
     const AudioQr = async () => {
         const blob = await fetch(audioURL).then(r => r.blob());
@@ -547,18 +552,22 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         onMensajeEnviado();
     };
 
+    
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault(); // Previene el salto de línea por defecto
-            // Comprueba si estadoQrSesion es igual a "estaqr"
-            if (estadoqrsesion === "true") {
-                mandarQr();
-            } else {
-                // Llama a la función que se ejecuta al hacer clic en el botón
-                if (selectedMessageId) {
-                    responderMensaje();
+
+            if (!isSending && mensaje.trim() !== '') { // Verifica si ya se está enviando y si hay texto
+                setIsSending(true); // Deshabilita el envío de mensajes
+
+                if (estadoqrsesion === "true") {
+                    mandarQr();
                 } else {
-                    enviarMensaje();
+                    if (selectedMessageId) {
+                        responderMensaje();
+                    } else {
+                        enviarMensaje();
+                    }
                 }
             }
         }
@@ -597,7 +606,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
             try {
                 console.log('entrando con QQQQQQQQQQQQQQQQQRRRRRRRRRRRRRRR');
                 const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/qrSendText', postData);
-                
+
                 console.log(response);
 
             } catch (error) {
