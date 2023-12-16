@@ -47,7 +47,7 @@ function CodigoQr() {
    
 
     useEffect(() => {
-        const socket = io('https://socialcenterhtc-5d6f4ba539de.herokuapp.com', {
+        const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app', {
             transports: ['polling', 'websocket']
         });
 
