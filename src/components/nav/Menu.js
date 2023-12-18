@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import io from 'socket.io-client';
-import audioNoti from '../../media/cartoon014.mp3'
+import audioNoti from '../../media/noti.mp3'
 
 
 
