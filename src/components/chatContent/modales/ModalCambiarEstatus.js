@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react'
 function ModalCambiarEstatus({closeModal, idUsuario}) {
     const [listLeads, setListLeads] = useState([])
     const [listStages, setListStages] = useState([]);
-    const [msgAlertValue, setMsgAlertValue] = useState(false);
 
     //Manejar estados de carga y errores
     const [loading, setLoading] = useState(false)
@@ -23,7 +22,7 @@ function ModalCambiarEstatus({closeModal, idUsuario}) {
               setListLeads(responseGetLeads.data);     
               
               //Obtener lista de estatus
-              const responseGetStages = await axios.get("/getStages");
+              const responseGetStages = await axios.get("https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getStages");
               setListStages(responseGetStages.data);
 
             } catch (error) {
@@ -50,10 +49,6 @@ function ModalCambiarEstatus({closeModal, idUsuario}) {
         e.preventDefault();
         setError(null)
         setLoading(true)
-        if(lead === "" || status === ""){
-          setMsgAlertValue(true);
-          return null;
-        }
         try {
             const data = {
                 idLead: parseInt(lead),
@@ -120,18 +115,12 @@ function ModalCambiarEstatus({closeModal, idUsuario}) {
                 ))
             }         
             </select>
-          </div>
-        
-          { msgAlertValue && 
-              <div>
-                  <p name="registrar" className="txtaduserAlert">Es necesario seleccionar los elementos*</p>
-              </div>
-          }          
+          </div>           
       </div>
 
 
       <div className='butoncont'>
-        <button className='btngenerico' onClick={changeStatus} disabled={loading} >Cambiar estado</button>
+        <button className='btngenerico' onClick={changeStatus} disabled={loading || status==='0' || lead===''} >Cambiar estado</button>
       </div>
       {loading && 
       <div className="spinner-container">
