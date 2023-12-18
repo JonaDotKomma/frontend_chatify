@@ -29,7 +29,9 @@ function Chatcontent(props) {
   const [mostrarBotonScroll, setMostrarBotonScroll] = useState(false);
   const [mensajesAgrupados, setMensajesAgrupados] = useState([]);
 
+  const [rol, setRol] = useState(null)
 
+  const [cambiarAgente , setCambiarAgente ] = useState(false)
   useEffect(() => {
     const agruparPorFecha = mensajes.reduce((acc, mensaje) => {
       // Asumiendo que `mensaje` tiene una propiedad de fecha que puedes convertir a un objeto Date
@@ -46,6 +48,17 @@ function Chatcontent(props) {
     setMensajesAgrupados(agruparPorFecha);
   }, [mensajes]);
 
+  useEffect(() => {
+    (async()=>{
+      const postData = {
+        idAgente: idagente
+      }
+      const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getDataAgent', postData);
+      const rolAgent = response.data[0][10];
+      setRol(rolAgent)
+    })()
+    // eslint-disable-next-line
+  }, [])
 
   useEffect(() => {
     // Conectar al servidor Socket.IO
@@ -246,6 +259,11 @@ function Chatcontent(props) {
     setModalBloqueo(false);
   };
 
+  //Funcion modal
+  const toggleModalCambiarAgente = () => {
+    setCambiarAgente(!cambiarAgente)
+  }
+
   //btn ir a leads
   const redirectToLink = () => {
     window.location.href = `https://hantec-15-0-hr-account-luist-10483968.dev.odoo.com/web#menu_id=370&cids=1&action=613&active_id=${id_odoo}&model=crm.lead&view_type=kanban`;
@@ -295,6 +313,7 @@ function Chatcontent(props) {
                 <button className='btnopclien' onClick={openModalOportunidad}><i className="fas fa-star"></i></button>
                 <button className='btnopclien' onClick={abrirModalpdf}><i className="fas fa-file-invoice-dollar"></i></button>
                 <button className='btnopclien' onClick={abrirModalBloqueo}><i className="fas fa-ban"></i></button>
+                <button className='btnopclien' onClick={toggleModalCambiarAgente}><i className="fas fa-ban"></i></button>
               </div>
           }
 
@@ -367,7 +386,9 @@ function Chatcontent(props) {
             </button>
           )}
         </div>
-
+        {rol === 'auditor'
+        ? <div className='footerChat'><p className='MsgTipoUsuario'>Vista de auditor</p></div>
+        :
         <div className='footerChat'>
           {ultimoMensajeRecibido && (
             <CamposMjs
@@ -388,6 +409,8 @@ function Chatcontent(props) {
           )}
 
         </div>
+      }
+
       </div>
 
       {holiVisible && (
