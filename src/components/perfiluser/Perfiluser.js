@@ -23,9 +23,9 @@ function PerfilUser({ user, onLogout, nombreUsuario }) {
         try {
             const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getDataAgent', postData);
             setdatosuser(response.data);
-            const elementoName = response.data[0][0];
-            const linkImguser = response.data[0][1];
-            const puestodUser = response.data[0][3];
+            const elementoName = response.data[0][3];
+            const linkImguser = response.data[0][5];
+            const puestodUser = response.data[0][8];
 
             setElementoName(elementoName);
             setLinkImguser(linkImguser);

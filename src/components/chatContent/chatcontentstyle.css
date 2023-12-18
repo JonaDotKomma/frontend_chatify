@@ -644,3 +644,10 @@ width: 80%;
   margin-left: 5%;
 
 }
+
+.MsgTipoUsuario{
+  background-color: #023F81;
+  color: #FFFFFF;
+  padding: 1rem;
+  border-radius: 5px;
+}
