@@ -23,7 +23,17 @@ function Chatlist(props) {
    const filteredChats = chatData.filter(chat =>
     chat[1].toLowerCase().includes(searchTerm.toLowerCase()) && chat[5] === tipochat
   );
-
+  const [rol, setRol] = useState('')
+  useEffect(() => {
+    (async()=>{
+      const postData = {
+        idAgente: idAgentesi
+      }
+      const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getDataAgent', postData);
+      setRol(response.data[0][10])
+    })()
+    // eslint-disable-next-line
+  }, [])
 
    //Carfar la lista con el socket 
   useEffect(() => {
@@ -185,6 +195,7 @@ function Chatlist(props) {
                 estadoqr={item[10]}
                 idsesionqr={item[11]}
                 onSelectChat={handleSelectChat}
+                rol={rol}
               />
             ))
           )

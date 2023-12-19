@@ -85,11 +85,14 @@ export default class ListItemWP extends Component {
         const idOdoo = this.props.id_odoo
         const estdoQr = this.props.estadoqr
         const issesionQr = this.props.idsesionqr
+        const rolAgente = this.props.rol
 
         // const seen = this.props.visto;
         console.log("---PASO1", idUser, numero, botestado, nameclient, linea, idOdoo,estdoQr,issesionQr );
         this.props.onSelectChat(idUser, numero, botestado, nameclient, idlinea, idOdoo, linea, estdoQr,issesionQr ); // Llama a la función onSelectChat
-        this.seenApi(idUser, idAgnt, nameAgnt);
+        if(rolAgente !== 'su' || rolAgente !== 'auditor'){
+            this.seenApi(idUser, idAgnt, nameAgnt);
+        }
 
         if (this.props.quientienchat === 0) {
             this.asignarcliente(idUser, idAgnt);

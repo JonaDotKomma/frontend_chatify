@@ -13,6 +13,7 @@ import ModalCancelUser from './modales/ModalCanceluser';
 import ModalOportunidad from './modales/ModalOportunidad';
 import ModalCambiarEstatus from './modales/ModalCambiarEstatus';
 import ModalPDF from './modales/ModalPDF';
+import ModalCambiarUsuario from './modales/ModalCambiarUsuario';
 
 function Chatcontent(props) {
 
@@ -31,7 +32,7 @@ function Chatcontent(props) {
 
   const [rol, setRol] = useState(null)
 
-  const [cambiarAgente , setCambiarAgente ] = useState(false)
+  const [isModalCambiarAgente , setisModalCambiarAgente ] = useState(false)
   useEffect(() => {
     const agruparPorFecha = mensajes.reduce((acc, mensaje) => {
       // Asumiendo que `mensaje` tiene una propiedad de fecha que puedes convertir a un objeto Date
@@ -141,6 +142,7 @@ function Chatcontent(props) {
   const toggleModalEstatus = () => {
     setIsModalEstatus(!isModalEstatus);
   }
+
 
   //Modal crear opotunidad
 
@@ -260,8 +262,9 @@ function Chatcontent(props) {
   };
 
   //Funcion modal
+
   const toggleModalCambiarAgente = () => {
-    setCambiarAgente(!cambiarAgente)
+    setisModalCambiarAgente(!isModalCambiarAgente)
   }
 
   //btn ir a leads
@@ -304,8 +307,13 @@ function Chatcontent(props) {
 
           {
             id_odoo === null || id_odoo === '' ?
-              <div className="divVacio">
+              <div className="btnopCliente">
                 {/* Contenido a mostrar si id_odoo es null o vacío */}
+                {
+                  rol === 'su'
+                  ? <button className='btnopclien' onClick={toggleModalCambiarAgente}><i className="fas fa-exchange-alt"></i></button>
+                  : <div></div>
+                }
               </div>
               :
               <div className='btnopCliente'>
@@ -313,7 +321,11 @@ function Chatcontent(props) {
                 <button className='btnopclien' onClick={openModalOportunidad}><i className="fas fa-star"></i></button>
                 <button className='btnopclien' onClick={abrirModalpdf}><i className="fas fa-file-invoice-dollar"></i></button>
                 <button className='btnopclien' onClick={abrirModalBloqueo}><i className="fas fa-ban"></i></button>
-                <button className='btnopclien' onClick={toggleModalCambiarAgente}><i className="fas fa-ban"></i></button>
+                {
+                  rol === 'su'
+                  ?<button className='btnopclien' onClick={toggleModalCambiarAgente}><i className="fas fa-exchange-alt"></i></button>
+                  : <div></div>
+                }
               </div>
           }
 
@@ -468,6 +480,15 @@ function Chatcontent(props) {
         isModalEstatus && (
           <ModalCambiarEstatus
             closeModal={toggleModalEstatus}
+            idUsuario={sendiduser}
+          />
+        )
+      }
+
+      {
+        isModalCambiarAgente && (
+          <ModalCambiarUsuario
+            closeModal={toggleModalCambiarAgente}
             idUsuario={sendiduser}
           />
         )
