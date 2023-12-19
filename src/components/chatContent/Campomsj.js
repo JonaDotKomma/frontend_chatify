@@ -156,7 +156,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
     const handleTextChange = (e) => {
         const inputValue = e.target.value;
         setMensaje(inputValue);
-    
+
         // Verificar si el valor es una imagen o un PDF
         if (
             (inputValue instanceof File && inputValue.type.startsWith("image/")) ||
@@ -167,20 +167,20 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         } else {
             setImageDetected(false);
         }
-    
+
         const lineasActuales = e.target.value.split('\n').length;
         if (lineasActuales <= 4) {
             setLineas(lineasActuales);
         } else if (lineas < 4) {
             setLineas(4);
         }
-    
+
         // Habilitar el envío de mensajes si hay texto nuevo y se había enviado un mensaje previamente
         if (isSending && inputValue.trim() !== '') {
             setIsSending(false);
         }
     };
-    
+
 
 
 
@@ -552,7 +552,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         onMensajeEnviado();
     };
 
-    
+
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault(); // Previene el salto de línea por defecto
@@ -748,6 +748,20 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
                                                 <button className='btnprvs' onClick={goToNextImage}>Siguiente</button>
                                             </div>
 
+
+
+                                            <div>
+                                                <button className='ntminpimg' onClick={() => {
+                                                    if (estadoqrsesion === "true") {
+                                                        mandarQr();
+                                                    } else {
+                                                        selectedMessageId ? responderMensaje() : enviarMensaje();
+                                                    }
+                                                }}>
+                                                    <span>Enviar</span>
+                                                </button>
+                                            </div>
+
                                         </div>
                                     ) : (
                                         <div className='conteimg'>
@@ -766,7 +780,23 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
                                                         className='imgmini'
                                                     />
                                                 ))}
+
+
+
                                             </div>
+
+                                            <div>
+                                                <button className='ntminpimg' onClick={() => {
+                                                    if (estadoqrsesion === "true") {
+                                                        mandarQr();
+                                                    } else {
+                                                        selectedMessageId ? responderMensaje() : enviarMensaje();
+                                                    }
+                                                }}>
+                                                    <span>Enviar</span>
+                                                </button>
+                                            </div>
+
 
                                         </div>
                                     )}
