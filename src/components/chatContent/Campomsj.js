@@ -462,7 +462,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
                         <div className='divlineares'></div>
                         <div className='msjrespueta'>
                             <i className="fas fa-file-alt"></i>
-                            <p>Dumento pdf</p>
+                            <p>Documento pdf</p>
                         </div>
                     </div>
                 </div>;

@@ -5,7 +5,6 @@ import ChatItem from './ChatItem';
 import ModalImagen from './modalImg';
 import CamposMjs from './Campomsj';
 import './chatcontentstyle.css';
-
 import DatosUser from './modales/Datosuser';
 
 import ModalCancelUser from './modales/ModalCanceluser';
@@ -14,13 +13,14 @@ import ModalOportunidad from './modales/ModalOportunidad';
 import ModalCambiarEstatus from './modales/ModalCambiarEstatus';
 import ModalPDF from './modales/ModalPDF';
 import ModalCambiarUsuario from './modales/ModalCambiarUsuario';
+import { Link } from 'react-router-dom';
 
 function Chatcontent(props) {
 
-  const { sendiduser, numerselect, nameclientf, idagente, typeclient, id_dlinea, id_odoo, namelineac,issesionqr, estadoqrseison } = props;
+  const { sendiduser, numerselect, nameclientf, idagente, typeclient, id_dlinea, id_odoo, namelineac, issesionqr, estadoqrseison, resetSelectedId } = props;
   let estadoqrseisonString = estadoqrseison ? estadoqrseison.toString() : false;
-  
-    const messagesContainerRef = useRef(null);
+
+  const messagesContainerRef = useRef(null);
   const [numberOfMessages, setNumberOfMessages] = useState(0);
 
   const [mensajes, setMensajes] = useState([]);
@@ -32,7 +32,7 @@ function Chatcontent(props) {
 
   const [rol, setRol] = useState(null)
 
-  const [isModalCambiarAgente , setisModalCambiarAgente ] = useState(false)
+  const [isModalCambiarAgente, setisModalCambiarAgente] = useState(false)
   useEffect(() => {
     const agruparPorFecha = mensajes.reduce((acc, mensaje) => {
       // Asumiendo que `mensaje` tiene una propiedad de fecha que puedes convertir a un objeto Date
@@ -50,7 +50,7 @@ function Chatcontent(props) {
   }, [mensajes]);
 
   useEffect(() => {
-    (async()=>{
+    (async () => {
       const postData = {
         idAgente: idagente
       }
@@ -288,7 +288,7 @@ function Chatcontent(props) {
     actualizarMensajes()
   };
 
-//Generar Pdf
+  //Generar Pdf
 
 
 
@@ -299,11 +299,18 @@ function Chatcontent(props) {
 
       <div className={`contechatcuerpo ${holiVisible ? 'contechatcuerpo-wide' : ''} ${chatItemStyle}`}>
         <header className='cbrachats' >
+          <button className="mobile-only-button" onClick={() => resetSelectedId()}><i class="fas fa-chevron-left"></i></button>
+
           <p className='nmcecleint' onClick={toggleHoliVisibility}>
-            {nameclientf} 
+            {nameclientf}
           </p>
 
 
+        <div className='hommovile'>
+        <Link  to="/">
+            <i className="fas fa-home inavhome"></i>
+          </Link>
+        </div>
 
           {
             id_odoo === null || id_odoo === '' ?
@@ -311,8 +318,8 @@ function Chatcontent(props) {
                 {/* Contenido a mostrar si id_odoo es null o vacío */}
                 {
                   rol === 'su'
-                  ? <button className='btnopclien' onClick={toggleModalCambiarAgente}><i className="fas fa-exchange-alt"></i></button>
-                  : <div></div>
+                    ? <button className='btnopclien' onClick={toggleModalCambiarAgente}><i className="fas fa-exchange-alt"></i></button>
+                    : <div></div>
                 }
               </div>
               :
@@ -323,8 +330,8 @@ function Chatcontent(props) {
                 <button className='btnopclien' onClick={abrirModalBloqueo}><i className="fas fa-ban"></i></button>
                 {
                   rol === 'su'
-                  ?<button className='btnopclien' onClick={toggleModalCambiarAgente}><i className="fas fa-exchange-alt"></i></button>
-                  : <div></div>
+                    ? <button className='btnopclien' onClick={toggleModalCambiarAgente}><i className="fas fa-exchange-alt"></i></button>
+                    : <div></div>
                 }
               </div>
           }
@@ -398,30 +405,31 @@ function Chatcontent(props) {
             </button>
           )}
         </div>
+
         {rol === 'auditor'
-        ? <div className='footerChat'><p className='MsgTipoUsuario'>Vista de auditor</p></div>
-        :
-        <div className='footerChat'>
-          {ultimoMensajeRecibido && (
-            <CamposMjs
-              numerselect={numerselect}
-              idagente={idagente}
-              id_dlinea={id_dlinea}
-              onMensajeEnviado={actualizarMensajes}
-              selectedMessageId={selectedMessageId}
-              selectedMsjUser={selectedMsjUser}
-              selectedTypeMsj={selectedTypeMsj}
-              tipochat={typeclient}
-              fechaulmsjcliente={ultimoMensajeRecibido.fecha}
-              idssionqr={issesionqr}
-              estadoqrsesion={estadoqrseisonString}
-         
+          ? <div className='footerChat'><p className='MsgTipoUsuario'>Vista de auditor</p></div>
+          :
+          <div className='footerChat'>
+            {ultimoMensajeRecibido && (
+              <CamposMjs
+                numerselect={numerselect}
+                idagente={idagente}
+                id_dlinea={id_dlinea}
+                onMensajeEnviado={actualizarMensajes}
+                selectedMessageId={selectedMessageId}
+                selectedMsjUser={selectedMsjUser}
+                selectedTypeMsj={selectedTypeMsj}
+                tipochat={typeclient}
+                fechaulmsjcliente={ultimoMensajeRecibido.fecha}
+                idssionqr={issesionqr}
+                estadoqrsesion={estadoqrseisonString}
 
-            />
-          )}
 
-        </div>
-      }
+              />
+            )}
+
+          </div>
+        }
 
       </div>
 
@@ -441,7 +449,7 @@ function Chatcontent(props) {
         <ModalImagen
           isOpen={isModalOpenimg}
           closeModal={closeImageModal}
-  
+
 
           imageUrl={selectedImage}
 

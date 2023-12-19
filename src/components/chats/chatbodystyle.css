@@ -9,7 +9,7 @@
 
 .prtechats{
     width: 23%;
-    
+   
     
 }
 .partechat{
@@ -18,17 +18,28 @@
 }
 
 /* Estilos para pantallas móviles */
+/* CSS para ocultar/mostrar componentes en móviles */
 @media screen and (max-width: 768px) {
-    .contentchats {
-      display: block;
+    .prtechat {
+      display: none; /* Oculta esta sección en móviles */
     }
   
-    .partechat {
-      display: none;
+
+    .prtechats{
+        width:100%;
+       
+        
     }
-  
-    .prtechats {
-      width: 100%;
-      /* otros estilos necesarios para móviles */
+    /* Aquí puedes añadir más reglas si necesitas ajustar otros componentes */
+
+    .contentchats{
+        display: block;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 99vh;
+        width: 100%;
+        background-color: #f0f0f0;
+    
     }
   }
+  

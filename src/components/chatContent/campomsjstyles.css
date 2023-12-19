@@ -222,7 +222,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1000; /* Valor alto para estar encima de otros elementos */
+  z-index: 1000;
+  /* Valor alto para estar encima de otros elementos */
 
   background-color: rgba(0, 0, 0, 0.5);
   /* fondo semi-transparente */
@@ -237,8 +238,6 @@
   width: 50%;
   border-radius: 10px;
   overflow: hidden;
-
-
 }
 
 
@@ -335,18 +334,18 @@
 .dtolista {
 
   width: 99%;
- 
+
   max-height: 20%;
 }
 
 
-.inputBusqueda{
-background-color: #F0F2F5;
-border: none;
-width: 80%;
-border-radius: 10px;
-height: 20px;
-color: #030303;
+.inputBusqueda {
+  background-color: #F0F2F5;
+  border: none;
+  width: 80%;
+  border-radius: 10px;
+  height: 20px;
+  color: #030303;
 
 }
 
@@ -378,20 +377,21 @@ color: #030303;
   /* Color del fondo de la barra de desplazamiento */
 }
 
-.divpfd{
-  background-color: rgba(170, 170, 182, 0.3); /* Opacidad del 50% */
+.divpfd {
+  background-color: rgba(170, 170, 182, 0.3);
+  /* Opacidad del 50% */
   margin-right: 1%;
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
-.txtpdf{
+.txtpdf {
   color: #030303;
 }
 
 .listaSinPuntos {
-   
+
   height: 400px;
   max-height: 400px;
   list-style-type: none;
@@ -408,7 +408,7 @@ color: #030303;
 }
 
 .lielement {
- 
+
   margin-top: 2%;
   background-color: #d9fdd3;
   border-radius: 10px;
@@ -424,7 +424,8 @@ color: #030303;
 .iframeContainer {
   display: flex;
   overflow-x: auto;
-  height: 450px; /* Set the height to 400px */
+  height: 450px;
+  /* Set the height to 400px */
 }
 
 .contaudio-container {
@@ -655,7 +656,7 @@ color: #030303;
   border: 0;
   box-sizing: border-box;
   border-radius: 6px;
-  box-shadow: 0px 2px 6px rgba(0,0,0,0.16);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   color: #8a8a8a;
   font-size: 16px;
@@ -664,14 +665,14 @@ color: #030303;
 
 }
 
-.btnordetn{
+.btnordetn {
   height: 40px;
   margin-top: 10%;
   padding: 0px 8px;
   border: 0;
   box-sizing: border-box;
   border-radius: 6px;
-  box-shadow: 0px 2px 6px rgba(0,0,0,0.16);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   color: #1e1f26;
   font-size: 16px;
@@ -683,25 +684,27 @@ color: #030303;
 }
 
 
-.pdfor20{
+.pdfor20 {
   align-items: center;
   text-align: center;
 
 }
 
-.btnsedord{
+
+.btnsedord {
   padding: 1%;
   text-align: center;
 }
 
-.btnordetn20{
+
+.btnordetn20 {
   height: 40px;
   margin-top: 1%;
   padding: 0px 8px;
   border: 0;
   box-sizing: border-box;
   border-radius: 6px;
-  box-shadow: 0px 2px 6px rgba(0,0,0,0.16);
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
   color: #1e1f26;
   font-size: 16px;
@@ -713,28 +716,169 @@ color: #030303;
 
 }
 
-.divcuentas{
+.divcuentas {
   background-color: #f0f0f0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.divuno{
+
+.divuno {
 
   width: 30%;
   text-align: center;
-  
+}
+.iconchamp{
+
+  display: none;
+}
+
+
+.thumbnail-container{
+  display: flex;
+  width: 90%;
+  margin-left: 5%;
+  overflow-x: auto;
+border: 1px solid #eff0f2 ;
 
 }
+
+
+/* Modificar el color de la barra de desplazamiento de WebKit */
+.thumbnail-container::-webkit-scrollbar {
+  width: 3px;
+  /* Ancho de la barra de desplazamiento */
+}
+
+.thumbnail-container::-webkit-scrollbar-thumb {
+  background-color: #aaaab6;
+  /* Color del pulgar de la barra de desplazamiento */
+  border-radius: 9px;
+  height: 4px;
+  /* Radio de borde del pulgar */
+}
+
+.thumbnail-container::-webkit-scrollbar-track {
+  background-color: white;
+  height: 5px;
+  /* Color del fondo de la barra de desplazamiento */
+}
+
 
 @media only screen and (max-width: 600px) {
-.emoji-picker-container {
-  position: fixed;
-  top: 55%;
-  left: 20%;
-  transform: translate(-50%, -50%);
-  z-index: 1000;
-  display: none;
+  .emoji-picker-container {
+    position: fixed;
+    top: 55%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    display: none;
+    width: 30%;
+  }
+
+  .modalContentsuge {
+    background-color: #ffffff;
+    height: 75%;
+    width: 80%;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .headermodals p {
+    margin: 0;
+    flex-grow: 1;
+    text-align: center;
+    color: #030303;
+    font-size: 18px;
+
+  }
+
+  .buttonSuge {
+    display: inline-block;
+    width: 60%;
+    margin-bottom: 10px;
+    text-align: left;
+    height: 42px;
+    border: none;
+    background-color: #ffffff;
+    border-radius: 2px;
+    color: #030303;
+    font-size: 12px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    /* Agrega una transición suave al transformar */
+  }
+
+  
+.dtospasug {
+  background-color: #ffffff;
   width: 30%;
+  text-align: center;
+  align-items: center;
 }
+.pdfplantilla{
+  display: none;
+}
+.iconchamp{
+  display: block;
+  font-size: 80px;
+  margin-top: 5%;
+  color: #030303;
+}
+
+.iframeContainer {
+  display: block;
+  overflow-y: auto;
+  height: 100%;
+  /* Set the height to 400px */
+}
+
+.divpfd {
+  background-color: #eff0f2;
+  /* Opacidad del 50% */
+  margin-top: 5%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border: 1px solid #030303;
+}
+
+/*Vista previa de la iamgen */
+.contenprev {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+  transform: translate(-40%, -50%);
+  width: 90%;
+  /* Ajusta el ancho del contenedor según tu preferencia */
+  border-radius: 8px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  background-color: #012A45;
+  padding: 10px;
+}
+
+.conmsjres {
+  position: absolute;
+  top: 86%;
+  left: 50%;
+  transform: translate(-45%, -50%);
+  width: 80%;
+  /* Ajusta el ancho del contenedor según tu preferencia */
+  border-radius: 8px;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  background-color: #ffffff;
+  color: #030303;
+  height: 50px;
+  overflow: hidden;
+
+
+}
+
+
 }

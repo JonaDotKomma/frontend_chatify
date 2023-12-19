@@ -83,7 +83,7 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
     useEffect(() => {
         setMostrar(contenido.filter(item => item.tipo_mensaje === "application/pdf"));
 
-    }, [ contenido]);
+    }, [contenido]);
 
 
     const handleSeleccion = (mensaje) => {
@@ -112,10 +112,10 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
                         >
                             Catálogo interactivo
                         </button>
-                    {error && 
-                    <p className='messageAlert' style={{color: '#030303'}}>Error</p>}
-                    {loading && 
-                        <div className="spinner-container">
+                        {error &&
+                            <p className='messageAlert' style={{ color: '#030303' }}>Error</p>}
+                        {loading &&
+                            <div className="spinner-container">
                                 <div className="spinner"></div>
                             </div>}
                     </div>
@@ -143,7 +143,10 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
                                             src={`${item.mensaje}#page=1`}
                                             style={{ width: '300px', height: '300px', marginRight: '10px' }}
                                             title={`iframe-${index}`}
+                                            className='pdfplantilla'
                                         ></iframe>
+
+                                        <i className="fas fa-file-alt iconchamp"></i>
 
                                         <div>
                                             <p className='txtpdf'>{item.nombre_del_archivo}</p>

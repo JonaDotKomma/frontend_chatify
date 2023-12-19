@@ -52,11 +52,8 @@ export default function ChatItem({ data, openImageModal, responseMessage, respon
     } else if (data.type === 'video/mp4') {
         content = (
             <div className="videochatr">
-                <video
-                    width="300"
-                    height="197.77"
-                    controls
-                >
+            <video className="video-size" controls>
+
                     <source src={data.mensaje} type="video/mp4" />
                     Tu navegador no admite el elemento de video.
                 </video>

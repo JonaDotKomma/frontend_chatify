@@ -67,6 +67,10 @@ function Chatbody({ chatType }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  function resetSelectedId() {
+    setSelectedId(null);
+  }
+
   // Renderización condicional
   return (
     <div className='contentchats'>
@@ -76,10 +80,10 @@ function Chatbody({ chatType }) {
         ) : null}
       </div>
       {isMobile && selectedId ? (
-       <Chatcontent  typeclient={tipechat} sendiduser={selectedId} numerselect={numerselect} boottas={boottas} nameclientf={nameclientf} idagente={idUser} nameagente={nombreAgente} id_dlinea={iddlinea} id_odoo={idOdoochat} namelineac={namlineaname} estadoqrseison={estadoqr} issesionqr={idsesionqr}/>  
+       <Chatcontent  resetSelectedId={resetSelectedId}  typeclient={tipechat} sendiduser={selectedId} numerselect={numerselect} boottas={boottas} nameclientf={nameclientf} idagente={idUser} nameagente={nombreAgente} id_dlinea={iddlinea} id_odoo={idOdoochat} namelineac={namlineaname} estadoqrseison={estadoqr} issesionqr={idsesionqr}/>  
       ) : (
         <div className="partechat">
-          {selectedId ? <Chatcontent  typeclient={tipechat} sendiduser={selectedId} numerselect={numerselect} boottas={boottas} nameclientf={nameclientf} idagente={idUser} nameagente={nombreAgente} id_dlinea={iddlinea} id_odoo={idOdoochat} namelineac={namlineaname} estadoqrseison={estadoqr} issesionqr={idsesionqr}/>   : <ChatVacio />}
+          {selectedId ? <Chatcontent   resetSelectedId={resetSelectedId}  typeclient={tipechat} sendiduser={selectedId} numerselect={numerselect} boottas={boottas} nameclientf={nameclientf} idagente={idUser} nameagente={nombreAgente} id_dlinea={iddlinea} id_odoo={idOdoochat} namelineac={namlineaname} estadoqrseison={estadoqr} issesionqr={idsesionqr}/>   : <ChatVacio />}
         </div>
       )}
     </div>
