@@ -490,3 +490,46 @@
       -webkit-transform: rotate(360deg);
   }
 }
+
+@media (max-width: 768px) {
+  .floating-button {
+    position: fixed; /* Mantiene el botón fijo en la pantalla */
+    bottom: 10px;    /* Distancia desde el fondo */
+    right: 10px;     /* Alineación a la derecha */
+    left: auto;      /* Anula cualquier estilo 'left' existente */
+    z-index: 1000;   /* Asegúrate de que sea mayor que otros elementos para que aparezca encima */
+  }
+
+  .modal-containeruser {
+    background: white;
+    width: 95%;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 5px;
+    z-index: 1001;
+  }
+  .cls{
+    text-align: left;
+    margin-left: 5%;
+    width: 40%;
+  }
+  .ipaduser{
+    width: 95%;
+    height: 25px;
+    font-size: 12px;
+  }
+
+  .btngenerico{
+ 
+    width: 80%;
+    height: 30%;
+    margin-top: 10%;
+
+  }
+  .tlmu h2{
+ font-size: 18px;
+  
+  }
+  
+  
+}
