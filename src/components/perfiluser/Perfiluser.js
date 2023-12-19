@@ -5,7 +5,7 @@ import Menu from "../nav/Menu";
 
 function PerfilUser({ user, onLogout, nombreUsuario }) {
 
-
+    const language = navigator.language;
     const idUser = localStorage.getItem('idAgente');
     const [elementoName, setElementoName] = useState("");
     const [linkImguser, setLinkImguser] = useState("");
@@ -65,7 +65,7 @@ function PerfilUser({ user, onLogout, nombreUsuario }) {
                 </div>
             </div>
 
-
+            {language==='es-ES' || language==='es-MX'?
             <div>
                 <div className='contentstat'>
                     <h3>Stats</h3>
@@ -102,7 +102,7 @@ function PerfilUser({ user, onLogout, nombreUsuario }) {
 
                 </div>
             </div>
-
+            : <div>TEST USER</div>}{language==='es-ES' || language==='es-MX'?
             <div>
                 <div className='contentstat'>
                     <h3>Medallas</h3>
@@ -127,6 +127,7 @@ function PerfilUser({ user, onLogout, nombreUsuario }) {
 
                 </div>
             </div>
+            : <div></div>}
         </div>
     );
 }

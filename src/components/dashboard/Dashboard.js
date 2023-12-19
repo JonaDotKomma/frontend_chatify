@@ -7,7 +7,7 @@ import ChatListRecient from './ChatlistDash';
 function Dashboard({ user, onLogout, }, props) {
 
   const idAgentesi = localStorage.getItem('idAgente');
-
+  const language = navigator.language;
   const [elementoName, setElementoName] = useState("");
   const [linkImguser, setLinkImguser] = useState("");
   const [puestoUser, setPuestoUser] = useState("");
@@ -99,7 +99,7 @@ function Dashboard({ user, onLogout, }, props) {
       <div className="perfil">
         <img src={linkImguser} alt="Perfil" className="imagen-perfil" />
         <div className="info-perfil">
-          <h2>Bienvenido</h2>
+          {language==='es-ES' || language==='es-MX'?<h2>Bienvenido</h2>: <h2>Welcome</h2>}
           <p> {elementoName}</p>
           <p>{puestoUser}</p>
         </div>
@@ -107,7 +107,7 @@ function Dashboard({ user, onLogout, }, props) {
 
       {/* Parte 2: Chats Recientes */}
       <div className="chats-recientes">
-        <h3>Chats Recientes</h3>
+        {language==='es-ES' || language==='es-MX'?<h3>Chats Recientes</h3>: <h3>Recent Chats</h3>}
         <div className="lista-chats">
 
           {chatData.slice(-4).map((item, index) => (
@@ -129,7 +129,7 @@ function Dashboard({ user, onLogout, }, props) {
 
       {/* Parte 3: Chats Favoritos */}
       <div className="chats-favoritos">
-        <h3>Chats Con Odoo</h3>
+        {language==='es-ES' || language==='es-MX'?<h3>Chats Con Odoo</h3>: <h3>Odoo chats</h3>}
         <div className="lista-chats">
 
           {chatodoo.slice(-4).map((item, index) => (

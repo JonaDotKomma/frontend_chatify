@@ -11,7 +11,7 @@ function Chatlist(props) {
   const idAgentesi = localStorage.getItem('idAgente');
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const language = navigator.language;
  //filtro para la selecion de red social 
   const { tipochat } = props;
   const [localTipoChat] = useState(props.tipochat);
@@ -155,7 +155,7 @@ function Chatlist(props) {
           <input
             className="serrachuser"
             type="text"
-            placeholder="Buscar un chat"
+            placeholder={language==='es-ES' || language==='es-MX'?"Buscar un chat": "Search"}
 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
