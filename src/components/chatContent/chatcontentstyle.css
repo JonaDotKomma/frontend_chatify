@@ -138,7 +138,7 @@ width: 100%;
 
 .nmcecleint {
   color: #030303;
-  font-size: 20px;
+  font-size: 15px;
   line-height: 26px;
   cursor: pointer;
   transition: font-size 0.3s ease; /* Define la transición */
@@ -650,4 +650,34 @@ width: 80%;
   color: #FFFFFF;
   padding: 1rem;
   border-radius: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+  /* Estilos para pantallas menores de 600px */
+  .content__body {
+
+    max-height: 75%;
+    width: 100%;
+    overflow-y: auto;
+  }
+
+  .nmcecleint {
+    color: #030303;
+    font-size: 12px;
+    line-height: 16px;
+    margin-left: 1%;
+    cursor: pointer;
+    transition: font-size 0.3s ease; /* Define la transición */
+  }
+  
+  .nmcecleint:hover {
+    font-size: 14px; /* Nuevo tamaño de fuente al hacer hover */
+  }
+  .btnsodofuncios2{
+    display: none;
+  }
+
+  .btnopCliente{
+    display: none;
+  }
 }

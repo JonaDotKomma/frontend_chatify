@@ -55,4 +55,12 @@ body {
   .menuweb {
       display: block; /* Muestra el menú normal en pantallas grandes */
   }
+
+
+  .contenido-principal {
+overflow-x: hidden;
+    overflow-y: auto; /* Para manejar contenido que exceda la altura */
+    background-color: aquamarine;
+  }
+
 }

@@ -70,3 +70,23 @@
     padding-top: 10px;
   
   }
+
+
+  /* Consulta de medios para dispositivos con un ancho de pantalla de hasta 600px */
+@media (max-width: 600px) {
+  .lista-chats {
+    display: block; /* O puedes usar 'flex' con 'flex-direction: row;' si prefieres */
+    overflow-y: auto; /* Permite desplazamiento horizontal si los elementos son demasiado anchos */
+  }
+
+  .chat-list-item{
+    width: 80%;
+    margin-top: 5%;
+    
+  }
+
+  .lista-chats .chat-item {
+    display: inline-block; /* Hace que los elementos de la lista se alineen horizontalmente */
+    /* otros estilos necesarios para los elementos individuales de la lista */
+  }
+}

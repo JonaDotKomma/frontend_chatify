@@ -17,3 +17,18 @@
     margin-left: 0.9%;
 }
 
+/* Estilos para pantallas móviles */
+@media screen and (max-width: 768px) {
+    .contentchats {
+      display: block;
+    }
+  
+    .partechat {
+      display: none;
+    }
+  
+    .prtechats {
+      width: 100%;
+      /* otros estilos necesarios para móviles */
+    }
+  }

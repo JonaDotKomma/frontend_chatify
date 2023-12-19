@@ -14,7 +14,7 @@ const MenuHamburguesa = () => {
                 ☰
             </div>
             <div className="logo">
-                LOGO
+           HANTEC
             </div>
             {isOpen && (
                 <div className="menu-list">

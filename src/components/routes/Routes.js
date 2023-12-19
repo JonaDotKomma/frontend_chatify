@@ -26,8 +26,7 @@ function Routeschmpi({ user, onLogout, nombreUsuario }) {
                 <div className='menuweb'>
                 </div>
 
-                <div className='menumovil'>   <MenuHamburguesa /></div>
-
+             
 
                 <Routes>
                     <Route path="/" element={<Dashboard user={user} onLogout={onLogout} nombreUsuario={nombreUsuario} />} />

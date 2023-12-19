@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Chatlist from '../chatlist/chatlist'
 import Chatcontent from '../chatContent/chatcontent';
 import './chatbodystyle.css';
@@ -19,12 +19,12 @@ function Chatbody({ chatType }) {
     botestado: routerBotestado,
     nameclient: routerNameclient,
     typechat: routerTypechat,
-    idlinea:routeridlinea,
-    idodoo:routerOdo
+    idlinea: routeridlinea,
+    idodoo: routerOdo
   } = location.state || {};
 
-  
-  console.log('el dato del dash',location.state);
+
+  console.log('el dato del dash', location.state);
 
   const [selectedId, setSelectedId] = useState(routerIdUser || null);
   const [numerselect, setNumerselect] = useState(routerNumero || null);
@@ -33,14 +33,14 @@ function Chatbody({ chatType }) {
   const [tipechat, settipechat] = useState(routerTypechat || null);
   const [iddlinea, setIddlinea] = useState(routeridlinea || null)
   const [idOdoochat, setIdOdooChat] = useState(routerOdo || null)
-  const[namlineaname, setLineaname]=useState(null)
-  const[estadoqr, setEstadoQr]=useState(null)
-  const[idsesionqr, setIdsesionQr]=useState(null)
+  const [namlineaname, setLineaname] = useState(null)
+  const [estadoqr, setEstadoQr] = useState(null)
+  const [idsesionqr, setIdsesionQr] = useState(null)
 
 
 
 
-  const handleSelectChat = (id, numero, botestado2, nameclient2, tipochat, idlinea, idOdoo, linea, estdoQr,issesionQr) => {
+  const handleSelectChat = (id, numero, botestado2, nameclient2, tipochat, idlinea, idOdoo, linea, estdoQr, issesionQr) => {
     setSelectedId(id);
     setNumerselect(numero);
     setBoottas(botestado2);
@@ -51,21 +51,37 @@ function Chatbody({ chatType }) {
     setLineaname(linea)
     setEstadoQr(estdoQr)
     setIdsesionQr(issesionQr)
-    console.log('LO QUE MANDO A CONTENT', id, numero, botestado2, nameclient2, tipochat, idlinea,idOdoo );
+    console.log('LO QUE MANDO A CONTENT', id, numero, botestado2, nameclient2, tipochat, idlinea, idOdoo, 'dto',);
   };
 
+
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Renderización condicional
   return (
     <div className='contentchats'>
-
       <div className='prtechats'>
-        <Chatlist tipochat={chatType} onSelectChat={handleSelectChat} />
+        {!isMobile || (isMobile && !selectedId) ? (
+          <Chatlist tipochat={chatType} onSelectChat={handleSelectChat} />
+        ) : null}
       </div>
-      
-      <div className="partechat">
-        
-        {selectedId ? <Chatcontent  typeclient={tipechat} sendiduser={selectedId} numerselect={numerselect} boottas={boottas} nameclientf={nameclientf} idagente={idUser} nameagente={nombreAgente} id_dlinea={iddlinea} id_odoo={idOdoochat} namelineac={namlineaname} estadoqrseison={estadoqr} issesionqr={idsesionqr}/> : <ChatVacio />}
-
-      </div>
+      {isMobile && selectedId ? (
+       <Chatcontent  typeclient={tipechat} sendiduser={selectedId} numerselect={numerselect} boottas={boottas} nameclientf={nameclientf} idagente={idUser} nameagente={nombreAgente} id_dlinea={iddlinea} id_odoo={idOdoochat} namelineac={namlineaname} estadoqrseison={estadoqr} issesionqr={idsesionqr}/>  
+      ) : (
+        <div className="partechat">
+          {selectedId ? <Chatcontent  typeclient={tipechat} sendiduser={selectedId} numerselect={numerselect} boottas={boottas} nameclientf={nameclientf} idagente={idUser} nameagente={nombreAgente} id_dlinea={iddlinea} id_odoo={idOdoochat} namelineac={namlineaname} estadoqrseison={estadoqr} issesionqr={idsesionqr}/>   : <ChatVacio />}
+        </div>
+      )}
     </div>
   );
 }
