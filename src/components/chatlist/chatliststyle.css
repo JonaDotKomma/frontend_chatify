@@ -9,6 +9,7 @@
 .cbaralist{
   height: 52px;
   background-color: #f0f0f0;
+  display: flex;
 }
 .caberaslist{
     text-align: center;
@@ -20,6 +21,7 @@
     height: 33px;
 
 }
+
 
 .cberabarra{
     background-color: #f0f2f5;
@@ -491,6 +493,10 @@
   }
 }
 
+.icnosmovileschampi{
+  display: none;
+}
+
 @media (max-width: 768px) {
   .floating-button {
     position: fixed; /* Mantiene el botón fijo en la pantalla */
@@ -531,5 +537,23 @@
   
   }
   
+
+  .icnosmovileschampi{
+    display: block;
+
+    width: 100%;
+    justify-content: flex-end;
+    text-align: left;
+  }
+
+  
+  .inavchmapo{
+    color: #030303;
+    margin-top: 2%;
+    font-size: 30px; /* Tamaño del ícono */
+    margin: 10px;    /* Espaciado alrededor de los íconos */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el ícono */
+    transition: transform 0.3s ease; /* Transición suave para el efecto de zoom */
+  }
   
 }

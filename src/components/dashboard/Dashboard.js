@@ -4,6 +4,7 @@ import axios from "axios";
 import './dasboardstyles.css';
 import Menu from '../nav/Menu';
 import ChatListRecient from './ChatlistDash';
+import { Link } from 'react-router-dom';
 function Dashboard({ user, onLogout, }, props) {
 
   const idAgentesi = localStorage.getItem('idAgente');
@@ -146,6 +147,51 @@ function Dashboard({ user, onLogout, }, props) {
             />
           ))}
         </div>
+
+
+
+
+
+      </div>
+
+
+      <div className='icnosmoviles'>
+        <Link className='likmovile' to="/ChatFacebook" >
+          <div className='btnnavmovile'>
+
+            <i className="fab fa-facebook-messenger inav"></i>
+            <p>Messenger</p>
+          </div>
+
+        </Link>
+        <Link className='likmovile' to="/ChatWathsapp"  >
+
+
+          <div className='btnnavmovile'>
+
+            <i className="fab fa-whatsapp inav"></i>
+            <p>Whatsapp</p>
+          </div>
+
+        </Link>
+
+
+        <Link className='likmovile'  to="/ChatInstgram" >
+
+          <div className='btnnavmovile'>
+
+            <i className="fab fa-instagram inav"></i>
+            <p>Instagram</p>
+          </div>
+        </Link>
+        <Link className='likmovile'  to="/ChatWeb" >
+
+          <div className='btnnavmovile'>
+
+            <i class="fab fa-shopify inav" ></i>
+            <p>Sitio Web</p>
+          </div>
+        </Link>
       </div>
     </div>
   );

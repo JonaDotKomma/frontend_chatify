@@ -5,6 +5,7 @@ import './chatliststyle.css';
 import ListItemWP from './ListItem';
 import ModalAddUser from './modales/ModalAddUser';
 import ListResultsSearch from './ListResultsSearch';
+import { Link } from 'react-router-dom';
 
 
 function Chatlist(props) {
@@ -12,20 +13,20 @@ function Chatlist(props) {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
- //filtro para la selecion de red social 
+  //filtro para la selecion de red social 
   const { tipochat } = props;
   const [localTipoChat] = useState(props.tipochat);
   const [searchTerm] = useState(""); // searchTerm se mantiene, setSearchTerm eliminado
   const [chatData, setChatData] = useState([]); // Estado para almacenar los datos del chat
 
 
-   // Filtra los chats basándote en el término de búsqueda y el tipo de chat
-   const filteredChats = chatData.filter(chat =>
+  // Filtra los chats basándote en el término de búsqueda y el tipo de chat
+  const filteredChats = chatData.filter(chat =>
     chat[1].toLowerCase().includes(searchTerm.toLowerCase()) && chat[5] === tipochat
   );
   const [rol, setRol] = useState('')
   useEffect(() => {
-    (async()=>{
+    (async () => {
       const postData = {
         idAgente: idAgentesi
       }
@@ -35,7 +36,7 @@ function Chatlist(props) {
     // eslint-disable-next-line
   }, [])
 
-   //Carfar la lista con el socket 
+  //Carfar la lista con el socket 
   useEffect(() => {
     // Conectar al servidor Socket.IO
     const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app');
@@ -53,7 +54,7 @@ function Chatlist(props) {
       socket.disconnect();
     };
   }, [idAgentesi]); // Agregar idAgentesi como dependencia si su valor puede cambiar
-//llamar a
+  //llamar a
   const listchat = async (idUser, localTipoChat) => {
 
     try {
@@ -67,18 +68,18 @@ function Chatlist(props) {
     }
   };
 
-  const handleSelectChat = (idUser, numero, botestado, nameclient, idlinea, idOdoo, linea, estdoQr,issesionQr ) => {
+  const handleSelectChat = (idUser, numero, botestado, nameclient, idlinea, idOdoo, linea, estdoQr, issesionQr) => {
     setSelectedUserId(idUser);
     console.log(selectedUserId)
     if (props.onSelectChat) {
-      props.onSelectChat(idUser, numero, botestado, nameclient, tipochat, idlinea, idOdoo, linea, estdoQr,issesionQr);
+      props.onSelectChat(idUser, numero, botestado, nameclient, tipochat, idlinea, idOdoo, linea, estdoQr, issesionQr);
       listchat(idAgentesi);
     }
   };
-  
 
 
-//Funciones para abrir modal flotante
+
+  //Funciones para abrir modal flotante
   const openExternalModal = () => {
     setIsModalOpen(true);
   };
@@ -88,64 +89,73 @@ function Chatlist(props) {
   };
 
 
- //busqeuda de mensajes 
- const [query, setQuery] = useState('');
- const [results, setResults] = useState([]);
+  //busqeuda de mensajes 
+  const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
 
 
- const [localResults, setLocalResults] = useState([]);
+  const [localResults, setLocalResults] = useState([]);
 
- useEffect(() => {
-   const fetchData = async () => {
-     if (query.length === 0) {
-       setResults([]);
-       return;
-     }
+  useEffect(() => {
+    const fetchData = async () => {
+      if (query.length === 0) {
+        setResults([]);
+        return;
+      }
 
-     const postData = {
-       agenteAsignado: idAgentesi,
-       mensaje: query, // Añade el query de búsqueda aquí
-     };
+      const postData = {
+        agenteAsignado: idAgentesi,
+        mensaje: query, // Añade el query de búsqueda aquí
+      };
 
-     try {
+      try {
 
-       const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/buscarMensaje', postData);
-       setResults(Array.isArray(response.data) ? response.data : []);
-       console.log('Los datos son', response.data)
-
-
-     } catch (error) {
-       console.error('Error al realizar la búsqueda:', error);
-     }
-   };
-
-   // Implementar un debounce para evitar llamadas excesivas a la API
-   const delayDebounceFn = setTimeout(() => {
-     fetchData();
-   }, 500);
-
-   return () => clearTimeout(delayDebounceFn);
- }, [query, idAgentesi]);
+        const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/buscarMensaje', postData);
+        setResults(Array.isArray(response.data) ? response.data : []);
+        console.log('Los datos son', response.data)
 
 
- useEffect(() => {
-   if (query.length === 0) {
-     setLocalResults([]);
-   } else {
-    const filtered = chatData.filter(chat =>
-      (String(chat[0]).toLowerCase().includes(query.toLowerCase()) || 
-      chat[1].toLowerCase().includes(query.toLowerCase())) && 
-      chat[5] === localTipoChat
-  );
-     setLocalResults(filtered);
-   }
- }, [query, chatData, localTipoChat]);
+      } catch (error) {
+        console.error('Error al realizar la búsqueda:', error);
+      }
+    };
+
+    // Implementar un debounce para evitar llamadas excesivas a la API
+    const delayDebounceFn = setTimeout(() => {
+      fetchData();
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [query, idAgentesi]);
+
+
+  useEffect(() => {
+    if (query.length === 0) {
+      setLocalResults([]);
+    } else {
+      const filtered = chatData.filter(chat =>
+        (String(chat[0]).toLowerCase().includes(query.toLowerCase()) ||
+          chat[1].toLowerCase().includes(query.toLowerCase())) &&
+        chat[5] === localTipoChat
+      );
+      setLocalResults(filtered);
+    }
+  }, [query, chatData, localTipoChat]);
 
 
 
   return (
     <div className='contentlist'>
       <header className='cbaralist'>
+        <div className='icnosmovileschampi'>
+          <Link to="/" >
+            <i className="fas fa-chevron-left inavchmapo"></i>
+          </Link>
+        
+        </div>
+
+
+
 
       </header>
 
