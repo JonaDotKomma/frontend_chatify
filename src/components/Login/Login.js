@@ -7,7 +7,7 @@ import Imglogin from '../img/imgpalogin.png'
 function Login({ clientId, onSuccess, onFailure, onLoginClick }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const language = navigator.language;
     // Utiliza useEffect para actualizar los campos de entrada cuando los valores cambian
     useEffect(() => {
         setEmail(email);
@@ -31,7 +31,7 @@ function Login({ clientId, onSuccess, onFailure, onLoginClick }) {
             <div className="login-left">
                 <img src={Imglogin} alt="Your Brand" className="login-image" />
                 <h1 className='txtprincipal'>Chatify</h1>
-                <p>Todas tus plataformas de venta en un solo lugar</p>
+                <p>{language==='es-ES' || language==='es-MX'?'Todas tus plataformas de venta en un solo lugar':" "}</p>
                 <div className='socilalinks'>
                     <i class="socilion fab  fa-whatsapp fa-2x" aria-hidden="true"></i>
                     <i class="socilion fab fa-facebook-messenger fa-2x" aria-hidden="true"></i>
@@ -65,7 +65,7 @@ function Login({ clientId, onSuccess, onFailure, onLoginClick }) {
                     />
                 </div>
 
-                <button className='btnligins' onClick={handleLoginClick}>Iniciar sesión</button>
+                <button className='btnligins' onClick={handleLoginClick}>{language==='es-ES' || language==='es-MX'?'Iniciar sesión': 'Log in'}</button>
                 <div className="texto-con-lineas">
                     <span>or</span>
                 </div>
@@ -79,7 +79,7 @@ function Login({ clientId, onSuccess, onFailure, onLoginClick }) {
                 />
 
 
-                <p className='holi'>Todas tus plataformas de venta en un solo lugar</p>
+                <p className='holi'>{language==='es-ES' || language==='es-MX'?'Todas tus plataformas de venta en un solo lugar':" "}</p>
                 <div className='socilalinks'>
                     <i class="socilion fab  fa-whatsapp fa-2x" aria-hidden="true"></i>
                     <i class="socilion fab fa-facebook-messenger fa-2x" aria-hidden="true"></i>

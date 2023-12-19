@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import io from 'socket.io-client';
 import audioNoti from '../../media/notiWa.mp3'
 import ModalPDF from '../chatContent/modales/ModalPDF';
+import axios from 'axios';
 
 
 function Nav() {
@@ -17,10 +18,23 @@ function Nav() {
     const [webNotificationCount, setWebNotificationCount] = useState(initialWebCount);
     const [watsNotificationCount, setWatsNotificationCount] = useState(initialWACount);
     const [fbNotificationCount, setFbNotificationCount] = useState(initialFbCount);
-
+    const [rol, setRol] = useState('')
 
     const usertipo = localStorage.getItem('usertipo');
 
+    useEffect(() => {
+        (async()=>{
+          const postData = {
+            idAgente: idAgentesi
+          }
+          const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/getDataAgent', postData);
+          const rolAgent = response.data[0][10];
+          console.log('res agente: ', response)
+          console.log('rol: ', rolAgent)
+          setRol(rolAgent)
+        })()
+        // eslint-disable-next-line
+      }, [])
 
     useEffect(() => {
         Notification.requestPermission()
@@ -103,40 +117,50 @@ function Nav() {
                 <Link to="/">
                     <img src={Logo} alt="Logo" />
                 </Link>
-                <div className='inocnconte'>
-                    <Link className="btnnav" to="/ChatWathsapp" onClick={handleWALinkClick} >
-                        <i className="fab fa-whatsapp inav"></i>
-                        {watsNotificationCount > 0 &&
+                {
+                        rol !== 'messenger'
+                        ? <div className='inocnconte'>                    
+                            <Link className="btnnav" to="/ChatWathsapp" onClick={handleWALinkClick} >
+                                <i className="fab fa-whatsapp inav"></i>
+                                {watsNotificationCount > 0 &&
 
 
-                            <div class="notificaciones">
-                                <span class="numero-notificaciones">{watsNotificationCount}</span>
-                            </div>
+                                    <div class="notificaciones">
+                                        <span class="numero-notificaciones">{watsNotificationCount}</span>
+                                    </div>
 
-                        }
-                    </Link>
+                                }
+                            </Link>
 
-                    <Link className="btnnav" to="/ChatFacebook" >
-                        <i className="fab fa-facebook-messenger inav"></i>
-                        {fbNotificationCount > 0 && <span className="notification-badge"> {fbNotificationCount}</span>}
-                    </Link>
+                            <Link className="btnnav" to="/ChatFacebook" >
+                                <i className="fab fa-facebook-messenger inav"></i>
+                                {fbNotificationCount > 0 && <span className="notification-badge"> {fbNotificationCount}</span>}
+                            </Link>
 
-                    <Link className="btnnav" to="/ChatInstgram" >
-                        <i className="fab fa-instagram inav"></i>
-                    </Link>
-                    <Link className="btnnav" to="/ChatWeb" >
-                        <i class="fab fa-shopify inav" ></i>
-                        {webNotificationCount > 0 && <span className="notification-badge"> {webNotificationCount}</span>}
-                    </Link>
+                            <Link className="btnnav" to="/ChatInstgram" >
+                                <i className="fab fa-instagram inav"></i>
+                            </Link>
+                            <Link className="btnnav" to="/ChatWeb" >
+                                <i class="fab fa-shopify inav" ></i>
+                                {webNotificationCount > 0 && <span className="notification-badge"> {webNotificationCount}</span>}
+                            </Link>
 
 
-                </div>
+                        </div>
+                        
+                        : <div className='inocnconte'>                    
+                        <Link className="btnnav" to="/ChatFacebook" >
+                            <i className="fab fa-facebook-messenger inav"></i>
+                            {fbNotificationCount > 0 && <span className="notification-badge"> {fbNotificationCount}</span>}
+                        </Link>
+
+                        </div>
+                }
             </header>
+            {
+                rol !== 'messenger'
+                ?
             <footer className="menu-inferior">
-
-
-
-
                 {
                     usertipo === "Administrador" ? (
                         <Link className="btnnav" to="/CodigoQr" >
@@ -174,6 +198,20 @@ function Nav() {
                 }
             </footer>
 
+                :<footer className="menu-inferior">
+                    {
+                    usertipo === "Administrador" ? (
+                        <Link className="btnnav" to="/Adminmodule" >
+                            <i className="fas fa-user-cog inav"></i>
+                        </Link>
+                    ) : (
+                        <Link className="btnnav" to="/PerfilUser" >
+                            <i className="fas fa-user inav"></i>
+                        </Link>
+                    )
+                }
+                </footer>                
+            }
 
             {ismodalpdf && <ModalPDF
                 isOpen={ismodalpdf}

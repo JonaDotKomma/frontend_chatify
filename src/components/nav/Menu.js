@@ -9,7 +9,7 @@ function Menu({ onLogout }) {
     const [showSearch, setShowSearch] = useState(false);
     
     const idAgentesi = localStorage.getItem('idAgente');
-
+    const language = navigator.language;
     const [notificationsAllowed, setNotificationsAllowed] = useState(false);
     const initialWebCount = parseInt(localStorage.getItem('webNotificationCount') || "0");
     const initialFbCount = parseInt(localStorage.getItem('fbNotificationCount') || "0");
@@ -142,7 +142,7 @@ function Menu({ onLogout }) {
                 <div className="dropdown">
                     <div className='dato1'><i className="fas fa-user menuicon"></i></div>
                     <div className="dropdown-content dropdown-content-right">
-                        <button onClick={handleLogoutClick}>Cerrar sesión</button>
+                        <button onClick={handleLogoutClick}>{language==='es-ES' || language==='es-MX'?'Cerrar sesión': 'Log Out'}</button>
 
                     </div>
                 </div>
