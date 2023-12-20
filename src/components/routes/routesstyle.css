@@ -1,67 +1,86 @@
-
-  .container {
-    max-width: 1550px; /* o el ancho que prefieras */
-    margin: auto; /* Esto centra el contenido */
-    background-color: white; /* Color de fondo para el contenido */
-    display: flex;
-    height: 100vh; /* 100% del viewport height */
+.container {
+  max-width: 1550px;
+  /* o el ancho que prefieras */
+  margin: auto;
+  /* Esto centra el contenido */
+  background-color: white;
+  /* Color de fondo para el contenido */
+  display: flex;
+  height: 100vh;
+  /* 100% del viewport height */
 }
 
 body {
-  background-color: rgba(170, 170, 182, 0.5); /* Opacidad del 50% */
+  background-color: rgba(170, 170, 182, 0.5);
+  /* Opacidad del 50% */
 
 }
 
 @media screen and (max-width: 1200px) {
-    .container {
-        max-width: 100%; /* En pantallas pequeñas, permite que el contenedor se expanda */
-    }
+  .container {
+    max-width: 100%;
+    /* En pantallas pequeñas, permite que el contenedor se expanda */
+  }
 }
 
-  
-  /* Barra lateral */
-  .barralateral {
-    width: 100px;
-    background-color: #eff0f2;
-    height: 100vh; /* 100% del viewport height */
-    overflow-y: auto; /* Para manejar contenido que exceda la altura */
-    display: flex; /* Activa Flexbox */
-    justify-content: center; /* Centra el contenido horizontalmente */
-    align-items: center; /* Centra el contenido verticalmente */
-    flex-direction: column; /* Alinea los elementos en dirección vertical */
-  }
-  
-  /* Contenido principal */
-  .contenido-principal {
-    width: 100%;
 
-    height: 100vh; /* 100% del viewport height */
-    overflow-y: auto; /* Para manejar contenido que exceda la altura */
-    overflow-x: hidden;
-  }
+/* Barra lateral */
+.barralateral {
+  width: 100px;
+  background-color: #eff0f2;
+  height: 100vh;
+  /* 100% del viewport height */
+  overflow-y: auto;
+  /* Para manejar contenido que exceda la altura */
+  display: flex;
+  /* Activa Flexbox */
+  justify-content: center;
+  /* Centra el contenido horizontalmente */
+  align-items: center;
+  /* Centra el contenido verticalmente */
+  flex-direction: column;
+  /* Alinea los elementos en dirección vertical */
+}
 
-  .menumovil {
-    display: blnoock; /* Muestra el menú de hamburguesa en móviles */
+/* Contenido principal */
+.contenido-principal {
+  width: 100%;
+
+  height: 100vh;
+  /* 100% del viewport height */
+  overflow-y: auto;
+  /* Para manejar contenido que exceda la altura */
+  overflow-x: hidden;
+}
+
+.menumovil {
+  display: blnoock;
+  /* Muestra el menú de hamburguesa en móviles */
 }
 
 .menuweb {
-    display: none; /* Oculta el menú normal en móviles */
+  display: none;
+  /* Oculta el menú normal en móviles */
 }
 
 @media (min-width: 768px) {
   .menumovil {
-      display: none; /* Oculta el menú de hamburguesa en pantallas grandes */
+    display: none;
+    /* Oculta el menú de hamburguesa en pantallas grandes */
   }
 
   .menuweb {
-      display: block; /* Muestra el menú normal en pantallas grandes */
+    display: block;
+    /* Muestra el menú normal en pantallas grandes */
   }
 
 
   .contenido-principal {
-overflow-x: hidden;
-    overflow-y: hidden; /* Para manejar contenido que exceda la altura */
-background-color: #fff;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    /* Para manejar contenido que exceda la altura */
+    background-color: #fff;
+
   }
 
 }

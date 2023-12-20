@@ -38,6 +38,7 @@
   width: 100%;
   height:100%;
   padding-bottom: 10%;
+  
 }
 
 .contechatcuerpo-wide {
@@ -767,3 +768,15 @@ display: none;
   }
 
 }
+
+
+@media screen and (max-height: 650px) {
+  .contechatcuerpo {
+    width: 100%;
+    height:99%;
+    padding-bottom: 10%;
+    overflow: hidden;
+    
+  }
+}
+
