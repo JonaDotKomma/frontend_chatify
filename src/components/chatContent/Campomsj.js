@@ -915,7 +915,7 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
                                     idagente={idagente}
                                     idlinea={id_dlinea}
                                     pdfsend={senviopdf}
-
+                                    idSesionA={idssionqr}
                                 />
                             }
 

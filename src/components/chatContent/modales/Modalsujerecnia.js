@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, pdfsend }) {
+function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, pdfsend, idSesionA }) {
     const [contenido, setContenido] = useState([]);
     const [mostrar, setMostrar] = useState([]);
     const [vistaActiva, setVistaActiva] = useState(''); // New state for tracking active view
@@ -39,6 +39,7 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
 
         setLoading(true);
         setError(null);
+        let idSession = idSesionA ? idSesionA : 0;
 
         const postData = {
             // Aquí puedes agregar los parámetros que espera tu API
@@ -46,8 +47,8 @@ function Modalsujerecnia({ onClose, onSeleccion, numerotel, idagente, idlinea, p
             mensaje: mensajePdf,
             tipo: "application/pdf",
             linea: idlinea.toString(), // Convertir idlinea a string
-            idAgente: parseInt(idagente) // Asegurar que idagente sea un entero
-
+            idAgente: parseInt(idagente), // Asegurar que idagente sea un entero
+            idSesion: idSession
 
         };
 
