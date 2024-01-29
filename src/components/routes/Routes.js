@@ -6,7 +6,6 @@ import './routesstyle.css';
 import Nav from '../nav/Nav';
 import PerfilUser from '../perfiluser/Perfiluser';
 import Enviomasivo from '../masivo/Enviomasivo';
-import MenuHamburguesa from '../menuhamburguesa/MenuHamburguesa';
 import EditClient from '../editclient/editarcliente';
 import CodigoQr from '../qr/CodigoQr';
 import AddAgenteAlinear from '../qr/Addagntealineaqr';

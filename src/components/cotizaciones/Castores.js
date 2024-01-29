@@ -2,19 +2,19 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './castorestyle.css'
 import axios from 'axios';
 import Select from 'react-select';
+import Tooltip from './Tooltip';
 
 
 
 function Castores() {
 
     const [opcionSeleccionada, setOpcionSeleccionada] = useState([]);
+    const [opcionSeleccionadaOcurrecurre, setOpcionSeleccionadaOcurre] = useState(null)
 
     // Estado para almacenar la respuesta de la API
     const [respuestaApi, setRespuestaApi] = useState(null);
 
     const [numeroDomicilio, setNumeroDomicilio] = useState(''); // Estado para almacenar el número
-
-
     //funcion formulario google 
     const [address, setAddress] = useState('');
 
@@ -25,6 +25,8 @@ function Castores() {
     const [neighborhood, setNeighborhood] = useState('');
     //funcion para poder llamar a la api
     const [listproductosdata, setListproductosdata] = useState([]);
+    const [listaOcurre, setListaOcurre] = useState([]);
+
 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
@@ -42,26 +44,72 @@ function Castores() {
             }
         };
 
+        const ocurresucursales = async () => {
+            try {
+                const response = await axios.get('https://api.castores.com.mx/catalogs/ocurreOffices');
+                const jsonData = response.data.data.packaging;
+                setListaOcurre(jsonData);
+                console.log('La lista ocurre es:', response.data.data.packaging);
+
+            } catch (error) {
+                console.error("Error al obtener los productos:", error);
+            }
+        };
+
         obtenerProductos();
+        ocurresucursales();
     }, []);
+
+
+    //ocurre 
+    const [isChecked, setIsChecked] = useState(false);
+
+    const opcionesSelectocurre = listaOcurre.map(item => ({
+        label: item.plaza, // Lo que se muestra al usuario
+        value: item.idoficina // El valor interno que se usa
+    }));
+
+    const handleChange = () => {
+        const newCheckedState = !isChecked;
+        setIsChecked(newCheckedState);
+    
+        // Si después de cambiar, el checkbox no está seleccionado, establece opcionSeleccionadaOcurre a null
+        if (!newCheckedState) {
+            setOpcionSeleccionadaOcurre(null);
+        }
+        // No hay necesidad de un else aquí a menos que quieras hacer algo específico cuando se seleccione el checkbox
+    };
+    
+
+
+    const handleChangeocurre = (opcionSeleccionadaOcurre) => {
+        console.log('Opción seleccionada:', opcionSeleccionadaOcurre.value);
+        const valueocurre = opcionSeleccionadaOcurre.value;
+        setOpcionSeleccionadaOcurre(valueocurre);
+
+
+    };
 
 
     //enviar datos a castores
     let productosSeleccionados = [];
+
     const handleFormSubmit = async () => {
+
         setLoading(true)
         setError(null)
         console.log('BOTON COTIZAR');
 
         let valorDeclaradoFinal = 0;
-        opcionSeleccionada.forEach((seleccion, index)=> {
+
+        opcionSeleccionada.forEach((seleccion, index) => {
             const [valorDeclarado, contenido, peso, largoCm, anchoCm, altoCm] = seleccion.split('|');
             valorDeclaradoFinal = valorDeclaradoFinal + parseFloat(valorDeclarado);
             const cantidadPiezas = parseInt(noPiezasPorProducto[index], 10) || 1; // Usa el valor del input o 1 por defecto
 
             const producto = {
                 contenido: contenido,
-                cantidad:cantidadPiezas, // Asumiendo que noPiezas es un número entero
+                cantidad: cantidadPiezas, // Asumiendo que noPiezas es un número entero
                 peso: parseFloat(peso), // Asumiendo que peso es un número decimal
                 largo: parseFloat(largoCm), // Asumiendo que largoCm es un número decimal
                 ancho: parseFloat(anchoCm), // Asumiendo que anchoCm es un número decimal
@@ -70,6 +118,8 @@ function Castores() {
 
             productosSeleccionados.push(producto);
         });
+
+
 
         // Ahora productosSeleccionados es un arreglo con los detalles de cada producto seleccionado
         console.log(productosSeleccionados);
@@ -81,6 +131,12 @@ function Castores() {
             colonia: neighborhood,
             ciudad: city,
             estado: state,
+
+            ...(opcionSeleccionadaOcurrecurre ? {
+                ocurre: "true",
+                idOffice: String(opcionSeleccionadaOcurrecurre)
+            } : {}),
+
             cp: postalCode,
             valorDeclarado: valorDeclaradoFinal,
             paquetes: productosSeleccionados
@@ -91,7 +147,24 @@ function Castores() {
             // Hacer la petición POST a tu API
             const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/cotEnvio', formData);
             console.log('Si paso mano', response.data);
-            setRespuestaApi(response.data); // Actualiza el estado con la respuesta
+            if (typeof response.data === 'string') {
+                // Mostrar una alerta con el mensaje completo de solicitud fallida
+                if(response.data ==='Error al buscar las ciudades y oficina'){
+                    alert(response.data +'. Seleciona otro código postal o sucural');
+                    resetearEstado()
+
+                }else{
+                    alert(response.data);
+
+                }
+               
+                // Opcional: Cambiar el estado para sugerir la selección de un Ocurre
+            } else {
+                // Procesar la respuesta exitosa de la API
+                setRespuestaApi(response.data); // Actualiza el estado con la respuesta
+            }
+
+
 
             // Manejar la respuesta de la API
         } catch (error) {
@@ -100,6 +173,7 @@ function Castores() {
         } finally {
             setLoading(false)
         }
+
 
     };
 
@@ -116,6 +190,8 @@ function Castores() {
         setColonias([])
         setIsColoniaSelectDisabled(true)
         setRespuestaApi(null);
+        setOpcionSeleccionadaOcurre(null)
+        setIsChecked(false)
     };
 
 
@@ -145,13 +221,13 @@ function Castores() {
         return opcionSeleccionada.map((opcion, index) => {
             // Dividir la opción para obtener las partes individuales
             const [, nombreProducto] = opcion.split('|');
-    
+
             return (
                 <li className='panchilist' key={index}>
                     {nombreProducto} {/* Mostrar solo el nombre del producto */}
-                    <input 
-                        type="number" 
-                        value={noPiezasPorProducto[index] || 1} 
+                    <input
+                        type="number"
+                        value={noPiezasPorProducto[index] || 1}
                         onChange={(e) => handleNoPiezasChange(index, e.target.value)}
                         placeholder="No. Piezas"
                     />
@@ -159,7 +235,7 @@ function Castores() {
             );
         });
     };
-    
+
 
     //estiulos del select
     const customStyles = {
@@ -238,6 +314,10 @@ function Castores() {
         setIsButtonEnabled(validarCampos());
     }, [validarCampos]); // Ahora validarCampos es una dependencia del efecto
 
+
+
+
+
     return (
         <div className='contencastores'>
 
@@ -294,10 +374,43 @@ function Castores() {
 
                     </div>
 
-                </div>                
-                
+                </div>
+
+                <div className='ocureediv'>
+
+                    <div>
+                        <label className='labelocurre'>
+                            <input type="checkbox" className='inputcastores' checked={isChecked} onChange={handleChange} />
+                            Ocurre                        </label>
+                    </div>
+
+                    <div>
+                        <Tooltip text="Ocurre es una opción que sirve para entregar el pedido en la sucursal más cercana del estado, en caso de que no llegue la paquetería al domicilio.">
+
+                            <i className="fas fa-question-circle"></i>
+                        </Tooltip>
+                    </div>
+
+                </div>
+
+                {isChecked &&
+                    <div>
+                        <p>Has seleccionado la casilla correcta.</p>
+                        <Select
+                            options={opcionesSelectocurre}
+                            onChange={handleChangeocurre}
+                            isSearchable={true}
+                            placeholder="Selecciona una opción"
+                            menuPlacement="top" // Esto hará que el menú se despliegue hacia arriba
+                        />
+
+
+                    </div>
+
+                }
+
                 <div className='btncontent'>
-                    <button  disabled={!isButtonEnabled || loading} className='btncassend'   onClick={handleFormSubmit}>
+                    <button disabled={!isButtonEnabled || loading} className='btncassend' onClick={handleFormSubmit}>
                         Cotizar
                     </button>
                 </div>
@@ -451,8 +564,6 @@ function Castores() {
 
 
                     </div>
-
-
 
 
 
