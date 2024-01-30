@@ -557,3 +557,22 @@
   }
   
 }
+
+
+.butonmore{
+
+  text-align: center;
+  height: 50px;
+}
+
+.btnmorechats{
+  cursor: pointer;
+  margin-top: 2%;
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  font-size: 18px;
+  border:none;
+  background-color: #f0f0f0;
+  color: #1e1f26 ;
+}

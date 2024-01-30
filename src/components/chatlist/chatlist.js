@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import io from 'socket.io-client';
 import axios from "axios";
 import './chatliststyle.css';
@@ -13,12 +13,19 @@ function Chatlist(props) {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const language = navigator.language;
- //filtro para la selecion de red social 
+
+
+  //filtro para la selecion de red social 
   const { tipochat } = props;
   const [localTipoChat] = useState(props.tipochat);
   const [searchTerm] = useState(""); // searchTerm se mantiene, setSearchTerm eliminado
   const [chatData, setChatData] = useState([]); // Estado para almacenar los datos del chat
 
+  
+  const [limit, setLimit] = useState(15);
+  const [isLoading, setIsLoading] = useState(false); // Nuevo estado para rastrear la carga
+
+  const chatListRef = useRef(null);
 
   // Filtra los chats basándote en el término de búsqueda y el tipo de chat
   const filteredChats = chatData.filter(chat =>
@@ -43,11 +50,11 @@ function Chatlist(props) {
 
     socket.on('notification', (data) => {
       console.log('Plataforma:', data.plataforma);
-      listchat(idAgentesi, data.plataforma);
+      listchat(idAgentesi, limit, data.plataforma);
     });
 
     // Llamar a listchat al montar el componente
-    listchat(idAgentesi);
+    listchat(idAgentesi, limit);
 
     // Limpiar al desmontar el componente
     return () => {
@@ -55,10 +62,13 @@ function Chatlist(props) {
     };
   }, [idAgentesi]); // Agregar idAgentesi como dependencia si su valor puede cambiar
   //llamar a
-  const listchat = async (idUser, localTipoChat) => {
+  const listchat = async (idUser, limit, localTipoChat) => {
+
+
+    console.log('el limite es ', limit)
 
     try {
-      const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/listuser', { idUser });
+      const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/listuser', { idUser, limit });
       const jsonData = response.data;
       setChatData(jsonData); // Actualiza el estado con los nuevos datos
 
@@ -92,8 +102,6 @@ function Chatlist(props) {
   //busqeuda de mensajes 
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
-
-
   const [localResults, setLocalResults] = useState([]);
 
   useEffect(() => {
@@ -143,6 +151,51 @@ function Chatlist(props) {
   }, [query, chatData, localTipoChat]);
 
 
+  //scroll chats
+   // Función para manejar el evento scroll
+  
+
+
+  const newLimit = (newLimitValue) => {
+    console.log("Nuevo limit:", newLimitValue);
+
+    listchat(idAgentesi, newLimitValue);
+
+    // Aquí puedes implementar la lógica para cargar más elementos en tu lista, por ejemplo
+  };
+
+ // Actualiza handleClick para incluir la lógica de actualización de limit
+ const handleClick = async () => {
+  if (!isLoading) { // Verifica si ya se está cargando
+    setIsLoading(true); // Establece el estado de carga a true
+    const newLimitValue = limit + 25;
+    setLimit(newLimitValue); // Actualiza el estado con el nuevo valor
+    await newLimit(newLimitValue); // Espera a que la carga de datos termine
+    setIsLoading(false); // Establece el estado de carga a false
+  }
+};
+
+const handleScroll = () => {
+  if (isLoading) return; // No hace nada si está cargando
+
+  const { scrollTop, scrollHeight, clientHeight } = chatListRef.current;
+  if (scrollTop + clientHeight >= scrollHeight - 5) {
+    handleClick();
+  }
+};
+
+useEffect(() => {
+  const chatListElement = chatListRef.current;
+  if (chatListElement) {
+    chatListElement.addEventListener('scroll', handleScroll);
+  }
+
+  return () => {
+    if (chatListElement) {
+      chatListElement.removeEventListener('scroll', handleScroll);
+    }
+  };
+}, [limit, isLoading]); 
 
   return (
     <div className='contentlist'>
@@ -151,7 +204,7 @@ function Chatlist(props) {
           <Link to="/" >
             <i className="fas fa-chevron-left inavchmapo"></i>
           </Link>
-        
+
         </div>
 
 
@@ -165,7 +218,7 @@ function Chatlist(props) {
           <input
             className="serrachuser"
             type="text"
-            placeholder={language==='es-ES' || language==='es-MX'?"Buscar un chat": "Search"}
+            placeholder={language === 'es-ES' || language === 'es-MX' ? "Buscar un chat" : "Search"}
 
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -180,7 +233,7 @@ function Chatlist(props) {
         <i className="fas fa-user-plus"></i>
       </button>
 
-      <div className="chatlist__items">
+      <div className="chatlist__items" ref={chatListRef}>
         {
           query.length > 0 ? (
             // Cuando hay algo en el input de búsqueda, mostramos los resultados de la búsqueda
@@ -210,6 +263,7 @@ function Chatlist(props) {
             ))
           )
         }
+
       </div>
 
       <ModalAddUser

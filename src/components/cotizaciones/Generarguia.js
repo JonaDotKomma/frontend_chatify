@@ -119,62 +119,65 @@ function GenerarGuia() {
 
     const [pdfUrl, setPdfUrl] = useState('');
 
-  useEffect(() => {
-    if (respuestaApi && respuestaApi.src && respuestaApi.src[0]) {
-      // Decodifica la cadena Base64 a un arreglo de bytes
-      const pdfData = atob(respuestaApi.src[0]);
-      const byteNumbers = new Array(pdfData.length);
-      for (let i = 0; i < pdfData.length; i++) {
-        byteNumbers[i] = pdfData.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
+    useEffect(() => {
+        if (respuestaApi && respuestaApi.src && respuestaApi.src[0]) {
+            // Decodifica la cadena Base64 a un arreglo de bytes
+            const pdfData = atob(respuestaApi.src[0]);
+            const byteNumbers = new Array(pdfData.length);
+            for (let i = 0; i < pdfData.length; i++) {
+                byteNumbers[i] = pdfData.charCodeAt(i);
+            }
+            const byteArray = new Uint8Array(byteNumbers);
 
-      // Crea un Blob con el tipo MIME para PDF
-      const pdfBlob = new Blob([byteArray], { type: 'application/pdf' });
+            // Crea un Blob con el tipo MIME para PDF
+            const pdfBlob = new Blob([byteArray], { type: 'application/pdf' });
 
-      // Crea una URL para el Blob
-      const blobUrl = URL.createObjectURL(pdfBlob);
-      setPdfUrl(blobUrl);
+            // Crea una URL para el Blob
+            const blobUrl = URL.createObjectURL(pdfBlob);
+            setPdfUrl(blobUrl);
 
-      // Limpieza: revoca la URL del objeto cuando el componente se desmonte
-      return () => {
-        URL.revokeObjectURL(blobUrl);
-      };
-    }
-  }, [respuestaApi]); // Dependencia a respuestaApi
+            // Limpieza: revoca la URL del objeto cuando el componente se desmonte
+            return () => {
+                URL.revokeObjectURL(blobUrl);
+            };
+        }
+    }, [respuestaApi]); // Dependencia a respuestaApi
 
     return (
         <div className='contencastores'>
 
             <div className='ldodercas'>
-                <h1>Generar guia para envio</h1>
+                <h1>
+                    Generar guía para envió
+
+                </h1>
 
                 <div>
                     <p>
-                        Ingresa los datos restantes para generar la guia.
+                        Ingresa los datos restantes para generar la guía.
                     </p>
                 </div>
 
 
-                <div >
+                <div className='formgene'>
                     <div className='divflexz'>
                         <div className='ipgneerar'>
-                            <label>Nombre:</label>
+                            <p>Nombre:</p>
                             <input className='inpchico' type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} />
                         </div>
                         <div className='ipgneerar'>
-                            <label>Teléfono:</label>
+                            <p>Teléfono:</p>
                             <input className='inpchico' type="text" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
                         </div>
                     </div>
 
                     <div className='divflexz'>
                         <div className='ipgneerar'>
-                            <label>Email:</label>
+                            <p>Email:</p>
                             <input className='inpchico' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div className='ipgneerar'>
-                            <label>Calle:</label>
+                            <p>Calle:</p>
                             <input className='inpchico' type="text" value={calle} onChange={(e) => setCalle(e.target.value)} />
                         </div>
 
@@ -183,54 +186,68 @@ function GenerarGuia() {
 
                     <div className='divflexz'>
                         <div className='ipgneerar'>
-                            <label>Numero interiro :</label>
+                            <p>Numero interiro :</p>
                             <input className='inpchico' type="text" value={numInt} onChange={(e) => setNumInt(e.target.value)} />
                         </div>
                         <div className='ipgneerar'>
-                            <label>Numero Exterior:</label>
+                            <p>Numero Exterior:</p>
                             <input className='inpchico' type="text" value={numExt} onChange={(e) => setNumExt(e.target.value)} />
                         </div>
                     </div>
                     <div className='divflexz'>
 
                         <div className='ipgneerar'>
-                            <label>Colonia:</label>
+                            <p>Colonia:</p>
                             <input className='inpchico' type="text" value={colonia} onChange={(e) => setColonia(e.target.value)} />
                         </div>
                         <div className='ipgneerar'>
-                            <label>Ciudad:</label>
+                            <p>Ciudad:</p>
                             <input className='inpchico' type="text" value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
                         </div>
                     </div>
 
                     <div className='divflexz'>
                         <div className='ipgneerar'>
-                            <label>Estado:</label>
+                            <p>Estado:</p>
                             <input className='inpchico' type="text" value={estado} onChange={(e) => setEstado(e.target.value)} />
                         </div >
                         <div className='ipgneerar' >
-                            <label>C.P.:</label>
+                            <p>C.P.:</p>
                             <input className='inpchico' type="text" value={cp} onChange={(e) => setCp(e.target.value)} />
                         </div>
                     </div>
 
-                    <button onClick={handleSubmit}>Enviar</button>
+                    <div className='contebutton'>
+                        <button className='btncassendguia' onClick={handleSubmit}>Generar Guía</button>
+
+                    </div>
+
                 </div>
                 {loading && <div className="spinner-container">
                     <div className="spinner"></div>
                 </div>}
 
             </div>
-            {pdfUrl  && (
-                <div className='ldoizqcas'>
+            {pdfUrl && (
+                <div className='ldoizqcasguia'>
 
-                    <iframe
-                        src={pdfUrl }
-                        style={{ width: '100%', height: '100%', border: 'none' }}
-                        frameBorder="0"
-                        scrolling="auto"
-                    >
-                    </iframe>
+
+               
+
+                        <iframe
+                            src={pdfUrl}
+                            style={{ width: '80%', height: '75%', border: 'none' }}
+                            frameBorder="0"
+                            scrolling="auto"
+                        >
+                        </iframe>
+                  
+
+                    <div>
+                        <a href={pdfUrl}  className='btncassendguiadow'  download="NombreDelArchivo.pdf">
+                            Descargar
+                        </a>
+                    </div>
 
                 </div>
             )}
