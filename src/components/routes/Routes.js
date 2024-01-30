@@ -11,6 +11,7 @@ import CodigoQr from '../qr/CodigoQr';
 import AddAgenteAlinear from '../qr/Addagntealineaqr';
 import AdminView from '../adminmodules/Aminmode';
 import Castores from '../cotizaciones/Castores';
+import GenerarGuia from '../cotizaciones/Generarguia';
 function Routeschmpi({ user, onLogout, nombreUsuario }) {
 
 
@@ -43,6 +44,8 @@ function Routeschmpi({ user, onLogout, nombreUsuario }) {
                     <Route path="/AddAgenteAlinear" element={<AddAgenteAlinear/>} />
 
                     <Route path="/Castores" element={<Castores user={user} onLogout={onLogout} nombreUsuario={nombreUsuario}  />} />
+                    <Route path="/GenerarGuia" element={<GenerarGuia user={user} onLogout={onLogout} nombreUsuario={nombreUsuario}  />} />
+
                     
                 </Routes>
             </div>

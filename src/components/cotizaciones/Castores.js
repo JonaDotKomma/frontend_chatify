@@ -4,9 +4,13 @@ import axios from 'axios';
 import Select from 'react-select';
 import Tooltip from './Tooltip';
 
+import { useNavigate } from 'react-router-dom';
 
 
 function Castores() {
+    const navigate = useNavigate();
+
+    const [datosGuia, setDatosGuia] = useState(null); // Inicializa el estado
 
     const [opcionSeleccionada, setOpcionSeleccionada] = useState([]);
     const [opcionSeleccionadaOcurrecurre, setOpcionSeleccionadaOcurre] = useState(null)
@@ -72,14 +76,14 @@ function Castores() {
     const handleChange = () => {
         const newCheckedState = !isChecked;
         setIsChecked(newCheckedState);
-    
+
         // Si después de cambiar, el checkbox no está seleccionado, establece opcionSeleccionadaOcurre a null
         if (!newCheckedState) {
             setOpcionSeleccionadaOcurre(null);
         }
         // No hay necesidad de un else aquí a menos que quieras hacer algo específico cuando se seleccione el checkbox
     };
-    
+
 
 
     const handleChangeocurre = (opcionSeleccionadaOcurre) => {
@@ -143,21 +147,24 @@ function Castores() {
         }
 
         console.log('la data es ', formData);
+
+        setDatosGuia(formData)
+
         try {
             // Hacer la petición POST a tu API
             const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/cotEnvio', formData);
             console.log('Si paso mano', response.data);
             if (typeof response.data === 'string') {
                 // Mostrar una alerta con el mensaje completo de solicitud fallida
-                if(response.data ==='Error al buscar las ciudades y oficina'){
-                    alert(response.data +'. Seleciona otro código postal o sucural');
+                if (response.data === 'Error al buscar las ciudades y oficina') {
+                    alert(response.data + '. Seleciona otro código postal o sucural');
                     resetearEstado()
 
-                }else{
+                } else {
                     alert(response.data);
 
                 }
-               
+
                 // Opcional: Cambiar el estado para sugerir la selección de un Ocurre
             } else {
                 // Procesar la respuesta exitosa de la API
@@ -315,8 +322,10 @@ function Castores() {
     }, [validarCampos]); // Ahora validarCampos es una dependencia del efecto
 
 
-
-
+    const gogenerarguia = () => {
+        navigate('/GenerarGuia', { state: { datosGuia } });
+    }
+    
 
     return (
         <div className='contencastores'>
@@ -394,8 +403,8 @@ function Castores() {
                 </div>
 
                 {isChecked &&
-                    <div>
-                        <p>Has seleccionado la casilla correcta.</p>
+                    <div className='divselct'>
+                        <p>Has seleccionado ocurre.</p>
                         <Select
                             options={opcionesSelectocurre}
                             onChange={handleChangeocurre}
@@ -568,6 +577,10 @@ function Castores() {
 
 
                     <div className='btncontent'>
+
+                        <button className='btncassend' onClick={gogenerarguia}>
+                            Crar guia
+                        </button>
 
                         <button className='btncassend' onClick={resetearEstado}>
                             Generar Nueva Cotización
