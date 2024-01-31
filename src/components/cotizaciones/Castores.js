@@ -13,7 +13,7 @@ function Castores() {
     const [datosGuia, setDatosGuia] = useState(null); // Inicializa el estado
 
     const [opcionSeleccionada, setOpcionSeleccionada] = useState([]);
-    const [opcionSeleccionadaOcurrecurre, setOpcionSeleccionadaOcurre] = useState(null)
+    const [opcionSeleccionadaOcurrecurre, setOpcionSeleccionadaOcurre] = useState(false)
 
     // Estado para almacenar la respuesta de la API
     const [respuestaApi, setRespuestaApi] = useState(null);
@@ -127,24 +127,34 @@ function Castores() {
 
         // Ahora productosSeleccionados es un arreglo con los detalles de cada producto seleccionado
         console.log(productosSeleccionados);
-        console.log('Valor declarado: ' + valorDeclaradoFinal);
-
-        const formData = {
-            calle: address,
-            noExterior: numeroDomicilio,
-            colonia: neighborhood,
-            ciudad: city,
-            estado: state,
-
-            ...(opcionSeleccionadaOcurrecurre ? {
+        var formData;
+        if (opcionSeleccionadaOcurrecurre){
+            formData = {
+                calle: address,
+                noExterior: numeroDomicilio,
+                colonia: neighborhood,
+                ciudad: city,
+                estado: state,
                 ocurre: "true",
-                idOffice: String(opcionSeleccionadaOcurrecurre)
-            } : {}),
-
-            cp: postalCode,
-            valorDeclarado: valorDeclaradoFinal,
-            paquetes: productosSeleccionados
+                idOffice: String(opcionSeleccionadaOcurrecurre),
+                cp: postalCode,
+                valorDeclarado: valorDeclaradoFinal,
+                paquetes: productosSeleccionados
+            }
+        }else{
+            formData = {
+                calle: address,
+                noExterior: numeroDomicilio,
+                colonia: neighborhood,
+                ciudad: city,
+                estado: state,
+                cp: postalCode,
+                valorDeclarado: valorDeclaradoFinal,
+                paquetes: productosSeleccionados
+            }
         }
+        
+        
 
         console.log('la data es ', formData);
 
@@ -323,6 +333,9 @@ function Castores() {
 
 
     const gogenerarguia = () => {
+        console.log('Estos son los datos para la guia');
+        console.log(datosGuia);
+        console.log('Estos fueron los datos para la guia');
         navigate('/GenerarGuia', { state: { datosGuia } });
     }
     
