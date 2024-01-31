@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import Logoo from '../img/Logo.png'
 
 
 import './castorestyle.css'
 import axios from 'axios';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
-
+import QRCode from 'qrcode';
 
 
 function GenerarGuia() {
@@ -143,6 +146,136 @@ function GenerarGuia() {
         }
     }, [respuestaApi]); // Dependencia a respuestaApi
 
+
+    //generar pdf 
+    const [pdfUrl2, setPdfUrl2] = useState('');
+
+    const generatePDF = async () => {
+        const doc = new jsPDF();
+
+        // Añadir texto "Hola Mundo" x1 y2
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(18);
+
+        doc.text('Pickin Oder', 10, 20);
+        doc.addImage(Logoo, 'PNG', 60, 7, 50, 15);
+        doc.setLineWidth(0.8);
+
+        doc.setFontSize(13);
+        doc.text('S21376', 15, 35);//DATO1
+        doc.text('/', 36, 35);
+        doc.text('WHP/OUT/15765', 38, 35);//DATO2
+
+
+
+
+        doc.setFontSize(12);
+        doc.text('SALES TEAM:', 15, 40);
+        doc.text('Venta directa 55', 45, 40);//dato3
+        doc.setLineWidth(0.8); // Ajusta este valor para cambiar el grosor de la línea
+
+        
+
+        let yMedia = 32; // Promedio de las alturas 'y' de los textos DATO2 y SALES TEAM
+
+        // Definir el tamaño y la posición del recuadro
+        let xRecuadro1 = 85; // Ajusta esta posición 'x' según el ancho de tu documento
+        let xRecuadro2 = xRecuadro1 + 10;
+        let anchoRecuadro = 10; // Ancho del recuadro
+        let altoRecuadro = 10; // Alto del recuadro
+    
+        // Dibujar el recuadro
+        doc.rect(xRecuadro1, yMedia - 3, anchoRecuadro, altoRecuadro);
+
+        // Dibujar el segundo recuadro para el "4"
+        doc.rect(xRecuadro2, yMedia - 3, anchoRecuadro, altoRecuadro);
+    
+        // Añadir el número "14" dentro del recuadro
+        // Ajusta el desplazamiento dentro del recuadro según el tamaño de la fuente y las dimensiones del recuadro
+        doc.setFontSize(15); // Puedes ajustar el tamaño de la fuente si es necesario
+        doc.text('1', xRecuadro1 + 3, yMedia + 4); // Ajusta estos valores para centrar el texto como desees
+    
+
+        doc.text('4', xRecuadro2 + 3, yMedia + 4); // Ajusta estos valores para centrar el texto como desees
+
+        doc.line(10, 45, 110, 45); // Ajusta las coordenadas según necesites
+        doc.setFontSize(12);
+
+        doc.text('Producto a despachar', 20, 52);
+        doc.setFontSize(10)
+        doc.text('[KITCPUHTC] KIT CPU ALIENADORA CON TECLADO', 15, 57);
+
+        doc.setLineWidth(0.8); // Ajusta este valor para cambiar el grosor de la línea
+
+        doc.line(10, 62, 110, 62); // Ajusta las coordenadas según necesites
+        doc.setFontSize(10)
+        doc.text('Productos adicionales de la orden (SKU)', 13, 67);
+
+        const productos = [
+            { id: 1, sku: "SKU1" },
+            { id: 1, sku: "SKU1" },
+            { id: 1, sku: "SKU1" },
+            { id: 1, sku: "SKU1" },
+            { id: 1, sku: "SKU1" },
+            { id: 1, sku: "SKU1" },
+            { id: 1, sku: "SKU1" },
+            // otros productos...
+        ];
+
+        const productosPorFila = 4;
+        const filaAltura = 5; // Altura de cada fila de texto
+        let y = 72; // Inicio de la primera fila de productos
+
+        productos.forEach((producto, index) => {
+            const x = 18 + (index % productosPorFila) * 25; // Calcular posición x basado en el índice
+            if (index % productosPorFila === 0 && index !== 0) {
+                y += filaAltura; // Mover a la siguiente fila después de cada 4 productos
+            }
+
+            // Dibujar un pequeño rectángulo para marcar, a la izquierda del SKU
+            doc.rect(x - 5, y - 3, 3, 3, 'S'); // Ajusta las dimensiones según necesites
+
+            // Escribir el SKU a la derecha del rectángulo
+            doc.text(producto.sku, x, y);
+        });
+
+        // Ajustar el rectángulo para contener todos los productos
+        const totalFilas = Math.ceil(productos.length / productosPorFila);
+        const rectAltura = totalFilas * filaAltura + 10; // 10 es un pequeño margen adicional
+        doc.rect(10, 25, 100, rectAltura + 40, 'S'); // +40 para ajustar contenido previo
+        let yQRStart = y + 10; // Agrega un margen después de la última línea de productos
+
+        // Generar código QR
+        try {
+            const qrDataURL = await QRCode.toDataURL('Tu texto o URL aquí', {
+                width: 100,
+                margin: 2,
+            });
+
+            // Añadir el código QR al PDF
+            doc.addImage(qrDataURL, 'PNG', 10, yQRStart, 50, 50); // Ajusta según necesites
+
+            const yQRStartfin = yQRStart + 50; // Agrega un margen después de la última línea de productos
+        doc.setFontSize(5)
+        doc.text('Nota: este documento es para uso esxlusivo', 13, yQRStartfin);
+
+        doc.text('del equipo de logistica de HANTEC. SI usted es', 13, yQRStartfin+2);
+        doc.text('cliente y ha recibido este documento por favor', 13, yQRStartfin+4);
+        doc.text('haga caso omiso', 13, yQRStartfin + 6);
+
+
+
+            if (doc.output('bloburi')) {
+                const url = doc.output('bloburi');
+                setPdfUrl2(url);
+              }
+        } catch (err) {
+            console.error('Error al generar el código QR:', err);
+        }
+
+
+    };
+
     return (
         <div className='contencastores'>
 
@@ -156,6 +289,17 @@ function GenerarGuia() {
                     <p>
                         Ingresa los datos restantes para generar la guía.
                     </p>
+
+                    <div>
+                        <button onClick={generatePDF} className="btnpdjo p-2 bg-blue-500 text-white rounded mr-4">
+                            Generar PDF
+                        </button>
+                        {pdfUrl2 && (
+                            <a href={pdfUrl2} target="_blank" rel="noopener noreferrer" className="liodf ml-6  text-blue-600">
+                                Abrir PDF
+                            </a>
+                        )}
+                    </div>
                 </div>
 
 
@@ -232,19 +376,19 @@ function GenerarGuia() {
                 <div className='ldoizqcasguia'>
 
 
-               
 
-                        <iframe
-                            src={pdfUrl}
-                            style={{ width: '80%', height: '75%', border: 'none' }}
-                            frameBorder="0"
-                            scrolling="auto"
-                        >
-                        </iframe>
-                  
+
+                    <iframe
+                        src={pdfUrl}
+                        style={{ width: '80%', height: '75%', border: 'none' }}
+                        frameBorder="0"
+                        scrolling="auto"
+                    >
+                    </iframe>
+
 
                     <div>
-                        <a href={pdfUrl}  className='btncassendguiadow'  download="NombreDelArchivo.pdf">
+                        <a href={pdfUrl} className='btncassendguiadow' download="NombreDelArchivo.pdf">
                             Descargar
                         </a>
                     </div>

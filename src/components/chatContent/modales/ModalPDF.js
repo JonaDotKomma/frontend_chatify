@@ -362,6 +362,7 @@ function ModalPDF({ isOpen, onClose, numerselect, idagente, id_dlinea }) {
 
 
     const generatePDF = () => {
+
         if (!isValidData()) {
             console.error("Datos no válidos o insuficientes para generar el PDF");
             return;
@@ -453,6 +454,7 @@ function ModalPDF({ isOpen, onClose, numerselect, idagente, id_dlinea }) {
         }
 
         onClose()
+        
 
 
 

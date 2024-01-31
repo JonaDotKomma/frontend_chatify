@@ -330,3 +330,10 @@ font-weight: bold;
     outline: none;
     transition: transform 0.3s ease; /* Agregar transición para suavizar el cambio */
 }
+.liodf{
+    margin-left: 5%;
+}
+
+.btnpdjo{
+    cursor: pointer;
+}
