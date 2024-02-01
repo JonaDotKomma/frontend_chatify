@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import io from 'socket.io-client';
 import audioNoti from '../../media/notiWa.mp3'
 import ModalPDF from '../chatContent/modales/ModalPDF';
+import ModalTicket from '../chatContent/modales/modalTicket';
 import axios from 'axios';
 
 
@@ -99,7 +100,7 @@ function Nav() {
 
     //funciones para orden
     const [ismodalpdf, setModalPdf] = useState(false);
-
+    const [isModalTicket, setModalTicket] = useState(false);
 
     // Función para abrir el modal
     const abrirModalpdf = () => {
@@ -108,6 +109,16 @@ function Nav() {
     // Función para cerrar el modal
     const cerrarModalpdf = () => {
         setModalPdf(false);
+
+    };
+
+
+    const abrirModalTicket = () => {
+        setModalTicket(true)
+    }
+    // Función para cerrar el modal
+    const cerrarModalTicket = () => {
+        setModalTicket(false);
 
     };
 
@@ -172,6 +183,7 @@ function Nav() {
                    null
                     )
                 }
+                <button onClick={abrirModalTicket} className="btnnav"> <i class="fas fa-box inav"></i></button>
                 <button onClick={abrirModalpdf} className="btnnav"> <i className="fas fa-file-invoice-dollar inav"></i></button>
 
 
@@ -218,6 +230,11 @@ function Nav() {
                 onClose={cerrarModalpdf}
 
 
+            />}
+
+            {isModalTicket && <ModalTicket
+                isOpen={isModalTicket}
+                onClose={cerrarModalTicket}
             />}
         </div>
     );
