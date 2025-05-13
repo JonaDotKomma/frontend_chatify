@@ -140,7 +140,7 @@ function Castores() {
 
     const reqQuotationPaqExpress = async (payload) => {
         try {
-            const response = await axios.post('http://127.0.0.1:8000/api/v1/getQuotationExpress', payload)
+            const response = await axios.post('https://servicehantececommerce-168873968061.us-central1.run.app/api/v1/getQuotationExpress', payload)
             console.log("Response pa express")
             console.log(response.data)
             return response.data.success
