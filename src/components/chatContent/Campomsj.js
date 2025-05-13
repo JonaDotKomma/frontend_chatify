@@ -92,29 +92,29 @@ function CamposMjs({ numerselect, idagente, id_dlinea, onMensajeEnviado, selecte
         setImagePreviewVisible(false)
     };
 
-    useEffect(() => {
-        const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app', {
-            transports: ['polling', 'websocket']
-        });
+    // useEffect(() => {
+    //     const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app', {
+    //         transports: ['polling', 'websocket']
+    //     });
 
-        socket.on('validado', (data) => {
-            onMensajeEnviado();
-            console.log('Se valida');
-            console.log(data.message);
-            console.log(data.agent);
-            console.log(data.linea);
-            console.log(data.nombre);
-            console.log(idAgentesi);
-            if (data.agent === parseInt(idAgentesi)) {
-                console.log('Si entra a la esta mierda');
+    //     socket.on('validado', (data) => {
+    //         onMensajeEnviado();
+    //         console.log('Se valida');
+    //         console.log(data.message);
+    //         console.log(data.agent);
+    //         console.log(data.linea);
+    //         console.log(data.nombre);
+    //         console.log(idAgentesi);
+    //         if (data.agent === parseInt(idAgentesi)) {
+    //             console.log('Si entra a la esta mierda');
 
-                onMensajeEnviado();
-            }
-        });
-        return () => {
-            socket.disconnect();
-        };
-    });
+    //             onMensajeEnviado();
+    //         }
+    //     });
+    //     return () => {
+    //         socket.disconnect();
+    //     };
+    // });
 
 
     // Función para responder a un mensaje

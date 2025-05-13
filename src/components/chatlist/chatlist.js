@@ -37,23 +37,23 @@ function Chatlist(props) {
   }, [])
 
   //Carfar la lista con el socket 
-  useEffect(() => {
-    // Conectar al servidor Socket.IO
-    const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app');
+  // useEffect(() => {
+  //   // Conectar al servidor Socket.IO
+  //   const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app');
 
-    socket.on('notification', (data) => {
-      console.log('Plataforma:', data.plataforma);
-      listchat(idAgentesi, data.plataforma);
-    });
+  //   socket.on('notification', (data) => {
+  //     console.log('Plataforma:', data.plataforma);
+  //     listchat(idAgentesi, data.plataforma);
+  //   });
 
-    // Llamar a listchat al montar el componente
-    listchat(idAgentesi);
+  //   // Llamar a listchat al montar el componente
+  //   listchat(idAgentesi);
 
-    // Limpiar al desmontar el componente
-    return () => {
-      socket.disconnect();
-    };
-  }, [idAgentesi]); // Agregar idAgentesi como dependencia si su valor puede cambiar
+  //   // Limpiar al desmontar el componente
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [idAgentesi]); // Agregar idAgentesi como dependencia si su valor puede cambiar
   //llamar a
   const listchat = async (idUser, localTipoChat) => {
 

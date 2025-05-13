@@ -61,28 +61,28 @@ function Chatcontent(props) {
     // eslint-disable-next-line
   }, [])
 
-  useEffect(() => {
-    // Conectar al servidor Socket.IO
-    const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app');
+  // useEffect(() => {
+  //   // Conectar al servidor Socket.IO
+  //   const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app');
 
-    socket.on('notification', (data) => {
+  //   socket.on('notification', (data) => {
 
-      // Aquí puedes hacer lo que necesites con los datos recibidos
-      listMensajes(sendiduser);
-    });
+  //     // Aquí puedes hacer lo que necesites con los datos recibidos
+  //     listMensajes(sendiduser);
+  //   });
 
-    // Llamar a listchat al montar el componente
-    listMensajes(sendiduser);
-    setHoliVisible(false)
-    setSelectedMsjUser(null)
-    setSelectedMessageId(null)
+  //   // Llamar a listchat al montar el componente
+  //   listMensajes(sendiduser);
+  //   setHoliVisible(false)
+  //   setSelectedMsjUser(null)
+  //   setSelectedMessageId(null)
 
 
-    // Limpiar al desmontar el componente
-    return () => {
-      socket.disconnect();
-    };
-  }, [sendiduser]);
+  //   // Limpiar al desmontar el componente
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [sendiduser]);
 
 
   const [chatItms, setChatItms] = useState([]);

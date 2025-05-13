@@ -60,23 +60,23 @@ function Dashboard({ user, onLogout, }, props) {
   const [chatData, setChatData] = useState([]); // Estado para almacenar los datos del chat
   const [chatodoo, setChatOdoo] = useState([]);
 
-  useEffect(() => {
-    // Conectar al servidor Socket.IO
-    const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app');
+  // useEffect(() => {
+  //   // Conectar al servidor Socket.IO
+  //   const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app');
 
-    socket.on('notification', (data) => {
-      console.log('Plataforma:', data.plataforma);
-      listchat(idAgentesi, data.plataforma);
-    });
+  //   socket.on('notification', (data) => {
+  //     console.log('Plataforma:', data.plataforma);
+  //     listchat(idAgentesi, data.plataforma);
+  //   });
 
-    // Llamar a listchat al montar el componente
-    listchat(idAgentesi);
+  //   // Llamar a listchat al montar el componente
+  //   listchat(idAgentesi);
 
-    // Limpiar al desmontar el componente
-    return () => {
-      socket.disconnect();
-    };
-  }, [idAgentesi]); // Agregar idAgentesi como dependencia si su valor puede cambiar
+  //   // Limpiar al desmontar el componente
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [idAgentesi]); // Agregar idAgentesi como dependencia si su valor puede cambiar
 
   const listchat = async (idUser) => {
 

@@ -29,49 +29,49 @@ function Menu({ onLogout }) {
             });
     }, []);
 
-    useEffect(() => {
-        const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app', {
-            transports: ['polling', 'websocket']
-        });
+    // useEffect(() => {
+    //     const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app', {
+    //         transports: ['polling', 'websocket']
+    //     });
 
-        socket.on('notification', (data) => {
-            if (data.agente === parseFloat(idAgentesi)) {
-                console.log('SI ME LLEGA PORQUE SI ES MI AGENTE MANO')
-                if (notificationsAllowed) {
-                    const notification = new Notification("Tienes una nueva notificación!", {
-                        body: data.message
-                    });
-                    console.log(notification)
-                }
+    //     socket.on('notification', (data) => {
+    //         if (data.agente === parseFloat(idAgentesi)) {
+    //             console.log('SI ME LLEGA PORQUE SI ES MI AGENTE MANO')
+    //             if (notificationsAllowed) {
+    //                 const notification = new Notification("Tienes una nueva notificación!", {
+    //                     body: data.message
+    //                 });
+    //                 console.log(notification)
+    //             }
 
-                const audio = new Audio(audioNoti);
-                audio.play();
+    //             const audio = new Audio(audioNoti);
+    //             audio.play();
 
-                if (data.plataforma === "WA") {
-                    const newCount = watsNotificationCount + 1;
-                    setWatsNotificationCount(newCount);
-                    localStorage.setItem('watsNotificationCount', newCount.toString());
+    //             if (data.plataforma === "WA") {
+    //                 const newCount = watsNotificationCount + 1;
+    //                 setWatsNotificationCount(newCount);
+    //                 localStorage.setItem('watsNotificationCount', newCount.toString());
 
-                }
-                if (data.plataforma === "WEB") {
-                    const newCount = webNotificationCount + 1;
-                    setWebNotificationCount(newCount);
-                    localStorage.setItem('webNotificationCount', newCount.toString());
+    //             }
+    //             if (data.plataforma === "WEB") {
+    //                 const newCount = webNotificationCount + 1;
+    //                 setWebNotificationCount(newCount);
+    //                 localStorage.setItem('webNotificationCount', newCount.toString());
 
-                }
-                if (data.plataforma === "FB") {
-                    const newCount = fbNotificationCount + 1;
-                    setFbNotificationCount(newCount);
-                    localStorage.setItem('fbNotificationCount', newCount.toString());
+    //             }
+    //             if (data.plataforma === "FB") {
+    //                 const newCount = fbNotificationCount + 1;
+    //                 setFbNotificationCount(newCount);
+    //                 localStorage.setItem('fbNotificationCount', newCount.toString());
 
-                }
-            }
-        });
+    //             }
+    //         }
+    //     });
 
-        return () => {
-            socket.disconnect();
-        };
-    }, [notificationsAllowed, watsNotificationCount, webNotificationCount, fbNotificationCount, idAgentesi]);
+    //     return () => {
+    //         socket.disconnect();
+    //     };
+    // }, [notificationsAllowed, watsNotificationCount, webNotificationCount, fbNotificationCount, idAgentesi]);
 
     const handleWALinkClick = () => {
         setWatsNotificationCount(0);

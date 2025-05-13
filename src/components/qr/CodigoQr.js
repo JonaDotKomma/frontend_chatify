@@ -46,32 +46,32 @@ function CodigoQr() {
 
    
 
-    useEffect(() => {
-        const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app', {
-            transports: ['polling', 'websocket']
-        });
+    // useEffect(() => {
+    //     const socket = io('https://webhookwa-sjkbu6lfrq-uc.a.run.app', {
+    //         transports: ['polling', 'websocket']
+    //     });
 
-        socket.on('validado', (data) => {
-            console.log('Se valida');
-            console.log(data.message);
-            console.log(data.agent);
-            console.log(data.linea);
-            console.log(data.nombre);
-            console.log(idAgentesi);
-            if(data.agent === idAgentesi){
-                console.log('Si entra a la esta mierda');
-                const datosParaEnviar = {
-                    numeroDeLinea: parseInt(data.linea),
-                    nombre_Linea: data.nombre
-                    // Puedes agregar más datos según sea necesario
-                };
-                navigate('/AddAgenteAlinear', { state: datosParaEnviar });
-            }
-        });
-        return () => {
-            socket.disconnect();
-        };
-    });
+    //     socket.on('validado', (data) => {
+    //         console.log('Se valida');
+    //         console.log(data.message);
+    //         console.log(data.agent);
+    //         console.log(data.linea);
+    //         console.log(data.nombre);
+    //         console.log(idAgentesi);
+    //         if(data.agent === idAgentesi){
+    //             console.log('Si entra a la esta mierda');
+    //             const datosParaEnviar = {
+    //                 numeroDeLinea: parseInt(data.linea),
+    //                 nombre_Linea: data.nombre
+    //                 // Puedes agregar más datos según sea necesario
+    //             };
+    //             navigate('/AddAgenteAlinear', { state: datosParaEnviar });
+    //         }
+    //     });
+    //     return () => {
+    //         socket.disconnect();
+    //     };
+    // });
 
     const resetQr = () => {
         setShowQr(true);
