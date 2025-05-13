@@ -120,7 +120,7 @@ function Nav() {
                 {
                         rol !== 'messenger'
                         ? <div className='inocnconte'>                    
-                            <Link className="btnnav" to="/ChatWathsapp" onClick={handleWALinkClick} >
+                            {/* <Link className="btnnav" to="/ChatWathsapp" onClick={handleWALinkClick} >
                                 <i className="fab fa-whatsapp inav"></i>
                                 {watsNotificationCount > 0 &&
 
@@ -130,9 +130,9 @@ function Nav() {
                                     </div>
 
                                 }
-                            </Link>
+                            </Link> */}
 
-                            <Link className="btnnav" to="/ChatFacebook" >
+                            {/* <Link className="btnnav" to="/ChatFacebook" >
                                 <i className="fab fa-facebook-messenger inav"></i>
                                 {fbNotificationCount > 0 && <span className="notification-badge"> {fbNotificationCount}</span>}
                             </Link>
@@ -143,7 +143,7 @@ function Nav() {
                             <Link className="btnnav" to="/ChatWeb" >
                                 <i class="fab fa-shopify inav" ></i>
                                 {webNotificationCount > 0 && <span className="notification-badge"> {webNotificationCount}</span>}
-                            </Link>
+                            </Link> */}
 
 
                         </div>
@@ -181,9 +181,9 @@ function Nav() {
                     <i className="fas fa-truck inav"></i>
 
                 </Link>
-                <Link className="btnnav" to="/CampanaMasiva" >
+                {/* <Link className="btnnav" to="/CampanaMasiva" >
                     <i className="fa fa-bullhorn inav" ></i>
-                </Link>
+                </Link> */}
 
                 {
                     usertipo === "Administrador" ? (

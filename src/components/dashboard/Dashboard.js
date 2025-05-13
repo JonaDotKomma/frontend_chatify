@@ -98,9 +98,11 @@ function Dashboard({ user, onLogout, }, props) {
       <Menu onLogout={onLogout} />
       {/* Parte 1: Perfil */}
       <div className="perfil">
-        <img src={linkImguser} alt="Perfil" className="imagen-perfil" />
+        {linkImguser &&
+          <img src={linkImguser} alt="Perfil" className="imagen-perfil" />
+        }
         <div className="info-perfil">
-          {language==='es-ES' || language==='es-MX'?<h2>Bienvenido</h2>: <h2>Welcome</h2>}
+          <h2>Bienvenido</h2>
           <p> {elementoName}</p>
           <p>{puestoUser}</p>
         </div>
@@ -108,7 +110,7 @@ function Dashboard({ user, onLogout, }, props) {
 
       {/* Parte 2: Chats Recientes */}
       <div className="chats-recientes">
-        {language==='es-ES' || language==='es-MX'?<h3>Chats Recientes</h3>: <h3>Recent Chats</h3>}
+        {/* {language==='es-ES' || language==='es-MX'?<h3>Chats Recientes</h3>: <h3>Recent Chats</h3>} */}
         <div className="lista-chats">
 
           {chatData.slice(-4).map((item, index) => (
@@ -130,7 +132,7 @@ function Dashboard({ user, onLogout, }, props) {
 
       {/* Parte 3: Chats Favoritos */}
       <div className="chats-favoritos">
-        {language==='es-ES' || language==='es-MX'?<h3>Chats Con Odoo</h3>: <h3>Odoo chats</h3>}
+        {/* {language==='es-ES' || language==='es-MX'?<h3>Chats Con Odoo</h3>: <h3>Odoo chats</h3>} */}
         <div className="lista-chats">
 
           {chatodoo.slice(-4).map((item, index) => (

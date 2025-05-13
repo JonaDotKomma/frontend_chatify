@@ -105,7 +105,7 @@ function LoginBack() {
       // Actualiza también el nombre de usuario para el inicio de sesión con usuario y contraseña
 
       localStorage.setItem('nombreUsuario', nombreAgente); // Agrega esto
-      navigate('/');
+      navigate('/Castores');
     } catch (error) {
       alert('Credenciales incorrectas');
       console.error(error);

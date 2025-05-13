@@ -57,7 +57,9 @@ function PerfilUser({ user, onLogout, nombreUsuario }) {
         <div>
             <Menu onLogout={onLogout} />
             <div className="perfil">
-                <img src={linkImguser} alt="Perfil" className="imagen-perfil" />
+                {linkImguser && 
+                    <img src={linkImguser} alt="Perfil" className="imagen-perfil" />
+                }
                 <div className="info-perfil">
                     <h2>Hola</h2>
                     <p> {elementoName}</p>
@@ -102,7 +104,7 @@ function PerfilUser({ user, onLogout, nombreUsuario }) {
 
                 </div>
             </div>
-            : <div>TEST USER</div>}{language==='es-ES' || language==='es-MX'?
+            : <div></div>}{language==='es-ES' || language==='es-MX'?
             <div>
                 <div className='contentstat'>
                     <h3>Medallas</h3>
