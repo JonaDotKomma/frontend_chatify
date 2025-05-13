@@ -9,6 +9,10 @@ let PRODUCTOS_DISPONIBLES = []
 const calculateDeclaredValue = (products) =>
     products.reduce((total, product) => total + product.valorDeclarado, 0);
 
+// Utilidad para calcular el valor declarado total con el valor real
+const calculateRealDeclaredValue = (products) =>
+    products.reduce((total, product) => total + product.valorDeclaradoReal, 0);
+
 // Construye el payload para Castores
 const buildCastoresPayload = (address, products, colony, postalCode, ocurre, selectedAddressOcurre, valorDeclaradoFinal) => ({
     calle: '',
@@ -28,15 +32,21 @@ const buildCastoresPayload = (address, products, colony, postalCode, ocurre, sel
 });
 
 // Construye el payload para Paquetexpress
-const buildPaquetexpressPayload = (address, products, colony, postalCode, valorDeclaradoFinal) => ({
+const buildPaquetexpressPayload = (address, products, colony, postalCode, valorDeclaradoFinal, ensure) => ({
     shipmentData: {
         originZipCode: address.postalCodeOrigin,
         originColonyName: address.colonyOrigin,
         destinyZipCode: postalCode,
         destinyColonyName: colony,
-        totlDeclVlue: valorDeclaradoFinal,
+        ...(
+            ensure
+                ? {
+                    totlDeclVlue: valorDeclaradoFinal,
+                }
+                : {}
+        ),
         shipment_data: "1",
-        invType: "A"
+        invType: ensure ? "A" : "N"
     },
     products: products.map((product) => ({
         sequence: 1,
@@ -54,6 +64,7 @@ function Castores() {
     const [searchTerm, setSearchTerm] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [showTooltip, setShowTooltip] = useState(false)
+    const [showTooltipSecure, setShowTooltipSecure] = useState(false)
     const [selectedAddress, setSelectedAddress] = useState("")
     const [selectedAddressOcurre, setSelectedAddressOcurre] = useState("")
     const [products, setProducts] = useState([])
@@ -62,6 +73,7 @@ function Castores() {
     const [colony, setColony] = useState("")
     const [ocurreOffices, setOcurreOffices] = useState([])
     const [ocurre, setOcurre] = useState(false)
+    const [ensure, setEnsure] = useState(false)
     const tooltipRef = useRef(null)
 
     const [showProductsList, setShowProductsList] = useState(false)
@@ -140,9 +152,7 @@ function Castores() {
 
     const reqQuotationPaqExpress = async (payload) => {
         try {
-            const response = await axios.post('https://servicehantececommerce-168873968061.us-central1.run.app/api/v1/getQuotationExpress', payload)
-            console.log("Response pa express")
-            console.log(response.data)
+            const response = await axios.post('https://servicehantececommerce-sjkbu6lfrq-uc.a.run.app/api/v1/getQuotationExpress', payload)
             return response.data.success
         } catch (error) {
             if (error.response.data.error) {
@@ -202,17 +212,24 @@ function Castores() {
     // Función principal optimizada
     const handleQuotationShipping = async () => {
         try {
+            if (!ocurre && colony === "") {
+                alert("Selecciona una colonia para continuar.")
+                return
+            }
+            if (ocurre && selectedAddressOcurre === "") {
+                alert("Selecciona una oficina ocurre para continuar.")
+                return
+            }
             setIsLoading(true);
-            console.log("Direccion envio");
 
             const dataAddress = addresses.find((add) => add.id == selectedAddress)?.address;
-            console.log(dataAddress)
             if (!dataAddress) {
                 alert("No se encontró la dirección seleccionada");
                 return;
             }
 
             const valorDeclaradoFinal = calculateDeclaredValue(products);
+            const valorDeclaradoReal = calculateRealDeclaredValue(products)
 
             // Cotización Castores
             const castoresPayload = buildCastoresPayload(dataAddress, products, colony, postalCode, ocurre, selectedAddressOcurre, valorDeclaradoFinal);
@@ -234,9 +251,9 @@ function Castores() {
 
             // Cotización Paquetexpress
             if (!ocurre) {
-                const paquetexpressPayload = buildPaquetexpressPayload(dataAddress, products, colony, postalCode, valorDeclaradoFinal);
+                const paquetexpressPayload = buildPaquetexpressPayload(dataAddress, products, colony, postalCode, valorDeclaradoReal, ensure);
                 const paquetexpressQuotes = await handlePaquetexpressQuotation(paquetexpressPayload);
-
+                
                 setQuotes((prevQuotes) => ({
                     ...prevQuotes,
                     paquetexpress: paquetexpressQuotes
@@ -309,6 +326,7 @@ function Castores() {
                 contenido: product.contenido,
                 cantidad: 1,
                 valorDeclarado: product.valor_declarado,
+                valorDeclaradoReal: product.valor_declarado_real,
                 peso: product.peso,
                 largo: product.largo_cm,
                 ancho: product.ancho_cm,
@@ -332,7 +350,6 @@ function Castores() {
     }
 
     const handlePostalCode = (e) => {
-        console.log(e.target.value)
         setPostalCode(e.target.value)
         if (e.target.value.length === 5) {
             fetchDistrictsCastores(e.target.value)
@@ -428,6 +445,7 @@ function Castores() {
                                 <label>Colonia (dirección de entrega)</label>
                                 <div className="select-container">
                                     <select value={colony} onChange={(e) => setColony(e.target.value)}>
+                                        <option value="">Selecciona una colonia</option>
                                         {colonies?.map((individualColony, i) => (
                                             <option key={i} value={individualColony.text}>
                                                 {individualColony.text}
@@ -437,6 +455,27 @@ function Castores() {
                                         }
                                     </select>
                                 </div>
+                            </div>
+                        </div>
+
+                        <div className="ocurre-container">
+                            <label className="ocurre-label">
+                                <input type="checkbox" checked={ensure} onChange={() => { setEnsure(!ensure) }} />
+                                <span>Asegurar en Paquetexpress</span>
+                            </label>
+                            <div
+                                className="question-icon"
+                                onMouseEnter={() => setShowTooltipSecure(true)}
+                                onMouseLeave={() => setShowTooltipSecure(false)}
+                                ref={tooltipRef}
+                            >
+                                <QuestionIcon />
+                                {showTooltipSecure && (
+                                    <div className="tooltip">
+                                        Está opción permite indicar si se quiere asegurar el envío en el caso de alguna incidencia.
+                                        El uso de está opción significará en un aumento en el precio de envío.
+                                    </div>
+                                )}
                             </div>
                         </div>
 
