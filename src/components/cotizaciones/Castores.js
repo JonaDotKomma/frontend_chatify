@@ -5,6 +5,48 @@ import { SearchIcon, QuestionIcon, LoadingIcon } from "./icons"
 
 let PRODUCTOS_DISPONIBLES = []
 
+/**
+ * Downloads a PDF file from a base64-encoded string.
+ * @param {string} base64String - The base64-encoded PDF data.
+ * @param {string} fileName - The name for the downloaded PDF file.
+ */
+export function downloadPdfFromBase64(base64String, fileName = 'document.pdf') {
+  try {
+    // Remove any base64 prefix if present
+    const BASE64_MARKER = ';base64,';
+    let base64 = base64String;
+    if (base64String.includes(BASE64_MARKER)) {
+      base64 = base64String.split(BASE64_MARKER)[1];
+    }
+    
+    // Convert base64 to binary data
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+
+    // Create a Blob from the binary data
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+
+    // Create a link and trigger the download
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Failed to download PDF:', error);
+  }
+}
+
+
 // Utilidad para calcular el valor declarado total
 const calculateDeclaredValue = (products) =>
     products.reduce((total, product) => total + product.valorDeclarado, 0);
@@ -65,6 +107,7 @@ function Castores() {
     const [isLoading, setIsLoading] = useState(false)
     const [showTooltip, setShowTooltip] = useState(false)
     const [showTooltipSecure, setShowTooltipSecure] = useState(false)
+    const [showTooltipTicket, setShowTooltipTicket] = useState(false)
     const [selectedAddress, setSelectedAddress] = useState("")
     const [selectedAddressOcurre, setSelectedAddressOcurre] = useState("")
     const [products, setProducts] = useState([])
@@ -73,8 +116,21 @@ function Castores() {
     const [colony, setColony] = useState("")
     const [ocurreOffices, setOcurreOffices] = useState([])
     const [ocurre, setOcurre] = useState(false)
+    const [showFieldsToTicket, setShowFieldsToTicket] = useState(false)
+    const [loadingTicket, setLoadingTicket] = useState(false)
     const [ensure, setEnsure] = useState(false)
     const tooltipRef = useRef(null)
+
+    const [castoresGuideData, setCastoresGuideData] = useState({
+        name: '',
+        phone: '',
+        street: '',
+        extNumber: '',
+        intNumber: '',
+        city: '',
+        state: '',
+        reference: ''
+    });
 
     const [showProductsList, setShowProductsList] = useState(false)
 
@@ -109,6 +165,13 @@ function Castores() {
             }
         },
     ]
+
+    const handleCastoresGuideChange = (field, value) => {
+        setCastoresGuideData(prev => ({
+            ...prev,
+            [field]: value
+        }));
+    };
 
     // Petición para obtener los productos de la API
     // Request to get products from API
@@ -253,7 +316,7 @@ function Castores() {
             if (!ocurre) {
                 const paquetexpressPayload = buildPaquetexpressPayload(dataAddress, products, colony, postalCode, valorDeclaradoReal, ensure);
                 const paquetexpressQuotes = await handlePaquetexpressQuotation(paquetexpressPayload);
-                
+
                 setQuotes((prevQuotes) => ({
                     ...prevQuotes,
                     paquetexpress: paquetexpressQuotes
@@ -353,6 +416,95 @@ function Castores() {
         setPostalCode(e.target.value)
         if (e.target.value.length === 5) {
             fetchDistrictsCastores(e.target.value)
+        }
+    }
+
+    const handleGenerateGuide = async () => {
+        setLoadingTicket(true)
+        // Lógica para generar la guía
+        if (products.length === 0) {
+            alert("Agrega al menos un producto para generar la guía.")
+            return
+        }
+        if (postalCode.length < 5) {
+            alert("Ingresa un código postal válido.")
+            return
+        }
+        if (colony === "") {
+            alert("Selecciona una colonia para continuar.")
+            return
+        }
+        if (castoresGuideData.name === '' || castoresGuideData.phone === '' || castoresGuideData.street === '' || castoresGuideData.extNumber === '' || castoresGuideData.city === '' || castoresGuideData.state === '') {
+            alert("Por favor, completa todos los campos del formulario de guía.")
+            return
+        }
+
+        console.log("Generando guía de Castores con los siguientes datos:")
+        // Paquetes debe ser un arreglo de objetos con la estructura adecuada
+        // [{ peso: , largo: , ancho: , alto: , cantidad:  , contenido}]
+        const packages = products.map(product => ({
+            peso: product.peso,
+            largo: product.largo,
+            ancho: product.ancho,
+            alto: product.alto,
+            cantidad: product.cantidad,
+            contenido: product.contenido
+        }))
+        const formData = {
+            calle: castoresGuideData.street,
+            noExterior: castoresGuideData.extNumber,
+            noInterior: castoresGuideData.intNumber,
+            colonia: colony,
+            ciudad: castoresGuideData.city,
+            estado: castoresGuideData.state,
+            telefonoDestino: castoresGuideData.phone,
+            nombreDestino: castoresGuideData.name,
+            email: "",
+            cp: postalCode,
+            valorDeclarado: 16000,
+            paquetes: packages
+        }
+
+        console.log('Datos de la guía:', formData);
+
+        try {
+            // Hacer la petición POST a tu API
+            const response = await axios.post('https://backend-chatify-sjkbu6lfrq-uc.a.run.app/generarGuia', formData);
+            console.log('Si paso mano', response.data);
+            if (typeof response.data === 'string') {
+                // Mostrar una alerta con el mensaje completo de solicitud fallida
+                if (response.data === 'Error al buscar las ciudades y oficina') {
+                    alert(response.data + '. Seleciona otro código postal o sucural');
+                } else {
+                    alert(response.data);
+                }
+
+                // Opcional: Cambiar el estado para sugerir la selección de un Ocurre
+            } else {
+                // Procesar la respuesta exitosa de la API
+                // Nombre del archivo PDF
+                const fileName = `guia_castores_${new Date().toISOString()}.pdf`;
+                const base64String = response.data.src[0]
+                downloadPdfFromBase64(base64String, fileName);
+                alert("Guía generada exitosamente. El PDF se ha descargado.");
+                setCastoresGuideData({
+                    name: '',
+                    phone: '',
+                    street: '',
+                    extNumber: '',
+                    intNumber: '',
+                    city: '',
+                    state: '',
+                    reference: ''
+                })
+            }
+        } catch (error) {
+            console.error("Error al enviar los datos:", error);
+            alert("Ha ocurrido un error al generar la guía. Por favor, inténtalo de nuevo más tarde.");
+            // setError('Ha ocurrido un error, vuelve a intentarlo');
+        } finally {
+            // setLoading(false)
+            setLoadingTicket(false)
         }
     }
 
@@ -457,7 +609,7 @@ function Castores() {
                                 </div>
                             </div>
                         </div>
-
+                        
                         <div className="ocurre-container">
                             <label className="ocurre-label">
                                 <input type="checkbox" checked={ensure} onChange={() => { setEnsure(!ensure) }} />
@@ -513,16 +665,124 @@ function Castores() {
                                 </select>
                             </div>
                         )}
+
+                        <div className="ocurre-container">
+                            <label className="ocurre-label" onChange={() => setShowFieldsToTicket(!showFieldsToTicket)}>
+                                <input type="checkbox" />
+                                <span>Generar Guia de Castores</span>
+                            </label>
+                            <div
+                                className="question-icon"
+                                onMouseEnter={() => setShowTooltipTicket(true)}
+                                onMouseLeave={() => setShowTooltipTicket(false)}
+                                ref={tooltipRef}
+                            >
+                                <QuestionIcon />
+                                {showTooltipTicket && (
+                                    <div className="tooltip">
+                                        Generar una guía de Castores para el envío. Esto te permitirá tener un ticket de envío que puedes imprimir y pegar en el paquete.
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        {showFieldsToTicket &&
+                         <>
+                        <p>Completa la información para generar la guía de Castores.</p>
+                         
+                        <div className="guide-form-grid">
+                            <div className="form-group">
+                                <label>Nombre del destinatario <span className="required">*</span></label>
+                                <input
+                                    type="text"
+                                    placeholder="Nombre del destinatario"
+                                    value={castoresGuideData.name}
+                                    onChange={(e) => handleCastoresGuideChange('name', e.target.value)}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Teléfono <span className="required">*</span></label>
+                                <input
+                                    type="text"
+                                    placeholder="Teléfono"
+                                    value={castoresGuideData.phone}
+                                    onChange={(e) => handleCastoresGuideChange('phone', e.target.value)}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Calle <span className="required">*</span></label>
+                                <input
+                                    type="text"
+                                    placeholder="Calle"
+                                    value={castoresGuideData.street}
+                                    onChange={(e) => handleCastoresGuideChange('street', e.target.value)}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Número exterior <span className="required">*</span></label>
+                                <input
+                                    type="text"
+                                    placeholder="Número exterior"
+                                    value={castoresGuideData.extNumber}
+                                    onChange={(e) => handleCastoresGuideChange('extNumber', e.target.value)}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Número interior</label>
+                                <input
+                                    type="text"
+                                    placeholder="Número interior (opcional)"
+                                    value={castoresGuideData.intNumber}
+                                    onChange={(e) => handleCastoresGuideChange('intNumber', e.target.value)}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Ciudad <span className="required">*</span></label>
+                                <input
+                                    type="text"
+                                    placeholder="Ciudad"
+                                    value={castoresGuideData.city}
+                                    onChange={(e) => handleCastoresGuideChange('city', e.target.value)}
+                                />
+                            </div>
+
+                            <div className="form-group">
+                                <label>Estado <span className="required">*</span></label>
+                                <input
+                                    type="text"
+                                    placeholder="Estado"
+                                    value={castoresGuideData.state}
+                                    onChange={(e) => handleCastoresGuideChange('state', e.target.value)}
+                                />
+                            </div>
+
+                            <div className="form-group full-width">
+                                <label>Referencia (opcional)</label>
+                                <input
+                                    type="text"
+                                    placeholder="Referencia adicional"
+                                    value={castoresGuideData.reference}
+                                    onChange={(e) => handleCastoresGuideChange('reference', e.target.value)}
+                                />
+                            </div>
+                        </div>
+                        </>
+                        }
                     </div>
 
                     <div className="actions">
                         <button className="cotizar-button" onClick={handleQuotationShipping} disabled={isLoading || products.length === 0 || postalCode === ""}>
                             {isLoading ? <LoadingIcon /> : "Cotizar"}
                         </button>
-                        {/* 
-                        <button className="nueva-cotizacion-button" onClick={handleNuevaCotizacion}>
-                            Generar Nueva Cotización
-                        </button> */}
+                        {showFieldsToTicket &&
+                            <button className="cotizar-button" onClick={handleGenerateGuide} disabled={loadingTicket || products.length === 0 || postalCode === ""}>
+                                {loadingTicket ? <LoadingIcon /> : "Generar Guia de Castores"}
+                            </button>
+                        }
                     </div>
                 </div>
 
